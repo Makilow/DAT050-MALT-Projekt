@@ -8,7 +8,7 @@ import javax.swing.*;
 
 /**
  * GamePanel, the panel that showcase the game
- * @author Lukas Wigren
+ * @author Mark Villarosa
  */
 public class GamePanel extends JPanel implements Observer<MainModel> {
 
