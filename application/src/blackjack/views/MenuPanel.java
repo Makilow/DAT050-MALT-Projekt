@@ -19,7 +19,6 @@ public class MenuPanel extends JPanel implements Observer<MainModel> {
     private JButton exitButton;
 
     public MenuPanel(MenuController menuController) {
-        System.out.println(State.GAME.toString());
         startButton.setActionCommand(State.GAME.toString());
         settingsButton.setActionCommand(State.SETTINGS.toString());
         rulesButton.setActionCommand(State.RULES.toString());
