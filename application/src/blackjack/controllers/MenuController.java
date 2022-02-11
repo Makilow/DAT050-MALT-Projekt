@@ -18,8 +18,6 @@ public class MenuController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println(e.getActionCommand());
-
         switch (e.getActionCommand()) {
             case "GAME":
                 mainModel.setState(State.GAME);
