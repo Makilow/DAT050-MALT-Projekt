@@ -10,7 +10,7 @@ import java.util.HashSet;
  * @author Lukas Wigren
  */
 public class MainModel implements Observable<MainModel> {
-    private final String title = "blackjack";
+    private final String title = "Blackjack";
     private int width=800, height=600;
     private State state;
     private final Collection<Observer<MainModel>> observers;
