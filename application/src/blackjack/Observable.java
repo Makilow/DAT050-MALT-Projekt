@@ -1,6 +1,6 @@
 package blackjack;
 /**
- * Observable interface
+ * Observable interface        
  */
 public interface Observable<T> {
     void addObserver(Observer<T> o);
