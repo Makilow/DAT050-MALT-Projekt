@@ -3,6 +3,7 @@ package blackjack.models;
 /**
  * Player class representing each player and stats
  * @author Tor Falkenberg
+ * @Version 1.2
  */
 public class Player {
 
@@ -15,7 +16,7 @@ public class Player {
     }
 
     public int getBalance() { return money; }
-    public void changeBalance(int change) { this.money = money+change; }
+    public void changeBalance(int change) { this.money += change; }
     public String getName() { return name; }
 
 }
