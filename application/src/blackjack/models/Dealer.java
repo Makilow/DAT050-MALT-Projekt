@@ -1,21 +1,24 @@
 package blackjack.models;
+
 import java.util.LinkedList;
 import java.util.List;
 
 /**
  * Dealer class containing responsible for table.
+ *
  * @author Tomas Alander (med ändringar av Tor Falkenberg)
  * @Version 1.0
  */
 
 public class Dealer {
 
+    LinkedList<Hand> playerHands = new LinkedList<>();
     private int reShuffle = 50;
     private CardDeck cardDeck;
     private Hand dealerHand = new Hand();
-    LinkedList<Hand> playerHands = new LinkedList<>();
 
-    public Dealer() {}
+    public Dealer() {
+    }
 
     public void startGame() {
         cardDeck = new CardDeck(7);
@@ -25,35 +28,39 @@ public class Dealer {
         playerHands.add(new Hand(player));
     }
 
-    public List getSeats() { return playerHands; }
+    public List getSeats() {
+        return playerHands;
+    }
 
     //Delar ut två kort till alla spelare som är med i rundan
-    public void newRound(){
+    public void newRound() {
         // Ligger dealerns hand i listan?
-        for(int i=0; i<2; i++){                   //Dela all spelare 2 kort
-            for(int j=0; j<playerHands.size(); j++){
+        for (int i = 0; i < 2; i++) {                   //Dela all spelare 2 kort
+            for (int j = 0; j < playerHands.size(); j++) {
                 playerDealOne(playerHands.get(j));
             }
-            if(i==0){
+            if (i == 0) {
                 dealerHand.addCard(cardDeck.next());
-            }else if(i==1){
+            } else if (i == 1) {
                 //Ett kort upp och ner?
             }
         }
-        if(dealerHand.getValue()<10){  //Betala alla spelare som fått blackjac
-            for(int i=0; i<playerHands.size(); i++) {
+        if (dealerHand.getValue() < 10) {  //Betala alla spelare som fått blackjac
+            for (int i = 0; i < playerHands.size(); i++) {
                 if (blackJack(playerHands.get(i))) {
                     playerHands.get(i).payout(2.5);
                 }
             }
         }
     }
+
     public void playerDealOne(Hand playerHand) {    //För newRound och dealern
         if (cardDeck.percentageLeft() <= reShuffle) {
             cardDeck = new CardDeck(7);
         }
         playerHand.addCard(cardDeck.next());
     }
+
     public void playerHit(Hand playerHand) {
         if (cardDeck.percentageLeft() <= reShuffle) {
             cardDeck = new CardDeck(7);
@@ -62,56 +69,91 @@ public class Dealer {
         if (playerHand.getValue() > 21) {
             playerHand.payout(0);
         }
-        if (playerHand.getValue() == 21){
+        if (playerHand.getValue() == 21) {
             //   next playerHand    //Deala nästa hand
         }
     }
-    public void doubleHand(Hand playerHand){
-        if (cardDeck.percentageLeft() < reShuffle){
+
+    public void doubleHand(Hand playerHand) {
+        if (cardDeck.percentageLeft() < reShuffle) {
             cardDeck = new CardDeck(7);
         }
         playerHand.doubleBet();
         playerHand.addCard(cardDeck.next());      //Adderar ett kort till spelarens hand
-        if(playerHand.getValue() > 21) {
+        if (playerHand.getValue() > 21) {
             playerHand.payout(0);
         }
     }
-    public void playerStand(Hand playerHand){
+
+    public void playerStand(Hand playerHand) {
         //next playerHand          //Deala nästa hand
     }
-    public boolean blackJack(Hand playerHand){
-        if( playerHand.getValue()==21) {
+
+    public boolean blackJack(Hand playerHand) {
+        if (playerHand.getValue() == 21 && playerHand.getCards().size()==2) {
             return true;
         } else {
             return false;
         }
     }
 
-    public void dealDealer(Hand dealerHand){
-        while(dealerHand.getValue()<17) {
+    public void dealDealer(Hand dealerHand) {
+        while (dealerHand.getValue() < 17) {
             playerDealOne(dealerHand);
         }
-        if(dealerHand.getValue()>21){
+        if (dealerHand.getValue() > 21) {
             dealerLoses();
-        }else{
+        } else if(blackJack(dealerHand)){
+            dealerBlackJack();
+        }
+        else {
             endOfRound();
         }
     }
+
     //Om dealern blir "tjock"
-    public void dealerLoses(){
-        for(int i=0; i<playerHands.size(); i++){
-            playerHands.get(i).payout(2); //Spelaren vinner, dubbla insatsen
+    public void dealerLoses() {
+        for (int i = 0; i < playerHands.size(); i++) {
+            if(blackJack(playerHands.get(i))){
+                playerHands.get(i).payout(2.5);
+            }else playerHands.get(i).payout(2); //Spelaren vinner, dubbla insatsen
         }
+        dealerHand = new Hand();
     }
-    public void endOfRound(){
-        for(int i=0; i<playerHands.size(); i++){
-            if(playerHands.get(i).getValue() == dealerHand.getValue()){
+    public void dealerBlackJack() {
+        for (int i = 0; i < playerHands.size(); i++) {
+            if (blackJack(playerHands.get(i))) {
                 playerHands.get(i).payout(1); //Lika, spelaren behåller sin insats
-            }else if(playerHands.get(i).getValue()>dealerHand.getValue() && playerHands.get(i).getValue()<=21){
+            } else {
+                playerHands.get(i).payout(0); //Kollar försäkring
+            }
+        }
+        dealerHand = new Hand();
+    }
+
+
+    public void endOfRound() {
+        for (int i = 0; i < playerHands.size(); i++) {
+            if(blackJack(playerHands.get(i))){
+                playerHands.get(i).payout(2.5);
+            } else if (playerHands.get(i).getValue() == dealerHand.getValue()) {
+                playerHands.get(i).payout(1); //Lika, spelaren behåller sin insats
+            } else if (playerHands.get(i).getValue() > dealerHand.getValue() ) {
                 playerHands.get(i).payout(2); //Spelaren vinner, dubbla insatsen
-            }else{
+            } else {
                 playerHands.get(i).payout(0);      //Spelaren förlorar =(
             }
         }
+        dealerHand = new Hand();
     }
 }
+
+
+
+
+
+
+
+
+
+
