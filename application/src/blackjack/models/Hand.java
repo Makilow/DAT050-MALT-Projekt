@@ -6,14 +6,14 @@ import java.util.List;
 /**
  * Hand class containing each table positions player, cards and bets.
  * @author Tor Falkenberg
- * @Version 1.0
+ * @Version 1.1
  */
 
 public class Hand {
     //Private variables
     private Player player;
     private List<Card> cardList = new ArrayList<>();
-    private int bet;
+    private double bet;
     private boolean insured = false;
 
 
@@ -26,16 +26,16 @@ public class Hand {
     public void setPlayer(Player player) { this.player = player; }
     public void removePlayer() { this.player = null; }
 
-    public void newHand() { cardList = new ArrayList<>(); }
+    public void newHand() { cardList.clear(); }
     public void addCard(Card card) { cardList.add(card); }
     public List<Card> getCards() { return cardList; }
 
-    public void bet(int bet) {
+    public void bet(double bet) {
         this.bet += bet;
         player.changeBalance(-bet);
     }
-    public int showBet() { return bet; }
-    public void payout(int multiplier) {
+    public double showBet() { return bet; }
+    public void payout(double multiplier) {
         if (insured) {
             if(multiplier == 0) {
                 multiplier = 1;
@@ -44,6 +44,7 @@ public class Hand {
             }
         }
         player.changeBalance(bet*multiplier);
+        cardList.clear();
         bet = 0;
         insured = false;
     }
