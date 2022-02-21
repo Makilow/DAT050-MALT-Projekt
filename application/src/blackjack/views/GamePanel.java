@@ -1,8 +1,10 @@
 package blackjack.views;
 
 import blackjack.controllers.GameController;
+import blackjack.models.Dealer;
 import blackjack.models.MainModel;
 import blackjack.Observer;
+import blackjack.models.Player;
 
 import javax.swing.*;
 
@@ -13,6 +15,14 @@ import javax.swing.*;
 public class GamePanel extends JPanel implements Observer<MainModel> {
 
     public GamePanel(GameController gameController) {
+        dealer = new Dealer();
+
+        //Test Code
+        for (int i = 0; i < 3; i++) {
+            dealer.addSeat(new Player());
+        }
+
+        dealer.newRound();
 
     }
 
