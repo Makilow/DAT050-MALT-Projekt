@@ -4,5 +4,14 @@ package blackjack.models;
  * @author Lukas Wigren
  */
 public enum Suit {
-    HEART, SPADE, DIAMOND, CLUB
+    HEART("hearts"),
+    SPADE("spades"),
+    DIAMOND("diamonds"),
+    CLUB("clubs");
+
+    private final String name;
+    Suit(String name) {this.name = name;}
+
+    @Override
+    public String toString() {return name;}
 }
