@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 /**
  * RuleController, a controller for rulePanel
  *
- * @author Lukas Wigren
+ * @author Lukas Wigren , Mark Villarosa
  */
 public class RuleController implements ActionListener {
     MainModel mainModel;
