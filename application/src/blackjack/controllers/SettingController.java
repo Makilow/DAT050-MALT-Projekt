@@ -7,10 +7,12 @@ import java.awt.event.ActionListener;
 
 /**
  * SettingController, a controller for scoreboardPanel
- * @author  Lukas Wigren
+ *
+ * @author Lukas Wigren
  */
 public class SettingController implements ActionListener {
     MainModel mainModel;
+
     public SettingController(MainModel mainModel) {
         this.mainModel = mainModel;
     }

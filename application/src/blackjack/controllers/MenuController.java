@@ -5,9 +5,11 @@ import blackjack.views.State;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 /**
  * MenuController, a controller for menuPanel
- * @author  Lukas Wigren
+ *
+ * @author Lukas Wigren
  */
 public class MenuController implements ActionListener {
     MainModel mainModel;
@@ -37,5 +39,4 @@ public class MenuController implements ActionListener {
             default:
         }
     }
-
 }

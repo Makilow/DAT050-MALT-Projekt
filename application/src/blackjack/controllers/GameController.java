@@ -7,10 +7,12 @@ import java.awt.event.ActionListener;
 
 /**
  * GameController, a controller for gamePanel
- * @author  Lukas Wigren
+ *
+ * @author Lukas Wigren
  */
 public class GameController implements ActionListener {
     MainModel mainModel;
+
     public GameController(MainModel mainModel) {
         this.mainModel = mainModel;
     }

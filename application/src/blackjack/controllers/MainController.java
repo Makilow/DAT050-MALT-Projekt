@@ -5,9 +5,11 @@ import blackjack.views.MainView;
 import blackjack.views.State;
 
 import java.awt.event.*;
+
 /**
  * MainController, a controller for the program, MainView...
- * @author  Lukas Wigren
+ *
+ * @author Lukas Wigren
  */
 public class MainController implements KeyListener, MouseListener, ComponentListener {
     private MainModel mainModel;
@@ -25,11 +27,21 @@ public class MainController implements KeyListener, MouseListener, ComponentList
     @Override
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
-            case 122: mainModel.toggleFullscreen();  break;
-            case 27: mainModel.setState(State.MENU); break; // temp
-            case 49: mainModel.setSize(500,500); break;
-            case 50: mainModel.setSize(800,600); break;
-            case 51: mainModel.setSize(1280,720); break;
+            case 122:
+                mainModel.toggleFullscreen();
+                break;
+            case 27:
+                mainModel.setState(State.MENU);
+                break; // temp
+            case 49:
+                mainModel.setSize(500, 500);
+                break;
+            case 50:
+                mainModel.setSize(800, 600);
+                break;
+            case 51:
+                mainModel.setSize(1280, 720);
+                break;
             default:
         }
     }
