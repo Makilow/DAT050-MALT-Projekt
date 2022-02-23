@@ -1,13 +1,14 @@
 package blackjack.views;
 
+import blackjack.Observer;
 import blackjack.controllers.GameController;
 import blackjack.models.MainModel;
-import blackjack.Observer;
 
 import javax.swing.*;
 
 /**
  * GamePanel, the panel that showcase the game
+ *
  * @author Mark Villarosa
  */
 public class GamePanel extends JPanel implements Observer<MainModel> {
