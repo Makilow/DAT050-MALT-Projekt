@@ -27,22 +27,14 @@ public class MainController implements KeyListener, MouseListener, ComponentList
     @Override
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
-            case 122:
-                mainModel.toggleFullscreen();
-                break;
-            case 27:
-                mainModel.setState(State.MENU);
-                break; // temp
-            case 49:
-                mainModel.setSize(500, 500);
-                break;
-            case 50:
-                mainModel.setSize(800, 600);
-                break;
-            case 51:
-                mainModel.setSize(1280, 720);
-                break;
-            default:
+            case 122 -> mainModel.toggleFullscreen();
+            case 27 -> mainModel.setState(State.MENU);
+            // temp
+            case 49 -> mainModel.setSize(500, 500);
+            case 50 -> mainModel.setSize(800, 600);
+            case 51 -> mainModel.setSize(1280, 720);
+            default -> {
+            }
         }
     }
 
