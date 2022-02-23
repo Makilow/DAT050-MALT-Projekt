@@ -1,13 +1,13 @@
 import blackjack.controllers.*;
 import blackjack.models.MainModel;
 import blackjack.views.*;
-import blackjack.views.State;
 
 import javax.swing.*;
 import java.awt.*;
 
 /**
  * The Blackjack class.. starts the program... something something .. can be run in thread
+ *
  * @author Lukas Wigren
  */
 public class Blackjack implements Runnable {
