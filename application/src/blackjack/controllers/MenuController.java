@@ -21,22 +21,13 @@ public class MenuController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
-            case "GAME":
-                mainModel.setState(State.GAME);
-                break;
-            case "SETTINGS":
-                mainModel.setState(State.SETTINGS);
-                break;
-            case "RULES":
-                mainModel.setState(State.RULES);
-                break;
-            case "SCOREBOARD":
-                mainModel.setState(State.SCOREBOARD);
-                break;
-            case "EXIT":
-                mainModel.setState(State.EXIT);
-                break;
-            default:
+            case "GAME" -> mainModel.setState(State.GAME);
+            case "SETTINGS" -> mainModel.setState(State.SETTINGS);
+            case "RULES" -> mainModel.setState(State.RULES);
+            case "SCOREBOARD" -> mainModel.setState(State.SCOREBOARD);
+            case "EXIT" -> mainModel.setState(State.EXIT);
+            default -> {
+            }
         }
     }
 }
