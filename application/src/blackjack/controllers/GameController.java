@@ -17,6 +17,12 @@ public class GameController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        switch (e.getActionCommand()) {
+            case "HIT": mainModel.playerHit();          break;
+            case "STAND": mainModel.playerStand();      break;
+            case "DOUBLE": mainModel.playerDouble();    break;
+            case "SPLIT": mainModel.playerSplit();      break;
+            default: System.out.println("WTF HOW DID WE GET HERE?");
+        }
     }
 }
