@@ -12,14 +12,14 @@ import java.util.List;
 public class PlayerHand extends Hand {
     //Private variables
     private Player player;
-    private final List<Card> cards = new ArrayList<>();
+    private final List<Card> cards = new ArrayList<>();;
     private double bet;
     private boolean insured = false;
 
 
     //Constructors
     public PlayerHand() {}
-    public PlayerHand(Player player) { this.player = player; }
+    public PlayerHand(Player player) { this.player = player;}
 
 
     //Functions
@@ -37,7 +37,7 @@ public class PlayerHand extends Hand {
 
     @Override
     public void clearHand() {
-        cards.clear();
+        super.clearHand();
         bet = 0;
         insured = false;
     }
