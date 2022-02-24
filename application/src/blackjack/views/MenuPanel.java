@@ -1,19 +1,16 @@
 package blackjack.views;
 
-import blackjack.Observer;
 import blackjack.controllers.MenuController;
 import blackjack.models.MainModel;
+import blackjack.Observer;
 
 import javax.swing.*;
 import java.awt.*;
-
 /**
  * MenuPanel, the panel that showcase the menu
- *
  * @author Lukas Wigren
  */
 public class MenuPanel extends JPanel implements Observer<MainModel> {
-
     private JPanel panel;
     private JButton startButton;
     private JButton settingsButton;
@@ -32,10 +29,9 @@ public class MenuPanel extends JPanel implements Observer<MainModel> {
         rulesButton.addActionListener(menuController);
         scoreboardButton.addActionListener(menuController);
         exitButton.addActionListener(menuController);
-        setLayout(new GridLayout(1, 0));
+        setLayout(new GridLayout(1,0));
         add(panel);
     }
-
     @Override
     public void update(MainModel o) {
     }

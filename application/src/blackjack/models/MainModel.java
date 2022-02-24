@@ -13,7 +13,7 @@ import java.util.*;
 public class MainModel implements Observable<MainModel> {
     private int width=800, height=600;
     private State state;
-    private final Collection<Observer<MainModel>> observers = new HashSet<>();;
+    private final Collection<Observer<MainModel>> observers = new HashSet<>();
     private boolean isFullscreen = false;
     private Dealer dealer;
     private List<PlayerHand> hands;
@@ -42,19 +42,23 @@ public class MainModel implements Observable<MainModel> {
         hands = new LinkedList<>();
         dealerHand = new DealerHand();
         currentHand = 0;
+        addHand(new Player("Lukas", 1000));
+        addHand(new Player("Tomas", 1000));
+        newRound();
     }
-    public void addHand(Player player) { hands.add(new PlayerHand(player)); }
+    public void addHand(Player player) { hands.add(new PlayerHand(player));}
     public List getHands() { return hands; }
     public List getDealerCards() {return dealerHand.getCards();}
     public void newRound() {
         currentHand = 0;
         for (int i = 0; i < 2; i++) {
             for (PlayerHand h : hands) {
-                if (h.getBet() == 0) {continue;}
+                //if (h.getBet() == 0) {continue;}
                 h.addCard(dealer.dealCard());
             }
             dealerHand.addCard(dealer.dealCard());
         }
+        updateObservers();
     }
 
     public void playerHit() {

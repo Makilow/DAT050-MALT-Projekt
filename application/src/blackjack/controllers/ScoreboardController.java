@@ -7,8 +7,7 @@ import java.awt.event.ActionListener;
 
 /**
  * ScoreboardController, a controller for scoreboardPanel
- *
- * @author Lukas Wigren
+ * @author  Lukas Wigren
  */
 public class ScoreboardController implements ActionListener {
     public ScoreboardController(MainModel mainModel) {
