@@ -27,12 +27,12 @@ public class MainView extends JFrame implements Observer<MainModel> {
     }
 
     private void changeSize(int width, int height) {
-        if (width == getWidth() && height == getHeight()) return;
+        if (width == getWidth() && height == getHeight() || isFullscreen) return;
         setPreferredSize(new Dimension(width, height));
         pack();
     }
 
-    private void toggleFullscreen(boolean f) {
+    private void toggleFullscreen(boolean f, int width, int height) {
         if (f == isFullscreen) return;
         isFullscreen^=true;
         dispose();
@@ -40,7 +40,7 @@ public class MainView extends JFrame implements Observer<MainModel> {
             setExtendedState(JFrame.MAXIMIZED_BOTH);
             setUndecorated(true);
         } else {
-            setPreferredSize(new Dimension(500, 500));
+            setPreferredSize(new Dimension(width, height));
             setUndecorated(false); pack();
             setLocationRelativeTo(null);
         }
@@ -55,8 +55,9 @@ public class MainView extends JFrame implements Observer<MainModel> {
 
     @Override
     public void update(MainModel o) {
+        requestFocus();
         changeSize(o.getWidth(),o.getHeight());
         switchPanel(o.getState());
-        toggleFullscreen(o.getIsFullscreen());
+        toggleFullscreen(o.getIsFullscreen(), o.getWidth(), o.getHeight());
     }
 }
