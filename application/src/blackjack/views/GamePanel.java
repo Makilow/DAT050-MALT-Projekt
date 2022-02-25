@@ -72,11 +72,6 @@ public class GamePanel extends JPanel implements Observer<MainModel> {
             System.out.println("Missing file: src/icons/cards/backside.png");
             System.exit(0);
         }
-
-
-        assert bImage != null;      // REMOVE THIS
-
-
         Image image = bImage.getScaledInstance(80, 120, Image.SCALE_SMOOTH);
         return new ImageIcon(image);
     }
@@ -92,11 +87,6 @@ public class GamePanel extends JPanel implements Observer<MainModel> {
             System.out.println("Missing file: src/icons/cards/" + filename);
             System.exit(0);
         }
-
-
-        assert bImage != null;      // REMOVE THIS
-
-
         Image image = bImage.getScaledInstance(80, 120, Image.SCALE_SMOOTH);
         return new ImageIcon(image);
     }
