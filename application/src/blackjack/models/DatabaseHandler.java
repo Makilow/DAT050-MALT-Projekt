@@ -34,7 +34,6 @@ public class DatabaseHandler {
 
     /**
      * returns a players credits
-     *
      * @param player
      * @return int
      * @throws SQLException
@@ -67,7 +66,6 @@ public class DatabaseHandler {
 
     /**
      * add credits to a players bankroll, credits > 0
-     *
      * @param player
      * @param credits
      * @throws SQLException
@@ -101,8 +99,7 @@ public class DatabaseHandler {
     }
 
     /**
-     * prints all players from table/database
-     *
+     * prints all players from database table Scoreboard
      * @throws SQLException
      * @throws ClassNotFoundException
      */
@@ -126,7 +123,6 @@ public class DatabaseHandler {
 
     /**
      * if player is in the database table Scoreboard return true
-     *
      * @param player
      * @return boolean
      * @throws SQLException, ClassNotFoundException
@@ -141,10 +137,15 @@ public class DatabaseHandler {
             ResultSet rs = ps.executeQuery();
             if (!rs.next()) {
                 System.out.println("Where are no players named " + player + " in this table");
-            } else rs.close();
-            dbms.closeConnection(con, ps);
-            ret = true;
-        } catch (SQLException | ClassNotFoundException e) {
+                rs.close();
+                dbms.closeConnection(con, ps);
+            } else {
+                rs.close();
+                dbms.closeConnection(con, ps);
+                ret = true;
+            }
+        }
+            catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         return ret;
@@ -152,7 +153,6 @@ public class DatabaseHandler {
 
     /**
      * remove player from the database table Scoreboard
-     *
      * @param player
      * @throws SQLException
      * @throws ClassNotFoundException
@@ -173,7 +173,6 @@ public class DatabaseHandler {
 
     /**
      * Adds a new player to the database table Scoreboard
-     *
      * @param player
      * @param credits
      * @throws SQLException
@@ -247,18 +246,60 @@ public class DatabaseHandler {
         } else System.out.println("No player with that name");
         return null;
     }
- /*// för testning
-    public static void main(String[] args) throws Exception {
-        DatabaseHandler databaseHandler = new DatabaseHandler();
-        HashMap<String,Integer>mapScoreboard = databaseHandler.map();
-        mapScoreboard.forEach((k,v) -> {
-            System.out.println("name: " + k + " credits: " + v);
-           // System.out.println(k +" "+ v);
-        });
+
+    /**
+     * add a player to database or update players credits
+     * @param player
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
+    public void addPlayerData(Player player)throws SQLException, ClassNotFoundException {
+        if (!playerName(player.getName())) {
+            try{ DBMSConnection dbms = new DBMSConnection(url, user, password);
+                Connection con = dbms.connect();
+                PreparedStatement ps = con.prepareStatement(insertQuery);
+                ps.setString(1, player.getName());
+                ps.setInt(2, (int)player.getBalance());
+                ps.execute();
+                System.out.println("PreparedStatement Insert  successful. name = " + player.getName() + ", credits = " + player.getBalance());
+                dbms.closeConnection(con, ps);
+            } catch (SQLException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+
+        } else {
+            try {
+                DBMSConnection dbms = new DBMSConnection(url, user, password);
+                Connection con = dbms.connect();
+                PreparedStatement ps = con.prepareStatement(addCredits);
+                ps.setInt(1, (int)player.getBalance());
+                ps.setString(2, player.getName());
+                ps.execute();
+                System.out.println("PreparedStatement Insert  successful. name = " + player.getName() + ", credits added = " + player.getBalance());
+                dbms.closeConnection(con, ps);
+            } catch (SQLException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
-  */
+/* // för testning
+    public static void main(String[] args) throws Exception {
+        DatabaseHandler databaseHandler = new DatabaseHandler();
+        HashMap<String, Integer> mapScoreboard = databaseHandler.map();
+              mapScoreboard.forEach((k,v) -> {
+              System.out.println("name: " + k + " credits: " + v);
+              });
+/*
+            Player tomas = new Player("jon",333);
+            try {
+                databaseHandler.addPlayerData(tomas);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+*/
 }
+
 
 
 
