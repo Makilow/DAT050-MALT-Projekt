@@ -13,7 +13,7 @@ public class PlayerHand extends Hand {
     //Private variables
     private Player player;
     private final List<Card> cards = new ArrayList<>();;
-    private double bet;
+    private double bet = 0;
     private boolean insured = false;
 
 
@@ -27,6 +27,7 @@ public class PlayerHand extends Hand {
         this.player = player;
         clearHand();
     }
+    public Player getPlayer() {return player;}
     public void removePlayer() { this.player = null; }
 
     public void bet(double bet) {

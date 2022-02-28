@@ -4,6 +4,7 @@ import blackjack.Observable;
 import blackjack.Observer;
 import blackjack.views.State;
 
+import javax.swing.*;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -12,18 +13,20 @@ import java.util.*;
  * @author Lukas Wigren, Tomas Alander, Tor Falkenberg
  */
 public class MainModel implements Observable<MainModel> {
-    private int width=800, height=600;
+    private int width=1200, height=800;
     private State state;
     private final Collection<Observer<MainModel>> observers = new HashSet<>();
     private boolean isFullscreen = false;
+
+    private final DatabaseHandler dbHandler = new DatabaseHandler();
+    private List<Player> playerList;
+
     private Dealer dealer;
-    private List<PlayerHand> hands;
+    private List<PlayerHand> playerHands;
     private DealerHand dealerHand;
     private int currentHand;
     private boolean showSecond;
 
-    private final DatabaseHandler dbHandler = new DatabaseHandler();
-    private List<Player> playerList;
 
     public MainModel() {
         state = State.MENU;
@@ -40,7 +43,8 @@ public class MainModel implements Observable<MainModel> {
     public int getWidth() {return width;}
     public int getHeight() {return height;}
     public void setState(State state) {
-        if (state == State.GAME) {startGame();}
+        if (state == State.NEWGAME) {startGame();}
+        if (state == State.STARTGAME) {newRound();}
         this.state = state;
         updateObservers();
     }
@@ -50,33 +54,33 @@ public class MainModel implements Observable<MainModel> {
     public List<Player> getPlayerList() { return playerList;}
 
 
-    private void testDB() {
-       for (Player player : playerList) {
-           System.out.println(player.getName() + ":" + player.getBalance());
-       }
-    }
-
     // Game functions
     private void startGame() {
         dealer = new Dealer(7);
-        hands = new LinkedList<>();
+        playerHands = new LinkedList<>();
         dealerHand = new DealerHand();
         currentHand = 0;
-        addHand(new Player("Lukas", 1000));
-        addHand(new Player("Tomas", 1000));
-        addHand(new Player("Tomas", 1000));
-        addHand(new Player("Tomas", 1000));
-        addHand(new Player("Tomas", 1000));
-        newRound();
     }
-    public void addHand(Player player) { hands.add(new PlayerHand(player));}
-    public List getHands() { return hands; }
+
+    public void newPlayer() {
+        String name = JOptionPane.showInputDialog("Name:");
+        addHand(new Player(name, 1000));
+    }
+
+    public void addHand(Player player) {
+        playerHands.add(new PlayerHand(player));
+        updateObservers();
+    }
+
+    public List<PlayerHand> getHands() { return playerHands; }
+
     public List getDealerCards() {return dealerHand.getCards();}
+
     public void newRound() {
         showSecond = false;
         currentHand = 0;
         for (int i = 0; i < 2; i++) {
-            for (PlayerHand h : hands) {
+            for (PlayerHand h : playerHands) {
                 //if (h.getBet() == 0) {continue;}
                 h.addCard(dealer.dealCard());
             }
@@ -87,10 +91,12 @@ public class MainModel implements Observable<MainModel> {
 
     public boolean getShowSecond() { return showSecond;}
 
+    public void update() {updateObservers();}
+
     public void playerHit() {
-        if (isBlackjack(hands.get(currentHand))) { playerStand(); }
-        hands.get(currentHand).addCard(dealer.dealCard());
-        int handValue = hands.get(currentHand).getValue();
+        if (isBlackjack(playerHands.get(currentHand))) { playerStand(); }
+        playerHands.get(currentHand).addCard(dealer.dealCard());
+        int handValue = playerHands.get(currentHand).getValue();
         if (handValue == 21) {
             playerStand();
         } else if (handValue > 21) {
@@ -99,7 +105,7 @@ public class MainModel implements Observable<MainModel> {
         updateObservers();
     }
     public void playerStand() {
-        if (currentHand == hands.size()-1) {
+        if (currentHand == playerHands.size()-1) {
             dealDealer();
         } else {
             currentHand++;
@@ -107,11 +113,11 @@ public class MainModel implements Observable<MainModel> {
         updateObservers();
     }
     public void playerDouble() {
-        if (hands.get(currentHand).getCards().size() != 2 ||
-        isBlackjack(hands.get(currentHand)) ||
-        hands.get(currentHand).getValue() >= 21) {return;}
-        hands.get(currentHand).bet(hands.get(currentHand).getBet());
-        hands.get(currentHand).addCard(dealer.dealCard());
+        if (playerHands.get(currentHand).getCards().size() != 2 ||
+        isBlackjack(playerHands.get(currentHand)) ||
+                playerHands.get(currentHand).getValue() >= 21) {return;}
+        playerHands.get(currentHand).bet(playerHands.get(currentHand).getBet());
+        playerHands.get(currentHand).addCard(dealer.dealCard());
         playerStand();
     }
     public void playerSplit() {
@@ -131,7 +137,7 @@ public class MainModel implements Observable<MainModel> {
     private void payHands() {
         int dealerValue = dealerHand.getValue();
         int handValue;
-        for (PlayerHand h : hands) {
+        for (PlayerHand h : playerHands) {
             handValue = h.getValue();
             if (handValue > 21) {
                 h.payout(0);
@@ -147,7 +153,7 @@ public class MainModel implements Observable<MainModel> {
                 h.payout(1);
             }
         }
-        for (PlayerHand h : hands) {
+        for (PlayerHand h : playerHands) {
             h.clearHand();
         }
         dealerHand.clearHand();
