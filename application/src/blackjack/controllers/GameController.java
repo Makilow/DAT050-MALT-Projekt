@@ -7,18 +7,22 @@ import java.awt.event.ActionListener;
 
 /**
  * GameController, a controller for gamePanel
- *
- * @author Lukas Wigren
+ * @author  Lukas Wigren
  */
 public class GameController implements ActionListener {
     MainModel mainModel;
-
     public GameController(MainModel mainModel) {
         this.mainModel = mainModel;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        switch (e.getActionCommand()) {
+            case "HIT": mainModel.playerHit();          break;
+            case "STAND": mainModel.playerStand();      break;
+            case "DOUBLE": mainModel.playerDouble();    break;
+            case "SPLIT": mainModel.playerSplit();      break;
+            default: System.out.println("WTF HOW DID WE GET HERE?");
+        }
     }
 }
