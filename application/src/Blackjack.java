@@ -1,13 +1,14 @@
 import blackjack.controllers.*;
 import blackjack.models.MainModel;
 import blackjack.views.*;
+import blackjack.views.State;
 
 import javax.swing.*;
 import java.awt.*;
+import java.sql.SQLException;
 
 /**
  * The Blackjack class.. starts the program... something something .. can be run in thread
- *
  * @author Lukas Wigren
  */
 public class Blackjack implements Runnable {
@@ -41,7 +42,7 @@ public class Blackjack implements Runnable {
         container.add(rulePanel, State.RULES.toString());
         container.add(scoreboardPanel, State.SCOREBOARD.toString());
         //
-        mainView = new MainView(mainModel.getTitle(), mainModel.getWidth(), mainModel.getHeight(), container);
+        mainView = new MainView(mainModel.getWidth(), mainModel.getHeight(), container);
         // Listeners for mainView
         mainView.addKeyListener(mainController);
         mainView.addMouseListener(mainController);
