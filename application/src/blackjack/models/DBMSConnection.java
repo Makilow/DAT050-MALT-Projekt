@@ -17,7 +17,6 @@ public class DBMSConnection {
     private String password;
     private Connection con;
 
-    public DBMSConnection() {}
 
     public DBMSConnection(String url, String user, String password) {
         this.url = url;
@@ -49,4 +48,3 @@ public class DBMSConnection {
         dbms.close();
     }
 }
-

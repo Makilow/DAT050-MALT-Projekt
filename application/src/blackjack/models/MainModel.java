@@ -4,6 +4,7 @@ import blackjack.Observable;
 import blackjack.Observer;
 import blackjack.views.State;
 
+import java.sql.SQLException;
 import java.util.*;
 
 /**
@@ -21,8 +22,18 @@ public class MainModel implements Observable<MainModel> {
     private int currentHand;
     private boolean showSecond;
 
+    private final DatabaseHandler dbHandler = new DatabaseHandler();
+    private List<Player> playerList;
+
     public MainModel() {
         state = State.MENU;
+        try {
+            playerList = dbHandler.getAllPlayers();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
     // Screen functions
     public void setSize(int width, int height) {this.width=width; this.height=height; updateObservers();}
@@ -36,6 +47,14 @@ public class MainModel implements Observable<MainModel> {
     public State getState() { return state; }
     public boolean getIsFullscreen() {return isFullscreen;}
     public void toggleFullscreen() {isFullscreen ^= true; updateObservers();}
+    public List<Player> getPlayerList() { return playerList;}
+
+
+    private void testDB() {
+       for (Player player : playerList) {
+           System.out.println(player.getName() + ":" + player.getBalance());
+       }
+    }
 
     // Game functions
     private void startGame() {

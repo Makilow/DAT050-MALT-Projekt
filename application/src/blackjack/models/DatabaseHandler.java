@@ -3,13 +3,15 @@ package blackjack.models;
 import java.sql.*;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * DBMS, uses SQL queries fore communication
  * Do not forget to "Apply" jarfile!
  *
- * @author Tomas Alander
+ * @author Tomas Alander & Tor Falkenberg
  */
 
 public class DatabaseHandler {
@@ -33,6 +35,30 @@ public class DatabaseHandler {
     }
 
     /**
+     * Creates an ArrayList of all players stored in the database
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
+    public List<Player> getAllPlayers() throws SQLException, ClassNotFoundException {
+        List<Player> playerList = new ArrayList<>();
+        try {
+            DBMSConnection dbms = new DBMSConnection(url, user, password);
+            Connection con = dbms.connect();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(getAll);
+            while (rs.next()) {
+                playerList.add(new Player(rs.getString(1), rs.getInt(2)));
+            }
+            rs.close();
+            dbms.closeConnection(con, st);
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return playerList;
+    }
+
+
+    /**
      * returns a players credits
      * @param player
      * @return int
@@ -54,7 +80,6 @@ public class DatabaseHandler {
                 ret = rs.getInt(2);
                 System.out.println(printName);
             }
-
              */
             rs.close();
             dbms.closeConnection(con, st);
@@ -98,28 +123,7 @@ public class DatabaseHandler {
         }
     }
 
-    /**
-     * prints all players from database table Scoreboard
-     * @throws SQLException
-     * @throws ClassNotFoundException
-     */
-    public void getAllPlayers() throws SQLException, ClassNotFoundException {
-        try {
-            DBMSConnection dbms = new DBMSConnection(url, user, password);
-            Connection con = dbms.connect();
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery(getAll);
-            while (rs.next()) {
-                String printName = rs.getString(1);
-                String printCredits = rs.getString(2);
-                System.out.println(printName + " " + printCredits);
-            }
-            rs.close();
-            dbms.closeConnection(con, st);
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
+
 
     /**
      * if player is in the database table Scoreboard return true
@@ -145,7 +149,7 @@ public class DatabaseHandler {
                 ret = true;
             }
         }
-            catch (SQLException | ClassNotFoundException e) {
+        catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         return ret;
@@ -299,7 +303,3 @@ public class DatabaseHandler {
             }
 */
 }
-
-
-
-
