@@ -37,7 +37,7 @@ public class Blackjack implements Runnable {
         ScoreboardPanel scoreboardPanel = new ScoreboardPanel(new ScoreboardController(mainModel));
         // Add to panels to mainPanel
         container.add(menuPanel, State.MENU.toString());
-        container.add(gamePanel, State.GAME.toString());
+        container.add(gamePanel, State.NEWGAME.toString());
         container.add(settingPanel, State.SETTINGS.toString());
         container.add(rulePanel, State.RULES.toString());
         container.add(scoreboardPanel, State.SCOREBOARD.toString());
