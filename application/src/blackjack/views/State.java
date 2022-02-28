@@ -2,7 +2,6 @@ package blackjack.views;
 
 /**
  * State enum, state for all the different panels (CardLayout)
- *
  * @author Lukas Wigren
  */
 public enum State {
