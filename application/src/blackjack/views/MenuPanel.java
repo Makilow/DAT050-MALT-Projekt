@@ -22,7 +22,7 @@ public class MenuPanel extends JPanel implements Observer<MainModel> {
     private JButton exitButton;
 
     public MenuPanel(MenuController menuController) {
-        startButton.setActionCommand(State.GAME.toString());
+        startButton.setActionCommand(State.NEWGAME.toString());
         settingsButton.setActionCommand(State.SETTINGS.toString());
         rulesButton.setActionCommand(State.RULES.toString());
         scoreboardButton.setActionCommand(State.SCOREBOARD.toString());

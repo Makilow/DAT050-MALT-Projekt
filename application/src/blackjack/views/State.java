@@ -8,7 +8,8 @@ public enum State {
     MENU("MENU"),
     SETTINGS("SETTINGS"),
     RULES("RULES"),
-    GAME("GAME"),
+    NEWGAME("NEWGAME"),
+    STARTGAME("STARTGAME"),
     SCOREBOARD("SCOREBOARD"),
     EXIT("EXIT");
 
