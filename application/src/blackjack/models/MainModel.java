@@ -120,11 +120,18 @@ public class MainModel implements Observable<MainModel> {
 
     private void dealDealer() {
         showSecond = true;
-        while (dealerHand.getValue() < 17) {
-            dealerHand.addCard(dealer.dealCard());
-            updateObservers();
-        }
-        payHands();
+        new Timer(2000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (dealerHand.getValue() < 17) {
+                    dealerHand.addCard(dealer.dealCard());
+                } else {
+                    ((Timer)e.getSource()).stop();
+                    payHands();
+                }
+                updateObservers();
+            }
+        }).start();
     }
 
     private boolean isBlackjack(PlayerHand hand) {return (hand.getValue() == 21) && (hand.getCards().size() == 2);}
