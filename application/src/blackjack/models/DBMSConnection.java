@@ -46,5 +46,6 @@ public class DBMSConnection {
     public void closeConnection(Connection dbms, Statement st) throws SQLException {
         st.close();
         dbms.close();
+        System.out.println("Connection clost");
     }
 }
