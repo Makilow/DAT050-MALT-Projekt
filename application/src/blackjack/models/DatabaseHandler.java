@@ -30,6 +30,7 @@ public class DatabaseHandler {
     private final String addCredits = "UPDATE Scoreboard SET credits = ? WHERE name = ?";
     private final String deletePlayer = "DELETE FROM Scoreboard WHERE name = ?";
     private final String findPlayer = "SELECT name FROM Scoreboard WHERE name = ?";
+    private final String sortPlayer = "SELECT* FROM Scoreboard ORDER BY credits DESC";
 
     public DatabaseHandler() {
     }
