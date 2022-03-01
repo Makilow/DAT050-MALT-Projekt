@@ -1,0 +1,133 @@
+JFDML JFormDesigner: "7.0.5.3.411" Java: "11.0.13" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+			name: "panel"
+			"background": new java.awt.Color( 7, 65, 0, 255 )
+			"enabled": true
+			"inheritsPopupMenu": false
+			"border": new javax.swing.border.TitledBorder( new javax.swing.border.EmptyBorder( 0, 0, 0, 0 ), "" )
+			"minimumSize": new java.awt.Dimension( 960, 600 )
+			"maximumSize": new java.awt.Dimension( 1500, 800 )
+			"preferredSize": sfield com.jformdesigner.model.FormObject NULL_VALUE
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "startButton"
+				"actionCommand": ""
+				"borderPainted": false
+				"doubleBuffered": false
+				"hideActionText": false
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/icons/menu_icons/button_start.png" )
+				"iconTextGap": 4
+				"inheritsPopupMenu": false
+				"label": ""
+				"margin": new java.awt.Insets( 0, 0, 0, 0 )
+				"name": ""
+				"opaque": false
+				"rolloverEnabled": true
+				"rolloverSelectedIcon": new com.jformdesigner.model.SwingIcon( 0, "/icons/menu_icons/button_startH.png" )
+				"selected": true
+				"text": ""
+				"visible": true
+				"contentAreaFilled": false
+				"horizontalTextPosition": 0
+				addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "startButtonMouseClicked", true ) )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 735
+				"y": 215
+				"width": 212
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "settingsButton"
+				"borderPainted": false
+				"contentAreaFilled": false
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/icons/menu_icons/button_settings.png" )
+				"rolloverSelectedIcon": new com.jformdesigner.model.SwingIcon( 0, "/icons/menu_icons/button_settingsH.png" )
+				"selected": true
+				"text": ""
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 735
+				"y": 320
+				"height": 66
+				"width": 212
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "rulesButton"
+				"borderPainted": false
+				"contentAreaFilled": false
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/icons/menu_icons/button_rules.png" )
+				"label": ""
+				"rolloverSelectedIcon": new com.jformdesigner.model.SwingIcon( 0, "/icons/menu_icons/button_rulesH.png" )
+				"selected": true
+				"text": ""
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 735
+				"y": 430
+				"height": 66
+				"width": 212
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "scoreboardButton"
+				"borderPainted": false
+				"contentAreaFilled": false
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/icons/menu_icons/button_scoreboard.png" )
+				"rolloverSelectedIcon": new com.jformdesigner.model.SwingIcon( 0, "/icons/menu_icons/button_scoreboardH.png" )
+				"selected": true
+				"text": ""
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 740
+				"y": 535
+				"height": 66
+				"width": 212
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "exitButton"
+				"borderPainted": false
+				"contentAreaFilled": false
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/icons/menu_icons/button_exit.png" )
+				"label": ""
+				"rolloverSelectedIcon": new com.jformdesigner.model.SwingIcon( 0, "/icons/menu_icons/button_exitH.png" )
+				"selected": true
+				"text": ""
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 740
+				"y": 640
+				"height": 66
+				"width": 212
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "texten"
+				"background": new java.awt.Color( 176, 178, 180, 255 )
+				"font": new java.awt.Font( "Superclarendon", 1, 74 )
+				"foreground": new java.awt.Color( 255, 255, 255, 255 )
+				"horizontalAlignment": 0
+				"horizontalTextPosition": 0
+				"opaque": false
+				"text": "BLACKJACK"
+				"maximumSize": new java.awt.Dimension( 5600, 9400 )
+				auxiliary() {
+					"JavaCodeGenerator.variableLocal": true
+				}
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 565
+				"y": 110
+				"height": 80
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "bordet"
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/icons/blackjackbordsuddigt.png" )
+				"horizontalAlignment": 0
+				"maximumSize": new java.awt.Dimension( 1500, 864 )
+				"preferredSize": new java.awt.Dimension( 1500, 864 )
+				"minimumSize": new java.awt.Dimension( 1500, 860 )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 1600
+				"height": 900
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 5 )
+			"size": new java.awt.Dimension( 1300, 775 )
+		} )
+	}
+}
