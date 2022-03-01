@@ -76,8 +76,8 @@ public class RulePanel extends JPanel implements Observer<MainModel> {
             returnButton.setHorizontalTextPosition(SwingConstants.CENTER);
             returnButton.setMaximumSize(new Dimension(174, 46));
             returnButton.setBorderPainted(false);
-            returnButton.setContentAreaFilled(false);
             returnButton.setSelected(true);
+            returnButton.setContentAreaFilled(false);
             returnButton.addKeyListener(new KeyAdapter() {
                 @Override
                 public void keyPressed(KeyEvent e) {
@@ -96,7 +96,7 @@ public class RulePanel extends JPanel implements Observer<MainModel> {
             panel1.add(bordet);
             bordet.setBounds(-160, -65, 1600, 900);
 
-            panel1.setPreferredSize(new Dimension(1260, 930));
+            panel1.setPreferredSize(new Dimension(1260, 835));
         }
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
