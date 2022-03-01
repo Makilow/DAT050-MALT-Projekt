@@ -1,0 +1,121 @@
+JFDML JFormDesigner: "7.0.5.3.411" Java: "11.0.13" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) {
+			"autoSize": false
+		} ) {
+			name: "panel"
+			"alignmentX": 0.0f
+			"alignmentY": 0.0f
+			"background": new java.awt.Color( 7, 65, 0, 255 )
+			"border": new javax.swing.border.TitledBorder( "text" )
+			"cursor": new java.awt.Cursor( 12 )
+			"maximumSize": new java.awt.Dimension( 1280, 720 )
+			"minimumSize": sfield com.jformdesigner.model.FormObject NULL_VALUE
+			"preferredSize": new java.awt.Dimension( 1280, 720 )
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.FlowLayout ) ) {
+				name: "dealer"
+				"opaque": false
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 500
+				"height": 145
+				"x": 390
+				"y": 55
+			} )
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.FlowLayout ) ) {
+				name: "handOne"
+				"background": sfield com.jformdesigner.model.FormObject NULL_VALUE
+				"foreground": sfield com.jformdesigner.model.FormObject NULL_VALUE
+				"opaque": false
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 160
+				"height": 160
+				"x": 20
+				"y": 260
+			} )
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.FlowLayout ) ) {
+				name: "handTwo"
+				"opaque": false
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 160
+				"height": 160
+				"x": 225
+				"y": 425
+			} )
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.FlowLayout ) ) {
+				name: "handThree"
+				"opaque": false
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 160
+				"height": 160
+				"x": 575
+				"y": 485
+			} )
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.FlowLayout ) ) {
+				name: "handFour"
+				"opaque": false
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 160
+				"height": 160
+				"x": 910
+				"y": 430
+			} )
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.FlowLayout ) ) {
+				name: "handFive"
+				"opaque": false
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 160
+				"height": 160
+				"x": 1115
+				"y": 255
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "hitButton"
+				"text": "Hit"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 560
+				"y": 660
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "standButton"
+				"text": "Stand"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 560
+				"y": 700
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "doubleButton"
+				"text": "Double"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 650
+				"y": 700
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "splitButton"
+				"text": "Split"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 650
+				"y": 660
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "bordet"
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/icons/blackjackbord.jpg" )
+				"horizontalAlignment": 0
+				"maximumSize": new java.awt.Dimension( 1900, 1080 )
+				"preferredSize": sfield com.jformdesigner.model.FormObject NULL_VALUE
+				"minimumSize": new java.awt.Dimension( 1900, 1080 )
+				"background": sfield com.jformdesigner.model.FormObject NULL_VALUE
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 1600
+				"height": 900
+				"y": -65
+				"x": -160
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 40, 0 )
+			"size": new java.awt.Dimension( 1620, 900 )
+		} )
+	}
+}

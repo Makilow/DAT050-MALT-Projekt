@@ -1,0 +1,36 @@
+JFDML JFormDesigner: "7.0.5.3.411" Java: "11.0.13" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) {
+			"autoSize": false
+		} ) {
+			name: "panelSB"
+			"maximumSize": new java.awt.Dimension( 1280, 720 )
+			"minimumSize": sfield com.jformdesigner.model.FormObject NULL_VALUE
+			"preferredSize": new java.awt.Dimension( 1280, 720 )
+			"alignmentX": 0.0f
+			"alignmentY": 0.0f
+			"background": new java.awt.Color( 7, 65, 0, 255 )
+			"cursor": new java.awt.Cursor( 12 )
+			"border": new javax.swing.border.TitledBorder( "text" )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 1535, 900 )
+		} )
+		add( new FormComponent( "javax.swing.JLabel" ) {
+			name: "bordetSB"
+			"icon": new com.jformdesigner.model.SwingIcon( 0, "/icons/blackjackbordsuddigt.png" )
+			"horizontalAlignment": 0
+			"maximumSize": new java.awt.Dimension( 1900, 1080 )
+			"preferredSize": sfield com.jformdesigner.model.FormObject NULL_VALUE
+			"minimumSize": new java.awt.Dimension( 1900, 1080 )
+			"background": sfield com.jformdesigner.model.FormObject NULL_VALUE
+			"foreground": sfield com.jformdesigner.model.FormObject NULL_VALUE
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 916 )
+			"size": new java.awt.Dimension( 1600, 900 )
+		} )
+	}
+}
