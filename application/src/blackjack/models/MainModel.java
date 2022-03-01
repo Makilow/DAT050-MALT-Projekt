@@ -28,6 +28,7 @@ public class MainModel implements Observable<MainModel> {
     private int currentHand;
     private boolean showSecond;
 
+
     public MainModel() {
         state = State.MENU;
     }
@@ -43,14 +44,7 @@ public class MainModel implements Observable<MainModel> {
     public State getState() { return state; }
     public boolean getIsFullscreen() {return isFullscreen;}
     public void toggleFullscreen() {isFullscreen ^= true; updateObservers();}
-    public List<Player> getPlayerList() { return playerList;}
-
-
-    private void testDB() {
-       for (Player player : playerList) {
-           System.out.println(player.getName() + ":" + player.getBalance());
-       }
-    }
+    
 
     // Game functions
     private void startGame() {
