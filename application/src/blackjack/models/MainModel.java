@@ -6,6 +6,7 @@ import blackjack.views.State;
 
 import java.sql.SQLException;
 import java.util.*;
+import javax.swing.Timer;
 
 /**
  * MainModel, represents a Model as per MVC-design
