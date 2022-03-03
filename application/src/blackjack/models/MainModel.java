@@ -18,10 +18,11 @@ import javax.swing.Timer;
  * @author Lukas Wigren, Tomas Alander, Tor Falkenberg
  */
 public class MainModel implements Observable<MainModel> {
-    private int width=800, height=600;
+    private int width=1280, height=720;
     private State state;
     private final Collection<Observer<MainModel>> observers = new HashSet<>();
     private boolean isFullscreen = false;
+    private boolean soundON = true;
     private Dealer dealer;
     private List<PlayerHand> hands;
     private DealerHand dealerHand;
@@ -44,7 +45,9 @@ public class MainModel implements Observable<MainModel> {
     public State getState() { return state; }
     public boolean getIsFullscreen() {return isFullscreen;}
     public void toggleFullscreen() {isFullscreen ^= true; updateObservers();}
-    
+    public boolean getSoundON() {return soundON;}
+    public void toggleSound() {soundON ^= true;}
+
 
     // Game functions
     private void startGame() {
@@ -67,7 +70,7 @@ public class MainModel implements Observable<MainModel> {
         currentHand = 0;
         for (int i = 0; i < 2; i++) {
             for (PlayerHand h : hands) {
-                //if (h.getBet() == 0) {continue;}
+                if (h.getBet() == 0) {continue;}
                 h.addCard(dealer.dealCard());
             }
             dealerHand.addCard(dealer.dealCard());
@@ -151,7 +154,10 @@ public class MainModel implements Observable<MainModel> {
         currentHand = 0;
         newRound();
     }
-    // Observer functions
+
+    /*-----------------------
+         Observer functions
+      -----------------------*/
     private  void updateObservers() {
         for (Observer<MainModel> o : observers) {
             o.update(this);
@@ -161,7 +167,6 @@ public class MainModel implements Observable<MainModel> {
     public void addObserver(Observer<MainModel> o) {
         observers.add(o);
     }
-
     @Override
     public void removeObserver(Observer<MainModel> o) {
         observers.remove(o);
