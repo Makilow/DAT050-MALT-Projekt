@@ -16,69 +16,171 @@ new FormModel {
 			"minimumSize": sfield com.jformdesigner.model.FormObject NULL_VALUE
 			"preferredSize": new java.awt.Dimension( 1280, 720 )
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.intellij.uiDesigner.core.GridLayoutManager ) {
-				"$columnCount": 5
-				"$rowCount": 7
+				"$columnCount": 7
+				"$rowCount": 9
 				"hGap": 2
 				"vGap": 2
 			} ) {
 				name: "panel1"
 				"opaque": false
+				add( new FormComponent( "com.jformdesigner.designer.wrapper.VSpacer" ) {
+					name: "vSpacer2"
+					auxiliary() {
+						"JavaCodeGenerator.variableLocal": true
+					}
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"column": 3
+				} )
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.FlowLayout ) ) {
 					name: "dealer"
 					"opaque": false
 				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
-					"row": 2
+					"row": 1
 					"column": 1
-					"colSpan": 3
+					"colSpan": 5
+				} )
+				add( new FormComponent( "com.jformdesigner.designer.wrapper.VSpacer" ) {
+					name: "vSpacer1"
+					auxiliary() {
+						"JavaCodeGenerator.variableLocal": true
+					}
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"column": 3
+					"row": 2
+				} )
+				add( new FormComponent( "com.jformdesigner.designer.wrapper.HSpacer" ) {
+					name: "hSpacer3"
+					auxiliary() {
+						"JavaCodeGenerator.variableLocal": true
+					}
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"row": 3
 				} )
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.FlowLayout ) ) {
 					name: "handOne"
 					"background": sfield com.jformdesigner.model.FormObject NULL_VALUE
 					"foreground": sfield com.jformdesigner.model.FormObject NULL_VALUE
+					"preferredSize": sfield com.jformdesigner.model.FormObject NULL_VALUE
 					"opaque": false
 				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
 					"row": 3
+					"column": 1
+					"fill": 3
+					"hSizePolicy": 4
+					"vSizePolicy": 4
 				} )
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.FlowLayout ) ) {
 					name: "handTwo"
-					"opaque": false
-				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
-					"column": 1
-					"row": 3
-				} )
-				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.FlowLayout ) ) {
-					name: "handThree"
+					"preferredSize": sfield com.jformdesigner.model.FormObject NULL_VALUE
 					"opaque": false
 				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
 					"column": 2
 					"row": 3
+					"fill": 3
+					"hSizePolicy": 4
+					"vSizePolicy": 4
+				} )
+				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.FlowLayout ) ) {
+					name: "handThree"
+					"preferredSize": sfield com.jformdesigner.model.FormObject NULL_VALUE
+					"opaque": false
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"column": 3
+					"row": 3
+					"fill": 3
+					"hSizePolicy": 4
+					"vSizePolicy": 4
 				} )
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.FlowLayout ) ) {
 					name: "handFour"
+					"preferredSize": sfield com.jformdesigner.model.FormObject NULL_VALUE
 					"opaque": false
 				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
 					"row": 3
-					"column": 3
+					"column": 4
+					"fill": 3
+					"hSizePolicy": 4
+					"vSizePolicy": 4
 				} )
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.FlowLayout ) ) {
 					name: "handFive"
+					"preferredSize": sfield com.jformdesigner.model.FormObject NULL_VALUE
 					"opaque": false
 				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
-					"column": 4
+					"column": 5
 					"row": 3
+					"fill": 3
+					"hSizePolicy": 4
+					"vSizePolicy": 4
 				} )
 				add( new FormComponent( "com.jformdesigner.designer.wrapper.HSpacer" ) {
-					name: "hSpacer1"
+					name: "hSpacer4"
 					auxiliary() {
 						"JavaCodeGenerator.variableLocal": true
 					}
 				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"column": 6
+					"row": 3
+				} )
+				add( new FormComponent( "javax.swing.JFormattedTextField" ) {
+					name: "betOne"
+					"horizontalAlignment": 0
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"column": 1
+					"row": 4
+					"hSizePolicy": 4
+					"fill": 1
+				} )
+				add( new FormComponent( "javax.swing.JFormattedTextField" ) {
+					name: "betTwo"
+					"horizontalAlignment": 0
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"column": 2
+					"row": 4
+					"hSizePolicy": 4
+					"fill": 1
+				} )
+				add( new FormComponent( "javax.swing.JFormattedTextField" ) {
+					name: "betThree"
+					"horizontalAlignment": 0
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"column": 3
+					"row": 4
+					"hSizePolicy": 4
+					"fill": 1
+				} )
+				add( new FormComponent( "javax.swing.JFormattedTextField" ) {
+					name: "betFour"
+					"horizontalAlignment": 0
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"column": 4
+					"row": 4
+					"hSizePolicy": 4
+					"fill": 1
+				} )
+				add( new FormComponent( "javax.swing.JFormattedTextField" ) {
+					name: "betFive"
+					"horizontalAlignment": 0
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"column": 5
+					"row": 4
+					"hSizePolicy": 4
+					"fill": 1
+				} )
+				add( new FormComponent( "com.jformdesigner.designer.wrapper.VSpacer" ) {
+					name: "vSpacer4"
+					auxiliary() {
+						"JavaCodeGenerator.variableLocal": true
+					}
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"column": 3
 					"row": 5
-					"colSpan": 2
+					"vSizePolicy": 0
+					"preferredSize": new java.awt.Dimension( 0, 40 )
 				} )
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.intellij.uiDesigner.core.GridLayoutManager ) {
 					"$columnCount": 2
-					"$rowCount": 2
+					"$rowCount": 3
 				} ) {
 					name: "panel2"
 					"opaque": false
@@ -110,21 +212,37 @@ new FormModel {
 						"row": 1
 						"fill": 3
 					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "addButton"
+						"text": "Add Player"
+					}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+						"row": 2
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "removeButton"
+						"text": "Remove Player"
+					}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+						"column": 1
+						"row": 2
+					} )
 				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
-					"column": 2
-					"row": 5
+					"column": 1
+					"row": 6
+					"colSpan": 5
 				} )
-				add( new FormComponent( "com.jformdesigner.designer.wrapper.HSpacer" ) {
-					name: "hSpacer2"
+				add( new FormComponent( "com.jformdesigner.designer.wrapper.VSpacer" ) {
+					name: "vSpacer3"
 					auxiliary() {
 						"JavaCodeGenerator.variableLocal": true
 					}
 				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
 					"column": 3
-					"row": 5
-					"colSpan": 2
+					"row": 8
 				} )
-			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 960
+				"height": 565
+			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "bordet"
 				"icon": new com.jformdesigner.model.SwingIcon( 0, "/icons/blackjackbord.jpg" )

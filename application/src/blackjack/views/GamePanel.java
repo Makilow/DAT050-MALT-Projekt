@@ -31,10 +31,14 @@ public class GamePanel extends JPanel implements Observer<MainModel> {
         standButton.addActionListener(gameController);
         doubleButton.addActionListener(gameController);
         splitButton.addActionListener(gameController);
+        addButton.addActionListener(gameController);
+        removeButton.addActionListener(gameController);
         hitButton.setActionCommand("HIT");
         standButton.setActionCommand("STAND");
         doubleButton.setActionCommand("DOUBLE");
         splitButton.setActionCommand("SPLIT");
+        addButton.setActionCommand("ADD");
+        removeButton.setActionCommand("REMOVE");
         handCards.add(new JLayeredPane());
         handCards.add(new JLayeredPane());
         handCards.add(new JLayeredPane());
@@ -73,7 +77,7 @@ public class GamePanel extends JPanel implements Observer<MainModel> {
             System.out.println("Missing file: src/icons/cards/" + filename);
             System.exit(0);
         }
-        Image image = bImage.getScaledInstance(80, 120, Image.SCALE_SMOOTH);
+        Image image = bImage.getScaledInstance(cardWidth, cardHeight, Image.SCALE_SMOOTH);
         return new ImageIcon(image);
     }
 
@@ -118,9 +122,14 @@ public class GamePanel extends JPanel implements Observer<MainModel> {
     public void update(MainModel o) {
         if (o.getState() != State.GAME) return;
         updateBackground(o.getWidth(),o.getHeight());
+        highlightCurrentHand(o.getCurrentHand());
         clearCards();
         showDealer(o.getDealerCards(), o.getShowSecond());
         showHands(o.getHands());
+    }
+    private void highlightCurrentHand(int index) {
+        // Show which hand the dealer is currently on
+        System.out.println(index);
     }
     private void updateBackground(int width, int height) {
         updateCardSize(height);
@@ -140,13 +149,13 @@ public class GamePanel extends JPanel implements Observer<MainModel> {
     private void updateCardSize(int h) {
         switch (h) {
             case 720 -> {
-                cardWidth = 40; cardHeight = 60;
-            }
-            case 900 -> {
                 cardWidth = 60; cardHeight = 90;
             }
-            case 1080 -> {
+            case 900 -> {
                 cardWidth = 80; cardHeight = 120;
+            }
+            case 1080 -> {
+                cardWidth = 100; cardHeight = 150;
             }
             default -> System.out.println("Wait what how we get here?");
         }
@@ -156,19 +165,30 @@ public class GamePanel extends JPanel implements Observer<MainModel> {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         panel = new JPanel();
         panel1 = new JPanel();
+        var vSpacer2 = new Spacer();
         dealer = new JPanel();
+        var vSpacer1 = new Spacer();
+        var hSpacer3 = new Spacer();
         handOne = new JPanel();
         handTwo = new JPanel();
         handThree = new JPanel();
         handFour = new JPanel();
         handFive = new JPanel();
-        var hSpacer1 = new Spacer();
+        var hSpacer4 = new Spacer();
+        betOne = new JFormattedTextField();
+        betTwo = new JFormattedTextField();
+        betThree = new JFormattedTextField();
+        betFour = new JFormattedTextField();
+        betFive = new JFormattedTextField();
+        var vSpacer4 = new Spacer();
         panel2 = new JPanel();
         hitButton = new JButton();
         standButton = new JButton();
         doubleButton = new JButton();
         splitButton = new JButton();
-        var hSpacer2 = new Spacer();
+        addButton = new JButton();
+        removeButton = new JButton();
+        var vSpacer3 = new Spacer();
         bordet = new JLabel();
 
         //======== panel ========
@@ -186,85 +206,150 @@ public class GamePanel extends JPanel implements Observer<MainModel> {
             //======== panel1 ========
             {
                 panel1.setOpaque(false);
-                panel1.setLayout(new GridLayoutManager(7, 5, new Insets(0, 0, 0, 0), 2, 2));
+                panel1.setLayout(new GridLayoutManager(9, 7, new Insets(0, 0, 0, 0), 2, 2));
+                panel1.add(vSpacer2, new GridConstraints(0, 3, 1, 1,
+                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL,
+                    GridConstraints.SIZEPOLICY_CAN_SHRINK,
+                    GridConstraints.SIZEPOLICY_CAN_GROW | GridConstraints.SIZEPOLICY_WANT_GROW,
+                    null, null, null));
 
                 //======== dealer ========
                 {
                     dealer.setOpaque(false);
                     dealer.setLayout(new FlowLayout());
                 }
-                panel1.add(dealer, new GridConstraints(2, 1, 1, 3,
+                panel1.add(dealer, new GridConstraints(1, 1, 1, 5,
                     GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
                     GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
                     GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                    null, null, null));
+                panel1.add(vSpacer1, new GridConstraints(2, 3, 1, 1,
+                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL,
+                    GridConstraints.SIZEPOLICY_CAN_SHRINK,
+                    GridConstraints.SIZEPOLICY_CAN_GROW | GridConstraints.SIZEPOLICY_WANT_GROW,
+                    null, null, null));
+                panel1.add(hSpacer3, new GridConstraints(3, 0, 1, 1,
+                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+                    GridConstraints.SIZEPOLICY_CAN_GROW | GridConstraints.SIZEPOLICY_WANT_GROW,
+                    GridConstraints.SIZEPOLICY_CAN_SHRINK,
                     null, null, null));
 
                 //======== handOne ========
                 {
                     handOne.setBackground(null);
                     handOne.setForeground(null);
+                    handOne.setPreferredSize(null);
                     handOne.setOpaque(false);
                     handOne.setLayout(new FlowLayout());
                 }
-                panel1.add(handOne, new GridConstraints(3, 0, 1, 1,
-                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                panel1.add(handOne, new GridConstraints(3, 1, 1, 1,
+                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
+                    GridConstraints.SIZEPOLICY_WANT_GROW,
+                    GridConstraints.SIZEPOLICY_WANT_GROW,
                     null, null, null));
 
                 //======== handTwo ========
                 {
+                    handTwo.setPreferredSize(null);
                     handTwo.setOpaque(false);
                     handTwo.setLayout(new FlowLayout());
                 }
-                panel1.add(handTwo, new GridConstraints(3, 1, 1, 1,
-                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                panel1.add(handTwo, new GridConstraints(3, 2, 1, 1,
+                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
+                    GridConstraints.SIZEPOLICY_WANT_GROW,
+                    GridConstraints.SIZEPOLICY_WANT_GROW,
                     null, null, null));
 
                 //======== handThree ========
                 {
+                    handThree.setPreferredSize(null);
                     handThree.setOpaque(false);
                     handThree.setLayout(new FlowLayout());
                 }
-                panel1.add(handThree, new GridConstraints(3, 2, 1, 1,
-                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                panel1.add(handThree, new GridConstraints(3, 3, 1, 1,
+                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
+                    GridConstraints.SIZEPOLICY_WANT_GROW,
+                    GridConstraints.SIZEPOLICY_WANT_GROW,
                     null, null, null));
 
                 //======== handFour ========
                 {
+                    handFour.setPreferredSize(null);
                     handFour.setOpaque(false);
                     handFour.setLayout(new FlowLayout());
                 }
-                panel1.add(handFour, new GridConstraints(3, 3, 1, 1,
-                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                panel1.add(handFour, new GridConstraints(3, 4, 1, 1,
+                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
+                    GridConstraints.SIZEPOLICY_WANT_GROW,
+                    GridConstraints.SIZEPOLICY_WANT_GROW,
                     null, null, null));
 
                 //======== handFive ========
                 {
+                    handFive.setPreferredSize(null);
                     handFive.setOpaque(false);
                     handFive.setLayout(new FlowLayout());
                 }
-                panel1.add(handFive, new GridConstraints(3, 4, 1, 1,
-                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                panel1.add(handFive, new GridConstraints(3, 5, 1, 1,
+                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
+                    GridConstraints.SIZEPOLICY_WANT_GROW,
+                    GridConstraints.SIZEPOLICY_WANT_GROW,
                     null, null, null));
-                panel1.add(hSpacer1, new GridConstraints(5, 0, 1, 2,
+                panel1.add(hSpacer4, new GridConstraints(3, 6, 1, 1,
                     GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
                     GridConstraints.SIZEPOLICY_CAN_GROW | GridConstraints.SIZEPOLICY_WANT_GROW,
                     GridConstraints.SIZEPOLICY_CAN_SHRINK,
                     null, null, null));
 
+                //---- betOne ----
+                betOne.setHorizontalAlignment(SwingConstants.CENTER);
+                panel1.add(betOne, new GridConstraints(4, 1, 1, 1,
+                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+                    GridConstraints.SIZEPOLICY_WANT_GROW,
+                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                    null, null, null));
+
+                //---- betTwo ----
+                betTwo.setHorizontalAlignment(SwingConstants.CENTER);
+                panel1.add(betTwo, new GridConstraints(4, 2, 1, 1,
+                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+                    GridConstraints.SIZEPOLICY_WANT_GROW,
+                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                    null, null, null));
+
+                //---- betThree ----
+                betThree.setHorizontalAlignment(SwingConstants.CENTER);
+                panel1.add(betThree, new GridConstraints(4, 3, 1, 1,
+                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+                    GridConstraints.SIZEPOLICY_WANT_GROW,
+                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                    null, null, null));
+
+                //---- betFour ----
+                betFour.setHorizontalAlignment(SwingConstants.CENTER);
+                panel1.add(betFour, new GridConstraints(4, 4, 1, 1,
+                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+                    GridConstraints.SIZEPOLICY_WANT_GROW,
+                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                    null, null, null));
+
+                //---- betFive ----
+                betFive.setHorizontalAlignment(SwingConstants.CENTER);
+                panel1.add(betFive, new GridConstraints(4, 5, 1, 1,
+                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+                    GridConstraints.SIZEPOLICY_WANT_GROW,
+                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                    null, null, null));
+                panel1.add(vSpacer4, new GridConstraints(5, 3, 1, 1,
+                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL,
+                    GridConstraints.SIZEPOLICY_CAN_SHRINK,
+                    GridConstraints.SIZEPOLICY_FIXED,
+                    null, new Dimension(0, 40), null));
+
                 //======== panel2 ========
                 {
                     panel2.setOpaque(false);
-                    panel2.setLayout(new GridLayoutManager(2, 2, new Insets(0, 0, 0, 0), -1, -1));
+                    panel2.setLayout(new GridLayoutManager(3, 2, new Insets(0, 0, 0, 0), -1, -1));
 
                     //---- hitButton ----
                     hitButton.setText("Hit");
@@ -297,20 +382,36 @@ public class GamePanel extends JPanel implements Observer<MainModel> {
                         GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
                         GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
                         null, null, null));
+
+                    //---- addButton ----
+                    addButton.setText("Add Player");
+                    panel2.add(addButton, new GridConstraints(2, 0, 1, 1,
+                        GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+                        GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                        GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                        null, null, null));
+
+                    //---- removeButton ----
+                    removeButton.setText("Remove Player");
+                    panel2.add(removeButton, new GridConstraints(2, 1, 1, 1,
+                        GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+                        GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                        GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                        null, null, null));
                 }
-                panel1.add(panel2, new GridConstraints(5, 2, 1, 1,
+                panel1.add(panel2, new GridConstraints(6, 1, 1, 5,
                     GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
                     GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
                     GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
                     null, null, null));
-                panel1.add(hSpacer2, new GridConstraints(5, 3, 1, 2,
-                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
-                    GridConstraints.SIZEPOLICY_CAN_GROW | GridConstraints.SIZEPOLICY_WANT_GROW,
+                panel1.add(vSpacer3, new GridConstraints(8, 3, 1, 1,
+                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL,
                     GridConstraints.SIZEPOLICY_CAN_SHRINK,
+                    GridConstraints.SIZEPOLICY_CAN_GROW | GridConstraints.SIZEPOLICY_WANT_GROW,
                     null, null, null));
             }
             panel.add(panel1);
-            panel1.setBounds(new Rectangle(new Point(0, 0), panel1.getPreferredSize()));
+            panel1.setBounds(0, 0, 960, 565);
 
             //---- bordet ----
             bordet.setIcon(new ImageIcon(getClass().getResource("/icons/blackjackbord.jpg")));
@@ -337,11 +438,18 @@ public class GamePanel extends JPanel implements Observer<MainModel> {
     private JPanel handThree;
     private JPanel handFour;
     private JPanel handFive;
+    private JFormattedTextField betOne;
+    private JFormattedTextField betTwo;
+    private JFormattedTextField betThree;
+    private JFormattedTextField betFour;
+    private JFormattedTextField betFive;
     private JPanel panel2;
     private JButton hitButton;
     private JButton standButton;
     private JButton doubleButton;
     private JButton splitButton;
+    private JButton addButton;
+    private JButton removeButton;
     private JLabel bordet;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
