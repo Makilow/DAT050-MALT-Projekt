@@ -60,6 +60,7 @@ public class MainModel implements Observable<MainModel> {
         waitForBet();
     }
     public Boolean activeGame() {return activeGame;}
+    public int getCurrentHand() {return currentHand;}
     /*
     Checks if a player with that name exists in the database. 
     If not, a new player is created with 1000 credits, updated in the database, and added to MainModels "hands"-list.
