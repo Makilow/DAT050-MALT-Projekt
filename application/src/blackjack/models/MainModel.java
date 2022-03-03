@@ -23,6 +23,7 @@ public class MainModel implements Observable<MainModel> {
     private final Collection<Observer<MainModel>> observers = new HashSet<>();
     private boolean isFullscreen = false;
     private boolean soundON = true;
+    private boolean activeGame;
     private Dealer dealer;
     private List<PlayerHand> hands;
     private DealerHand dealerHand;
@@ -49,20 +50,16 @@ public class MainModel implements Observable<MainModel> {
     public void toggleSound() {soundON ^= true;}
 
 
-    // Game functions
+    /*-----------------------
+         Game functions
+      -----------------------*/
     private void startGame() {
         dealer = new Dealer(7);
         hands = new LinkedList<>();
         dealerHand = new DealerHand();
-        currentHand = 0;
-        addHand(new Player("Lukas", 1000));
-        addHand(new Player("Tomas", 1000));
-        addHand(new Player("Tomas", 1000));
-        addHand(new Player("Tomas", 1000));
-        addHand(new Player("Tomas", 1000));
-        newRound();
+        waitForBet();
     }
-    
+    public Boolean activeGame() {return activeGame;}
     /*
     Checks if a player with that name exists in the database. 
     If not, a new player is created with 1000 credits, updated in the database, and added to MainModels "hands"-list.
@@ -78,6 +75,9 @@ public class MainModel implements Observable<MainModel> {
             dbH.addPlayerData(player);
         }
         addHand(player);
+    }
+    public void removePlayer(String name) {
+        // TODO
     }
     
     //Updates the database with the score of all players in the "hands"-list.
@@ -96,6 +96,7 @@ public class MainModel implements Observable<MainModel> {
     public List getHands() { return hands; }
     public List getDealerCards() {return dealerHand.getCards();}
     public void newRound() {
+        activeGame = true;
         showSecond = false;
         currentHand = 0;
         for (int i = 0; i < 2; i++) {
@@ -111,6 +112,7 @@ public class MainModel implements Observable<MainModel> {
     public boolean getShowSecond() { return showSecond;}
 
     public void playerHit() {
+        if (!activeGame) {return;}
         if (isBlackjack(hands.get(currentHand))) { playerStand(); }
         hands.get(currentHand).addCard(dealer.dealCard());
         int handValue = hands.get(currentHand).getValue();
@@ -122,6 +124,7 @@ public class MainModel implements Observable<MainModel> {
         updateObservers();
     }
     public void playerStand() {
+        if (!activeGame) {return;}
         if (currentHand == hands.size()-1) {
             dealDealer();
         } else {
@@ -130,6 +133,7 @@ public class MainModel implements Observable<MainModel> {
         updateObservers();
     }
     public void playerDouble() {
+        if (!activeGame) {return;}
         if (hands.get(currentHand).getCards().size() != 2 ||
         isBlackjack(hands.get(currentHand)) ||
         hands.get(currentHand).getValue() >= 21) {return;}
@@ -138,6 +142,7 @@ public class MainModel implements Observable<MainModel> {
         playerStand();
     }
     public void playerSplit() {
+        if (!activeGame) {return;}
         // göra här
     }
 
@@ -181,10 +186,23 @@ public class MainModel implements Observable<MainModel> {
             h.clearHand();
         }
         dealerHand.clearHand();
-        currentHand = 0;
-        newRound();
+        activeGame = false;
+        waitForBet();
     }
-
+    private void waitForBet() {
+        new Timer(15000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for (PlayerHand h : hands) {
+                    if (h.getBet() > 0) {
+                        newRound();
+                        ((Timer)e.getSource()).stop();
+                        return;
+                    }
+                }
+            }
+        }).start();
+    }
     /*-----------------------
          Observer functions
       -----------------------*/
