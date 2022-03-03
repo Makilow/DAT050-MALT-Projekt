@@ -40,8 +40,7 @@ public class ScoreboardPanel extends JPanel implements Observer<MainModel> {
 
     private void showScoreBoard() {
 
-        //Detta är koden som hämtar från databasen
-        /*
+        //Hämtar lista från database, sorterad efter score
         DatabaseHandler dbH = new DatabaseHandler();
         List<Player> list = new ArrayList<>();
         try {
@@ -49,15 +48,16 @@ public class ScoreboardPanel extends JPanel implements Observer<MainModel> {
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        */
 
-        //Testkod pga "too many connections" på databas
+        /*
+        //Testkod som kan köras ifall"too many connections" på databasen
         List<Player> list = new ArrayList<>();
         list.add(new Player("Tor", 10000));
         list.add(new Player("Tomas", 500));
         list.add(new Player("Arvin", 0));
+        */
 
-
+        //Skapar och lägger till en JLabel för varje spelare
         for (Player player : list) {
             JLabel l = new JLabel(player.getName() + ": " + (int)player.getBalance());
             l.setAlignmentX(Component.CENTER_ALIGNMENT);
