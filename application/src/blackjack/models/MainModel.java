@@ -80,6 +80,18 @@ public class MainModel implements Observable<MainModel> {
         addHand(player);
     }
     
+    //Updates the database with the score of all players in the "hands"-list.
+    public void dbUpdateScores () {
+        DatabaseHandler dbH = new DatabaseHandler();
+        for (PlayerHand hand : hands) {
+            try {
+                dbH.addPlayerData(hand.getPlayer());
+            } catch (SQLException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
     public void addHand(Player player) { hands.add(new PlayerHand(player));}
     public List getHands() { return hands; }
     public List getDealerCards() {return dealerHand.getCards();}
