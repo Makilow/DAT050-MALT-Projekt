@@ -62,6 +62,12 @@ public class MainModel implements Observable<MainModel> {
         addHand(new Player("Tomas", 1000));
         newRound();
     }
+    
+    /*
+    Checks if a player with that name exists in the database. 
+    If not, a new player is created with 1000 credits, updated in the database, and added to MainModels "hands"-list.
+    If the player already exists, it's credit score is recieved, and the player is added to the "hands"-list.
+    */
     public void addPlayer (String name) throws SQLException, ClassNotFoundException {
         DatabaseHandler dbH = new DatabaseHandler();
         Player player;
@@ -73,6 +79,7 @@ public class MainModel implements Observable<MainModel> {
         }
         addHand(player);
     }
+    
     public void addHand(Player player) { hands.add(new PlayerHand(player));}
     public List getHands() { return hands; }
     public List getDealerCards() {return dealerHand.getCards();}
