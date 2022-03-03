@@ -27,6 +27,9 @@ public class PlayerHand extends Hand {
         this.player = player;
         clearHand();
     }
+    
+    public Player getPlayer () {return player;}
+    
     public void removePlayer() { this.player = null; }
 
     public void bet(double bet) {
