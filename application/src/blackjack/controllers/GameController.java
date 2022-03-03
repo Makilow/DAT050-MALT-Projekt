@@ -27,7 +27,7 @@ public class GameController implements ActionListener {
             case "ADD" -> {
                 name = JOptionPane.showInputDialog(null, "Enter player name:");
                 if (name != null) {
-                    //mainModel.addPlayer(name);
+                    mainModel.addPlayer(name);
                 }
             }
             case "REMOVE" -> {
