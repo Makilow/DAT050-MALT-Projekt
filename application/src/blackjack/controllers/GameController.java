@@ -17,12 +17,25 @@ public class GameController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        String name;
         switch (e.getActionCommand()) {
-            case "HIT": mainModel.playerHit();          break;
-            case "STAND": mainModel.playerStand();      break;
-            case "DOUBLE": mainModel.playerDouble();    break;
-            case "SPLIT": mainModel.playerSplit();      break;
-            default: System.out.println("WTF HOW DID WE GET HERE?");
+            case "HIT"-> mainModel.playerHit();
+            case "STAND"-> mainModel.playerStand();
+            case "DOUBLE"-> mainModel.playerDouble();
+            case "SPLIT"-> mainModel.playerSplit();
+            case "ADD" -> {
+                name = JOptionPane.showInputDialog(null, "Enter player name:");
+                if (name != null) {
+                    //mainModel.addPlayer(name);
+                }
+            }
+            case "REMOVE" -> {
+                name = JOptionPane.showInputDialog(null, "Enter player name:");
+                if (name != null) {
+                    mainModel.removePlayer(name);
+                }
+            }
+            default-> System.out.println("HOW DID WE GET HERE?");
         }
     }
 }
