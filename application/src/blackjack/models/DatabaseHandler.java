@@ -42,19 +42,15 @@ public class DatabaseHandler {
      */
     public List<Player> getScoreBoard() throws SQLException, ClassNotFoundException {
         List<Player> playerList = new ArrayList<>();
-        try {
-            DBMSConnection dbms = new DBMSConnection(url, user, password);
-            Connection con = dbms.connect();
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery(sortPlayer);
-            while (rs.next()) {
-                playerList.add(new Player(rs.getString(1), rs.getInt(2)));
-            }
-            rs.close();
-            dbms.closeConnection(con, st);
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+        DBMSConnection dbms = new DBMSConnection(url, user, password);
+        Connection con = dbms.connect();
+        Statement st = con.createStatement();
+        ResultSet rs = st.executeQuery(sortPlayer);
+        while (rs.next()) {
+            playerList.add(new Player(rs.getString(1), rs.getInt(2)));
         }
+        rs.close();
+        dbms.closeConnection(con, st);
         return playerList;
     }
 
