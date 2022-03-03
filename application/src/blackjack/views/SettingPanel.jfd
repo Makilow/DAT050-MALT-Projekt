@@ -6,31 +6,180 @@ new FormModel {
 		add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) {
 			"autoSize": false
 		} ) {
-			name: "panel1"
+			name: "panel"
 			"background": new java.awt.Color( 7, 65, 0, 255 )
-			"preferredSize": new java.awt.Dimension( 1280, 720 )
-			"maximumSize": new java.awt.Dimension( 1280, 720 )
+			"preferredSize": sfield com.jformdesigner.model.FormObject NULL_VALUE
+			"maximumSize": sfield com.jformdesigner.model.FormObject NULL_VALUE
 			"minimumSize": sfield com.jformdesigner.model.FormObject NULL_VALUE
 			"alignmentX": 0.0f
 			"alignmentY": 0.0f
 			"cursor": new java.awt.Cursor( 12 )
 			"border": new javax.swing.border.TitledBorder( "text" )
+			"opaque": false
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.intellij.uiDesigner.core.GridLayoutManager ) {
+				"$columnCount": 8
+				"$rowCount": 11
+			} ) {
+				name: "panel1"
+				"opaque": false
+				add( new FormComponent( "com.jformdesigner.designer.wrapper.VSpacer" ) {
+					name: "vSpacer1"
+					auxiliary() {
+						"JavaCodeGenerator.variableLocal": true
+					}
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"colSpan": 8
+					"vSizePolicy": 0
+					"preferredSize": new java.awt.Dimension( 0, 100 )
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "title"
+					"text": "SETTINGS"
+					"font": new java.awt.Font( "Times New Roman", 1, 31 )
+					"foreground": &Color0 new java.awt.Color( 255, 153, 204, 255 )
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"row": 1
+					"colSpan": 8
+				} )
+				add( new FormComponent( "com.jformdesigner.designer.wrapper.HSpacer" ) {
+					name: "hSpacer1"
+					auxiliary() {
+						"JavaCodeGenerator.variableLocal": true
+					}
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"rowSpan": 7
+					"row": 1
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "resolutionLabel"
+					"text": "Screen resolution"
+					"font": &Font0 new java.awt.Font( "Times New Roman", 1, 18 )
+					"foreground": #Color0
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"column": 1
+					"row": 2
+					"anchor": 8
+				} )
+				add( new FormComponent( "javax.swing.JComboBox" ) {
+					name: "resolutions"
+					"model": new javax.swing.DefaultComboBoxModel {
+						selectedItem: "1280x720"
+						addElement( "1280x720" )
+						addElement( "1600x900" )
+						addElement( "1920x1080" )
+					}
+					"opaque": false
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"column": 6
+					"row": 2
+					"anchor": 8
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "fullscreenLabel"
+					"text": "Fullscreen"
+					"font": #Font0
+					"foreground": #Color0
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"row": 3
+					"column": 1
+					"anchor": 8
+				} )
+				add( new FormComponent( "javax.swing.JCheckBox" ) {
+					name: "fullscreenCheckbox"
+					"opaque": false
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"column": 6
+					"row": 3
+					"anchor": 8
+				} )
+				add( new FormComponent( "com.jformdesigner.designer.wrapper.HSpacer" ) {
+					name: "hSpacer2"
+					auxiliary() {
+						"JavaCodeGenerator.variableLocal": true
+					}
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"column": 7
+					"rowSpan": 7
+					"row": 1
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "soundLabel"
+					"text": "VFX ON/OFF"
+					"font": #Font0
+					"foreground": #Color0
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"row": 4
+					"anchor": 8
+					"column": 1
+				} )
+				add( new FormComponent( "javax.swing.JCheckBox" ) {
+					name: "soundCheckbox"
+					"opaque": false
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"column": 6
+					"row": 4
+					"anchor": 8
+				} )
+				add( new FormComponent( "com.jformdesigner.designer.wrapper.VSpacer" ) {
+					name: "vSpacer3"
+					auxiliary() {
+						"JavaCodeGenerator.variableLocal": true
+					}
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"row": 5
+					"colSpan": 6
+					"column": 1
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "okButton"
+					"text": "OK"
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"row": 6
+					"fill": 3
+					"column": 1
+					"colSpan": 6
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "cancelButton"
+					"text": "CANCEL"
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"row": 7
+					"fill": 3
+					"column": 1
+					"colSpan": 6
+				} )
+				add( new FormComponent( "com.jformdesigner.designer.wrapper.VSpacer" ) {
+					name: "vSpacer2"
+					auxiliary() {
+						"JavaCodeGenerator.variableLocal": true
+					}
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"row": 8
+					"colSpan": 8
+					"rowSpan": 2
+					"vSizePolicy": 0
+					"preferredSize": new java.awt.Dimension( 0, 100 )
+				} )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 740
+				"height": 525
+			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "bordet"
 				"icon": new com.jformdesigner.model.SwingIcon( 0, "/icons/blackjackbordsuddigt.png" )
-				"horizontalAlignment": 0
-				"maximumSize": new java.awt.Dimension( 1500, 864 )
-				"preferredSize": new java.awt.Dimension( 1500, 864 )
-				"minimumSize": new java.awt.Dimension( 1500, 860 )
+				"horizontalAlignment": 2
+				"maximumSize": sfield com.jformdesigner.model.FormObject NULL_VALUE
+				"preferredSize": sfield com.jformdesigner.model.FormObject NULL_VALUE
+				"minimumSize": sfield com.jformdesigner.model.FormObject NULL_VALUE
+				"background": sfield com.jformdesigner.model.FormObject NULL_VALUE
+				"foreground": sfield com.jformdesigner.model.FormObject NULL_VALUE
+				"verticalAlignment": 1
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"width": 1600
-				"height": 900
-				"y": -65
-				"x": -160
+				"x": 0
 			} )
 		}, new FormLayoutConstraints( null ) {
-			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 1260, 835 )
+			"location": new java.awt.Point( 155, 0 )
+			"size": new java.awt.Dimension( 1105, 835 )
 		} )
 	}
 }

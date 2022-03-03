@@ -10,70 +10,110 @@ new FormModel {
 			"background": new java.awt.Color( 7, 65, 0, 255 )
 			"border": new javax.swing.border.TitledBorder( new javax.swing.border.EmptyBorder( 0, 0, 0, 0 ), "" )
 			"minimumSize": sfield com.jformdesigner.model.FormObject NULL_VALUE
-			"maximumSize": new java.awt.Dimension( 1280, 720 )
-			"preferredSize": new java.awt.Dimension( 1280, 720 )
+			"maximumSize": sfield com.jformdesigner.model.FormObject NULL_VALUE
+			"preferredSize": sfield com.jformdesigner.model.FormObject NULL_VALUE
 			"alignmentX": 0.0f
 			"alignmentY": 0.0f
 			"cursor": new java.awt.Cursor( 12 )
-			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class javax.swing.BoxLayout ) {
-				"axis": 1
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.intellij.uiDesigner.core.GridLayoutManager ) {
+				"$columnCount": 3
+				"$rowCount": 5
+				"hGap": 5
 			} ) {
-				name: "scorePanel"
+				name: "panel1"
+				"preferredSize": sfield com.jformdesigner.model.FormObject NULL_VALUE
 				"opaque": false
-				"background": sfield java.awt.Color black
-			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"width": 300
-				"height": 480
-				"x": 490
-				"y": 175
-			} )
-			add( new FormComponent( "javax.swing.JButton" ) {
-				name: "exitButton"
-				"borderPainted": false
-				"contentAreaFilled": false
-				"icon": new com.jformdesigner.model.SwingIcon( 0, "/icons/menu_icons/button_exit.png" )
-				"label": ""
-				"rolloverSelectedIcon": new com.jformdesigner.model.SwingIcon( 0, "/icons/menu_icons/button_exitH.png" )
-				"selected": true
-				"text": ""
-			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 535
-				"y": 670
-				"height": 66
-				"width": 212
-			} )
-			add( new FormComponent( "javax.swing.JTextArea" ) {
-				name: "panel2"
-				"background": new java.awt.Color( 65, 4, 0, 255 )
-				"editable": false
-				"font": new java.awt.Font( "Luminari", 1, 101 )
-				"foreground": new java.awt.Color( 255, 255, 255, 255 )
-				"opaque": false
-				"requestFocusEnabled": false
-				"selectionEnd": 928
-				"tabSize": 2
-				"text": "Player Scores"
-				"wrapStyleWord": false
-			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"width": 640
-				"x": 320
-				"y": 35
-			} )
+				"minimumSize": sfield com.jformdesigner.model.FormObject NULL_VALUE
+				"maximumSize": sfield com.jformdesigner.model.FormObject NULL_VALUE
+				add( new FormComponent( "com.jformdesigner.designer.wrapper.VSpacer" ) {
+					name: "vSpacer1"
+					auxiliary() {
+						"JavaCodeGenerator.variableLocal": true
+					}
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"column": 1
+					"preferredSize": new java.awt.Dimension( 0, 50 )
+					"vSizePolicy": 0
+				} )
+				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class javax.swing.BoxLayout ) {
+					"axis": 1
+				} ) {
+					name: "scorePanel"
+					"opaque": false
+					"background": sfield java.awt.Color black
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"row": 2
+					"column": 1
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "exitButton"
+					"borderPainted": false
+					"contentAreaFilled": false
+					"icon": new com.jformdesigner.model.SwingIcon( 0, "/icons/menu_icons/button_exit.png" )
+					"label": ""
+					"rolloverSelectedIcon": new com.jformdesigner.model.SwingIcon( 0, "/icons/menu_icons/button_exitH.png" )
+					"selected": true
+					"text": ""
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"row": 3
+					"column": 1
+				} )
+				add( new FormComponent( "javax.swing.JTextArea" ) {
+					name: "panel2"
+					"background": new java.awt.Color( 65, 4, 0, 255 )
+					"editable": false
+					"font": new java.awt.Font( "Luminari", 1, 101 )
+					"foreground": new java.awt.Color( 255, 255, 255, 255 )
+					"opaque": false
+					"requestFocusEnabled": false
+					"selectionEnd": 928
+					"tabSize": 2
+					"text": "Player Scores"
+					"wrapStyleWord": false
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"column": 1
+					"row": 1
+				} )
+				add( new FormComponent( "com.jformdesigner.designer.wrapper.HSpacer" ) {
+					name: "hSpacer1"
+					auxiliary() {
+						"JavaCodeGenerator.variableLocal": true
+					}
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"row": 2
+				} )
+				add( new FormComponent( "com.jformdesigner.designer.wrapper.HSpacer" ) {
+					name: "hSpacer2"
+					auxiliary() {
+						"JavaCodeGenerator.variableLocal": true
+					}
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"column": 2
+					"row": 2
+				} )
+				add( new FormComponent( "com.jformdesigner.designer.wrapper.VSpacer" ) {
+					name: "vSpacer2"
+					auxiliary() {
+						"JavaCodeGenerator.variableLocal": true
+					}
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"column": 1
+					"row": 4
+					"vSizePolicy": 0
+					"preferredSize": new java.awt.Dimension( 0, 50 )
+				} )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "bordet"
 				"icon": new com.jformdesigner.model.SwingIcon( 0, "/icons/blackjackbordsuddigt.png" )
-				"horizontalAlignment": 0
+				"horizontalAlignment": 2
 				"maximumSize": new java.awt.Dimension( 1900, 1080 )
 				"preferredSize": sfield com.jformdesigner.model.FormObject NULL_VALUE
 				"minimumSize": new java.awt.Dimension( 1900, 1080 )
 				"background": sfield com.jformdesigner.model.FormObject NULL_VALUE
 				"foreground": sfield com.jformdesigner.model.FormObject NULL_VALUE
-			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"width": 1600
-				"height": 900
-				"x": -160
-				"y": -65
-			} )
+				"verticalAlignment": 1
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 2047 )
 			"size": new java.awt.Dimension( 1300, 775 )

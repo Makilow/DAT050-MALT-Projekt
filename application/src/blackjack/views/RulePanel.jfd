@@ -6,7 +6,7 @@ new FormModel {
 		add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) {
 			"autoSize": false
 		} ) {
-			name: "panel1"
+			name: "panel"
 			"background": new java.awt.Color( 7, 65, 0, 255 )
 			"preferredSize": new java.awt.Dimension( 1280, 720 )
 			"maximumSize": new java.awt.Dimension( 1280, 720 )
@@ -15,54 +15,99 @@ new FormModel {
 			"alignmentY": 0.0f
 			"cursor": new java.awt.Cursor( 12 )
 			"border": new javax.swing.border.TitledBorder( "text" )
-			add( new FormComponent( "javax.swing.JTextArea" ) {
-				name: "panel"
-				"background": new java.awt.Color( 65, 4, 0, 255 )
-				"editable": false
-				"font": new java.awt.Font( "Comic Sans MS", 1, 16 )
-				"foreground": new java.awt.Color( 255, 255, 255, 255 )
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.intellij.uiDesigner.core.GridLayoutManager ) {
+				"$columnCount": 3
+				"$rowCount": 5
+				"hGap": 5
+			} ) {
+				name: "panel1"
 				"opaque": false
-				"requestFocusEnabled": false
-				"selectionEnd": 928
-				"tabSize": 2
-				"text": "-The goal of blackjack is to beat the dealer's hand without going over 21.\n\n-Face cards are worth 10. Aces are worth 1 or 11, whichever makes a better hand.\n\n-Each player starts with two cards, one of the dealer's cards is hidden until the end.\n\n-To 'Hit' is to ask for another card. To 'Stand' is to hold your total and end your turn.\n\n-If you go over 21 you bust, and the dealer wins regardless  of the dealer's hand.\n\n-If you are dealt 21 from the start (Ace & 10), you get blackjack.\n\n-Blackjack usually means you win 1.5 times the amount of your bet.\n\n-Dealer will hit until his/her cards total 17 or higher.\n\n-Doubling is like a hit, only the bet is doubled and you only get one more card.\n\n-Split can be done when you have two of the same card and the pair is split into two hands.\n\n-Splitting also doubles the bet, because each new hand is worth the original bet.\n\n-You cannot play on two aces after they are split."
-				"wrapStyleWord": false
-			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 330
-				"y": 65
-				"width": 605
-			} )
-			add( new FormComponent( "javax.swing.JButton" ) {
-				name: "returnButton"
-				"background": new java.awt.Color( 65, 4, 0, 255 )
-				"foreground": new java.awt.Color( 65, 4, 0, 255 )
-				"icon": new com.jformdesigner.model.SwingIcon( 0, "/icons/button_return.png" )
-				"rolloverSelectedIcon": new com.jformdesigner.model.SwingIcon( 0, "/icons/button_returnH.png" )
-				"text": ""
-				"horizontalTextPosition": 0
-				"maximumSize": new java.awt.Dimension( 174, 46 )
-				"borderPainted": false
-				"selected": true
-				"contentAreaFilled": false
-				addEvent( new FormEvent( "java.awt.event.KeyListener", "keyPressed", "returnButtonKeyPressed", true ) )
-			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 570
-				"y": 610
-				"width": 145
-			} )
+				add( new FormComponent( "com.jformdesigner.designer.wrapper.VSpacer" ) {
+					name: "vSpacer1"
+					auxiliary() {
+						"JavaCodeGenerator.variableLocal": true
+					}
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"column": 1
+				} )
+				add( new FormComponent( "com.jformdesigner.designer.wrapper.HSpacer" ) {
+					name: "hSpacer2"
+					auxiliary() {
+						"JavaCodeGenerator.variableLocal": true
+					}
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"row": 1
+				} )
+				add( new FormComponent( "javax.swing.JTextArea" ) {
+					name: "rules"
+					"background": new java.awt.Color( 65, 4, 0, 255 )
+					"editable": false
+					"font": new java.awt.Font( "Comic Sans MS", 1, 16 )
+					"foreground": new java.awt.Color( 255, 255, 255, 255 )
+					"requestFocusEnabled": false
+					"selectionEnd": 928
+					"tabSize": 2
+					"text": "-The goal of blackjack is to beat the dealer's hand without going over 21.\n\n-Face cards are worth 10. Aces are worth 1 or 11, whichever makes a better hand.\n\n-Each player starts with two cards, one of the dealer's cards is hidden until the end.\n\n-To 'Hit' is to ask for another card. To 'Stand' is to hold your total and end your turn.\n\n-If you go over 21 you bust, and the dealer wins regardless  of the dealer's hand.\n\n-If you are dealt 21 from the start (Ace & 10), you get blackjack.\n\n-Blackjack usually means you win 1.5 times the amount of your bet.\n\n-Dealer will hit until his/her cards total 17 or higher.\n\n-Doubling is like a hit, only the bet is doubled and you only get one more card.\n\n-Split can be done when you have two of the same card and the pair is split into two hands.\n\n-Splitting also doubles the bet, because each new hand is worth the original bet.\n\n-You cannot play on two aces after they are split."
+					"wrapStyleWord": false
+					"opaque": false
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"column": 1
+					"row": 1
+				} )
+				add( new FormComponent( "com.jformdesigner.designer.wrapper.HSpacer" ) {
+					name: "hSpacer1"
+					auxiliary() {
+						"JavaCodeGenerator.variableLocal": true
+					}
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"column": 2
+					"row": 1
+				} )
+				add( new FormComponent( "com.jformdesigner.designer.wrapper.VSpacer" ) {
+					name: "vSpacer2"
+					auxiliary() {
+						"JavaCodeGenerator.variableLocal": true
+					}
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"column": 1
+					"row": 2
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "returnButton"
+					"background": new java.awt.Color( 65, 4, 0, 255 )
+					"foreground": new java.awt.Color( 65, 4, 0, 255 )
+					"icon": new com.jformdesigner.model.SwingIcon( 0, "/icons/button_return.png" )
+					"rolloverSelectedIcon": new com.jformdesigner.model.SwingIcon( 0, "/icons/button_returnH.png" )
+					"text": ""
+					"horizontalTextPosition": 0
+					"maximumSize": new java.awt.Dimension( 174, 46 )
+					"borderPainted": false
+					"selected": true
+					"contentAreaFilled": false
+					addEvent( new FormEvent( "java.awt.event.KeyListener", "keyPressed", "returnButtonKeyPressed", true ) )
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"row": 3
+					"column": 1
+				} )
+				add( new FormComponent( "com.jformdesigner.designer.wrapper.VSpacer" ) {
+					name: "vSpacer3"
+					auxiliary() {
+						"JavaCodeGenerator.variableLocal": true
+					}
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"column": 1
+					"row": 4
+				} )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "bordet"
 				"icon": new com.jformdesigner.model.SwingIcon( 0, "/icons/blackjackbordsuddigt.png" )
-				"horizontalAlignment": 0
-				"maximumSize": new java.awt.Dimension( 1500, 864 )
-				"preferredSize": new java.awt.Dimension( 1500, 864 )
-				"minimumSize": new java.awt.Dimension( 1500, 860 )
-			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"width": 1600
-				"height": 900
-				"y": -65
-				"x": -160
-			} )
+				"horizontalAlignment": 2
+				"maximumSize": sfield com.jformdesigner.model.FormObject NULL_VALUE
+				"preferredSize": sfield com.jformdesigner.model.FormObject NULL_VALUE
+				"minimumSize": sfield com.jformdesigner.model.FormObject NULL_VALUE
+				"verticalAlignment": 1
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 60, 195 )
 			"size": new java.awt.Dimension( 1260, 835 )

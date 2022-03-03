@@ -1,6 +1,7 @@
 package blackjack.views;
 
 import java.awt.event.*;
+import javax.imageio.ImageIO;
 import javax.swing.border.*;
 import blackjack.Observer;
 import blackjack.controllers.MenuController;
@@ -8,6 +9,11 @@ import blackjack.models.MainModel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import com.intellij.uiDesigner.core.*;
 
 
 
@@ -32,32 +38,49 @@ public class MenuPanel extends JPanel implements Observer<MainModel> {
         exitButton.addActionListener(menuController);
         setLayout(new GridLayout(1, 0));
         add(panel);
+        updateBackground(1280,720);
     }
 
     @Override
     public void update(MainModel o) {
+        if (o.getState() != State.MENU) {return;}
+        updateBackground(o.getWidth(), o.getHeight());
     }
-
-    private void bordetMouseClicked(MouseEvent e) {
-        ImageIcon ii = new ImageIcon(getClass().getResource("/bordetsuddigt.png"));
-        Image image = (ii).getImage().getScaledInstance(bordet.getWidth(), bordet.getHeight(),Image.SCALE_SMOOTH);
-        ii = new ImageIcon(image);
-        bordet.setIcon(ii);
+    private void updateBackground(int width, int height) {
+        panel.setSize(new Dimension(width,height));
+        panel1.setSize(new Dimension(width,height));
+        BufferedImage bImage = null;
+        try {
+            bImage = ImageIO.read(new File("src/icons/blackjackbordsuddigt.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Missing file: \"src/icons/blackjackbordsuddigt.png\"");
+            System.exit(0);
+        }
+        Image image = bImage.getScaledInstance(width,height,Image.SCALE_SMOOTH);
+        bordet.setIcon(new ImageIcon(image));
     }
 
     private void startButtonMouseClicked(MouseEvent e) {
         // TODO add your code here
     }
 
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         panel = new JPanel();
+        panel1 = new JPanel();
+        var vSpacer3 = new Spacer();
         startButton = new JButton();
         settingsButton = new JButton();
         rulesButton = new JButton();
         scoreboardButton = new JButton();
         exitButton = new JButton();
         panel2 = new JTextArea();
+        var vSpacer1 = new Spacer();
+        var hSpacer2 = new Spacer();
+        var hSpacer3 = new Spacer();
+        var vSpacer2 = new Spacer();
         bordet = new JLabel();
 
         //======== panel ========
@@ -65,115 +88,176 @@ public class MenuPanel extends JPanel implements Observer<MainModel> {
             panel.setBackground(new Color(7, 65, 0));
             panel.setBorder(new TitledBorder(BorderFactory.createEmptyBorder(), ""));
             panel.setMinimumSize(null);
-            panel.setMaximumSize(new Dimension(1280, 720));
-            panel.setPreferredSize(new Dimension(1280, 720));
+            panel.setMaximumSize(null);
+            panel.setPreferredSize(null);
             panel.setAlignmentX(0.0F);
             panel.setAlignmentY(0.0F);
             panel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             panel.setLayout(null);
 
-            //---- startButton ----
-            startButton.setActionCommand("");
-            startButton.setBorderPainted(false);
-            startButton.setDoubleBuffered(false);
-            startButton.setHideActionText(false);
-            startButton.setIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_start.png")));
-            startButton.setIconTextGap(4);
-            startButton.setInheritsPopupMenu(false);
-            startButton.setLabel("");
-            startButton.setMargin(new Insets(0, 0, 0, 0));
-            startButton.setName("");
-            startButton.setOpaque(false);
-            startButton.setRolloverEnabled(true);
-            startButton.setRolloverSelectedIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_startH.png")));
-            startButton.setSelected(true);
-            startButton.setText("");
-            startButton.setVisible(true);
-            startButton.setContentAreaFilled(false);
-            startButton.setHorizontalTextPosition(SwingConstants.CENTER);
-            startButton.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    startButtonMouseClicked(e);
-                }
-            });
-            panel.add(startButton);
-            startButton.setBounds(535, 190, 211, startButton.getPreferredSize().height);
+            //======== panel1 ========
+            {
+                panel1.setOpaque(false);
+                panel1.setMinimumSize(null);
+                panel1.setMaximumSize(null);
+                panel1.setPreferredSize(new Dimension(1280, 720));
+                panel1.setLayout(new GridLayoutManager(9, 3, new Insets(0, 0, 0, 0), 5, -1, true, false));
+                panel1.add(vSpacer3, new GridConstraints(0, 1, 1, 1,
+                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL,
+                    GridConstraints.SIZEPOLICY_CAN_SHRINK,
+                    GridConstraints.SIZEPOLICY_CAN_GROW | GridConstraints.SIZEPOLICY_WANT_GROW,
+                    null, null, null));
 
-            //---- settingsButton ----
-            settingsButton.setBorderPainted(false);
-            settingsButton.setContentAreaFilled(false);
-            settingsButton.setIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_settings.png")));
-            settingsButton.setRolloverSelectedIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_settingsH.png")));
-            settingsButton.setSelected(true);
-            settingsButton.setText("");
-            panel.add(settingsButton);
-            settingsButton.setBounds(535, 295, 212, 63);
+                //---- startButton ----
+                startButton.setActionCommand("");
+                startButton.setBorderPainted(false);
+                startButton.setDoubleBuffered(false);
+                startButton.setHideActionText(false);
+                startButton.setIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_start.png")));
+                startButton.setIconTextGap(4);
+                startButton.setInheritsPopupMenu(false);
+                startButton.setLabel("");
+                startButton.setMargin(new Insets(0, 0, 0, 0));
+                startButton.setName("");
+                startButton.setOpaque(false);
+                startButton.setRolloverEnabled(true);
+                startButton.setRolloverSelectedIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_startH.png")));
+                startButton.setSelected(true);
+                startButton.setText("");
+                startButton.setVisible(true);
+                startButton.setContentAreaFilled(false);
+                startButton.setHorizontalTextPosition(SwingConstants.CENTER);
+                startButton.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        startButtonMouseClicked(e);
+                    }
+                });
+                panel1.add(startButton, new GridConstraints(3, 1, 1, 1,
+                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                    null, null, null));
 
-            //---- rulesButton ----
-            rulesButton.setBorderPainted(false);
-            rulesButton.setContentAreaFilled(false);
-            rulesButton.setIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_rules.png")));
-            rulesButton.setLabel("");
-            rulesButton.setRolloverSelectedIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_rulesH.png")));
-            rulesButton.setSelected(true);
-            rulesButton.setText("");
-            panel.add(rulesButton);
-            rulesButton.setBounds(535, 395, 211, 59);
+                //---- settingsButton ----
+                settingsButton.setBorderPainted(false);
+                settingsButton.setContentAreaFilled(false);
+                settingsButton.setIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_settings.png")));
+                settingsButton.setRolloverSelectedIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_settingsH.png")));
+                settingsButton.setSelected(true);
+                settingsButton.setText("");
+                panel1.add(settingsButton, new GridConstraints(4, 1, 1, 1,
+                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                    null, null, null));
 
-            //---- scoreboardButton ----
-            scoreboardButton.setBorderPainted(false);
-            scoreboardButton.setContentAreaFilled(false);
-            scoreboardButton.setIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_scoreboard.png")));
-            scoreboardButton.setRolloverSelectedIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_scoreboardH.png")));
-            scoreboardButton.setSelected(true);
-            scoreboardButton.setText("");
-            panel.add(scoreboardButton);
-            scoreboardButton.setBounds(535, 495, 212, 66);
+                //---- rulesButton ----
+                rulesButton.setBorderPainted(false);
+                rulesButton.setContentAreaFilled(false);
+                rulesButton.setIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_rules.png")));
+                rulesButton.setLabel("");
+                rulesButton.setRolloverSelectedIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_rulesH.png")));
+                rulesButton.setSelected(true);
+                rulesButton.setText("");
+                panel1.add(rulesButton, new GridConstraints(5, 1, 1, 1,
+                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                    null, null, null));
 
-            //---- exitButton ----
-            exitButton.setBorderPainted(false);
-            exitButton.setContentAreaFilled(false);
-            exitButton.setIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_exit.png")));
-            exitButton.setLabel("");
-            exitButton.setRolloverSelectedIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_exitH.png")));
-            exitButton.setSelected(true);
-            exitButton.setText("");
-            panel.add(exitButton);
-            exitButton.setBounds(535, 600, 212, 66);
+                //---- scoreboardButton ----
+                scoreboardButton.setBorderPainted(false);
+                scoreboardButton.setContentAreaFilled(false);
+                scoreboardButton.setIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_scoreboard.png")));
+                scoreboardButton.setRolloverSelectedIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_scoreboardH.png")));
+                scoreboardButton.setSelected(true);
+                scoreboardButton.setText("");
+                panel1.add(scoreboardButton, new GridConstraints(6, 1, 1, 1,
+                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                    null, null, null));
 
-            //---- panel2 ----
-            panel2.setBackground(new Color(65, 4, 0));
-            panel2.setEditable(false);
-            panel2.setFont(new Font("Luminari", Font.BOLD, 101));
-            panel2.setForeground(Color.white);
-            panel2.setOpaque(false);
-            panel2.setRequestFocusEnabled(false);
-            panel2.setSelectionEnd(928);
-            panel2.setTabSize(2);
-            panel2.setText("Blackjack");
-            panel2.setWrapStyleWord(false);
-            panel.add(panel2);
-            panel2.setBounds(415, 55, 455, panel2.getPreferredSize().height);
+                //---- exitButton ----
+                exitButton.setBorderPainted(false);
+                exitButton.setContentAreaFilled(false);
+                exitButton.setIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_exit.png")));
+                exitButton.setLabel("");
+                exitButton.setRolloverSelectedIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_exitH.png")));
+                exitButton.setSelected(true);
+                exitButton.setText("");
+                panel1.add(exitButton, new GridConstraints(7, 1, 1, 1,
+                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                    null, null, null));
+
+                //---- panel2 ----
+                panel2.setBackground(new Color(65, 4, 0));
+                panel2.setEditable(false);
+                panel2.setFont(new Font("Luminari", Font.BOLD, 101));
+                panel2.setForeground(Color.white);
+                panel2.setOpaque(false);
+                panel2.setRequestFocusEnabled(false);
+                panel2.setSelectionEnd(928);
+                panel2.setTabSize(2);
+                panel2.setText("Blackjack");
+                panel2.setWrapStyleWord(false);
+                panel1.add(panel2, new GridConstraints(1, 0, 1, 3,
+                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                    null, null, null));
+
+                //---- vSpacer1 ----
+                vSpacer1.setMinimumSize(new Dimension(0, 50));
+                vSpacer1.setMaximumSize(new Dimension(0, 50));
+                vSpacer1.setPreferredSize(new Dimension(0, 50));
+                panel1.add(vSpacer1, new GridConstraints(2, 1, 1, 1,
+                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL,
+                    GridConstraints.SIZEPOLICY_CAN_SHRINK,
+                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                    null, null, null));
+                panel1.add(hSpacer2, new GridConstraints(5, 0, 1, 1,
+                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+                    GridConstraints.SIZEPOLICY_CAN_GROW | GridConstraints.SIZEPOLICY_WANT_GROW,
+                    GridConstraints.SIZEPOLICY_CAN_SHRINK,
+                    null, null, null));
+                panel1.add(hSpacer3, new GridConstraints(5, 2, 1, 1,
+                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+                    GridConstraints.SIZEPOLICY_CAN_GROW | GridConstraints.SIZEPOLICY_WANT_GROW,
+                    GridConstraints.SIZEPOLICY_CAN_SHRINK,
+                    null, null, null));
+                panel1.add(vSpacer2, new GridConstraints(8, 1, 1, 1,
+                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL,
+                    GridConstraints.SIZEPOLICY_CAN_SHRINK,
+                    GridConstraints.SIZEPOLICY_CAN_GROW | GridConstraints.SIZEPOLICY_WANT_GROW,
+                    null, null, null));
+            }
+            panel.add(panel1);
+            panel1.setBounds(new Rectangle(new Point(0, 0), panel1.getPreferredSize()));
 
             //---- bordet ----
             bordet.setIcon(new ImageIcon(getClass().getResource("/icons/blackjackbordsuddigt.png")));
-            bordet.setHorizontalAlignment(SwingConstants.CENTER);
-            bordet.setMaximumSize(new Dimension(1900, 1080));
+            bordet.setHorizontalAlignment(SwingConstants.LEFT);
+            bordet.setMaximumSize(null);
             bordet.setPreferredSize(null);
-            bordet.setMinimumSize(new Dimension(1900, 1080));
+            bordet.setMinimumSize(null);
             bordet.setBackground(null);
             bordet.setForeground(null);
+            bordet.setVerticalAlignment(SwingConstants.TOP);
             panel.add(bordet);
-            bordet.setBounds(-160, -65, 1600, 900);
+            bordet.setBounds(new Rectangle(new Point(0, 0), bordet.getPreferredSize()));
 
-            panel.setPreferredSize(new Dimension(1300, 775));
+            panel.setPreferredSize(new Dimension(2955, 1150));
         }
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     private JPanel panel;
+    private JPanel panel1;
     private JButton startButton;
     private JButton settingsButton;
     private JButton rulesButton;
