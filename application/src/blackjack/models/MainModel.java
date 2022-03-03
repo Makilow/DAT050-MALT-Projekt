@@ -76,6 +76,7 @@ public class MainModel implements Observable<MainModel> {
             dbH.addPlayerData(player);
         }
         addHand(player);
+        updateObservers();
     }
     public void removePlayer(String name) {
         // TODO
