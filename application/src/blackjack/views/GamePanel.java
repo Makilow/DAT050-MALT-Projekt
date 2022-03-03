@@ -24,6 +24,7 @@ import com.intellij.uiDesigner.core.*;
 public class GamePanel extends JPanel implements Observer<MainModel> {
 
     private final List<JLayeredPane> handCards = new ArrayList<>();
+    private final List<JTextArea> infoTexts = new ArrayList<>();
     private int cardWidth, cardHeight;
     public GamePanel(GameController gameController) {
         initComponents();
@@ -57,6 +58,11 @@ public class GamePanel extends JPanel implements Observer<MainModel> {
         handThree.add(handCards.get(2));
         handFour.add(handCards.get(3));
         handFive.add(handCards.get(4));
+        infoTexts.add(infoOne);
+        infoTexts.add(infoTwo);
+        infoTexts.add(infoThree);
+        infoTexts.add(infoFour);
+        infoTexts.add(infoFive);
         setLayout(new GridLayout(1, 0));
         add(panel);
         updateBackground(1280,720);
@@ -121,15 +127,41 @@ public class GamePanel extends JPanel implements Observer<MainModel> {
     @Override
     public void update(MainModel o) {
         if (o.getState() != State.GAME) return;
+        updateInfo(o.getHands());
         updateBackground(o.getWidth(),o.getHeight());
         highlightCurrentHand(o.getCurrentHand());
         clearCards();
         showDealer(o.getDealerCards(), o.getShowSecond());
         showHands(o.getHands());
+        showBettingButton(o.activeGame(), o.getHands());
+    }
+    private void showBettingButton(Boolean activeGame, List<PlayerHand> hands) {
+        if (activeGame) {
+            // dont show button
+            // setvisable(false)
+        } else {
+            // show button
+            for (PlayerHand h : hands) {
+                if (h.getPlayer() != null) {
+                    // show button
+                }
+            }
+        }
     }
     private void highlightCurrentHand(int index) {
-        // Show which hand the dealer is currently on
-        System.out.println(index);
+        Border currentPlayerBorder = BorderFactory.createLineBorder(Color.RED);
+        for(JLayeredPane lp : handCards) {lp.setBorder(null);}
+        handCards.get(index).setBorder(currentPlayerBorder);
+    }
+    private void updateInfo(List<PlayerHand> hands) {
+        String name;
+        Double bet, balance;
+        for (int i = 0; i < hands.size(); i++) {
+            name = hands.get(i).getPlayer().getName();
+            bet = hands.get(i).getBet();
+            balance = hands.get(i).getPlayer().getBalance();
+            infoTexts.get(i).setText("Name: "+name+"\nBet: "+bet+"\nBalance: "+balance);
+        }
     }
     private void updateBackground(int width, int height) {
         updateCardSize(height);
@@ -170,16 +202,21 @@ public class GamePanel extends JPanel implements Observer<MainModel> {
         var vSpacer1 = new Spacer();
         var hSpacer3 = new Spacer();
         handOne = new JPanel();
+        betOne = new JButton();
         handTwo = new JPanel();
+        betTwo = new JButton();
         handThree = new JPanel();
+        betThree = new JButton();
         handFour = new JPanel();
+        betFour = new JButton();
         handFive = new JPanel();
+        betFive = new JButton();
         var hSpacer4 = new Spacer();
-        betOne = new JFormattedTextField();
-        betTwo = new JFormattedTextField();
-        betThree = new JFormattedTextField();
-        betFour = new JFormattedTextField();
-        betFive = new JFormattedTextField();
+        infoOne = new JTextArea();
+        infoTwo = new JTextArea();
+        infoThree = new JTextArea();
+        infoFour = new JTextArea();
+        infoFive = new JTextArea();
         var vSpacer4 = new Spacer();
         panel2 = new JPanel();
         hitButton = new JButton();
@@ -241,6 +278,10 @@ public class GamePanel extends JPanel implements Observer<MainModel> {
                     handOne.setPreferredSize(null);
                     handOne.setOpaque(false);
                     handOne.setLayout(new FlowLayout());
+
+                    //---- betOne ----
+                    betOne.setText("bet");
+                    handOne.add(betOne);
                 }
                 panel1.add(handOne, new GridConstraints(3, 1, 1, 1,
                     GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
@@ -253,6 +294,10 @@ public class GamePanel extends JPanel implements Observer<MainModel> {
                     handTwo.setPreferredSize(null);
                     handTwo.setOpaque(false);
                     handTwo.setLayout(new FlowLayout());
+
+                    //---- betTwo ----
+                    betTwo.setText("bet");
+                    handTwo.add(betTwo);
                 }
                 panel1.add(handTwo, new GridConstraints(3, 2, 1, 1,
                     GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
@@ -265,6 +310,10 @@ public class GamePanel extends JPanel implements Observer<MainModel> {
                     handThree.setPreferredSize(null);
                     handThree.setOpaque(false);
                     handThree.setLayout(new FlowLayout());
+
+                    //---- betThree ----
+                    betThree.setText("bet");
+                    handThree.add(betThree);
                 }
                 panel1.add(handThree, new GridConstraints(3, 3, 1, 1,
                     GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
@@ -277,6 +326,10 @@ public class GamePanel extends JPanel implements Observer<MainModel> {
                     handFour.setPreferredSize(null);
                     handFour.setOpaque(false);
                     handFour.setLayout(new FlowLayout());
+
+                    //---- betFour ----
+                    betFour.setText("bet");
+                    handFour.add(betFour);
                 }
                 panel1.add(handFour, new GridConstraints(3, 4, 1, 1,
                     GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
@@ -289,6 +342,10 @@ public class GamePanel extends JPanel implements Observer<MainModel> {
                     handFive.setPreferredSize(null);
                     handFive.setOpaque(false);
                     handFive.setLayout(new FlowLayout());
+
+                    //---- betFive ----
+                    betFive.setText("bet");
+                    handFive.add(betFive);
                 }
                 panel1.add(handFive, new GridConstraints(3, 5, 1, 1,
                     GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
@@ -301,43 +358,58 @@ public class GamePanel extends JPanel implements Observer<MainModel> {
                     GridConstraints.SIZEPOLICY_CAN_SHRINK,
                     null, null, null));
 
-                //---- betOne ----
-                betOne.setHorizontalAlignment(SwingConstants.CENTER);
-                panel1.add(betOne, new GridConstraints(4, 1, 1, 1,
-                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
-                    GridConstraints.SIZEPOLICY_WANT_GROW,
+                //---- infoOne ----
+                infoOne.setOpaque(false);
+                infoOne.setForeground(new Color(255, 0, 51));
+                infoOne.setFont(new Font("Times New Roman", Font.BOLD, 18));
+                infoOne.setEditable(false);
+                panel1.add(infoOne, new GridConstraints(4, 1, 1, 1,
+                    GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL,
+                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
                     GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
                     null, null, null));
 
-                //---- betTwo ----
-                betTwo.setHorizontalAlignment(SwingConstants.CENTER);
-                panel1.add(betTwo, new GridConstraints(4, 2, 1, 1,
-                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
-                    GridConstraints.SIZEPOLICY_WANT_GROW,
+                //---- infoTwo ----
+                infoTwo.setOpaque(false);
+                infoTwo.setForeground(new Color(255, 0, 51));
+                infoTwo.setFont(new Font("Times New Roman", Font.BOLD, 18));
+                infoTwo.setEditable(false);
+                panel1.add(infoTwo, new GridConstraints(4, 2, 1, 1,
+                    GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL,
+                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
                     GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
                     null, null, null));
 
-                //---- betThree ----
-                betThree.setHorizontalAlignment(SwingConstants.CENTER);
-                panel1.add(betThree, new GridConstraints(4, 3, 1, 1,
-                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
-                    GridConstraints.SIZEPOLICY_WANT_GROW,
+                //---- infoThree ----
+                infoThree.setOpaque(false);
+                infoThree.setForeground(new Color(255, 0, 51));
+                infoThree.setFont(new Font("Times New Roman", Font.BOLD, 18));
+                infoThree.setEditable(false);
+                panel1.add(infoThree, new GridConstraints(4, 3, 1, 1,
+                    GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL,
+                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
                     GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
                     null, null, null));
 
-                //---- betFour ----
-                betFour.setHorizontalAlignment(SwingConstants.CENTER);
-                panel1.add(betFour, new GridConstraints(4, 4, 1, 1,
-                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
-                    GridConstraints.SIZEPOLICY_WANT_GROW,
+                //---- infoFour ----
+                infoFour.setOpaque(false);
+                infoFour.setForeground(new Color(255, 0, 51));
+                infoFour.setFont(new Font("Times New Roman", Font.BOLD, 18));
+                infoFour.setEditable(false);
+                panel1.add(infoFour, new GridConstraints(4, 4, 1, 1,
+                    GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL,
+                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
                     GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
                     null, null, null));
 
-                //---- betFive ----
-                betFive.setHorizontalAlignment(SwingConstants.CENTER);
-                panel1.add(betFive, new GridConstraints(4, 5, 1, 1,
-                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
-                    GridConstraints.SIZEPOLICY_WANT_GROW,
+                //---- infoFive ----
+                infoFive.setOpaque(false);
+                infoFive.setForeground(new Color(255, 0, 51));
+                infoFive.setFont(new Font("Times New Roman", Font.BOLD, 18));
+                infoFive.setEditable(false);
+                panel1.add(infoFive, new GridConstraints(4, 5, 1, 1,
+                    GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL,
+                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
                     GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
                     null, null, null));
                 panel1.add(vSpacer4, new GridConstraints(5, 3, 1, 1,
@@ -434,15 +506,20 @@ public class GamePanel extends JPanel implements Observer<MainModel> {
     private JPanel panel1;
     private JPanel dealer;
     private JPanel handOne;
+    private JButton betOne;
     private JPanel handTwo;
+    private JButton betTwo;
     private JPanel handThree;
+    private JButton betThree;
     private JPanel handFour;
+    private JButton betFour;
     private JPanel handFive;
-    private JFormattedTextField betOne;
-    private JFormattedTextField betTwo;
-    private JFormattedTextField betThree;
-    private JFormattedTextField betFour;
-    private JFormattedTextField betFive;
+    private JButton betFive;
+    private JTextArea infoOne;
+    private JTextArea infoTwo;
+    private JTextArea infoThree;
+    private JTextArea infoFour;
+    private JTextArea infoFive;
     private JPanel panel2;
     private JButton hitButton;
     private JButton standButton;
