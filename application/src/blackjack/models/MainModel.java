@@ -62,6 +62,17 @@ public class MainModel implements Observable<MainModel> {
         addHand(new Player("Tomas", 1000));
         newRound();
     }
+    public void addPlayer (String name) throws SQLException, ClassNotFoundException {
+        DatabaseHandler dbH = new DatabaseHandler();
+        Player player;
+        if (dbH.playerName(name)) {
+            player = new Player(name, dbH.getCredits(name));
+        } else {
+            player = new Player(name, 1000);
+            dbH.addPlayerData(player);
+        }
+        addHand(player);
+    }
     public void addHand(Player player) { hands.add(new PlayerHand(player));}
     public List getHands() { return hands; }
     public List getDealerCards() {return dealerHand.getCards();}
