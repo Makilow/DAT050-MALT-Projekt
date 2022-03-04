@@ -3,6 +3,7 @@ package blackjack.models;
 import blackjack.Observable;
 import blackjack.Observer;
 import blackjack.views.State;
+import blackjack.controllers.SoundController;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -46,8 +47,6 @@ public class MainModel implements Observable<MainModel> {
     public State getState() { return state; }
     public boolean getIsFullscreen() {return isFullscreen;}
     public void toggleFullscreen() {isFullscreen ^= true; updateObservers();}
-    public boolean getSoundON() {return soundON;}
-    public void toggleSound() {soundON ^= true;}
 
 
     /*-----------------------
