@@ -49,4 +49,30 @@ public class ChatClient {
             closeEverything(socket, bufferedReader, bufferedWriter);
         }
     }
+
+    /*  Method for listening for messages from the server.
+        This will be the broadcasted messages from other users.
+        New thread will be used because as we'll be listening for messages
+        this will be a blocking operation.
+        New thread created and pass a runnable object.
+
+        This method will be waiting for messages that are broadcasted from class chatClientHandler, method broadcastMessage.
+     */
+    public void listenForMessage() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String messageFromChat;
+
+                while (socket.isConnected()) {
+                    try {
+                        messageFromChat = bufferedReader.readLine();
+                        System.out.println(messageFromChat);
+                    } catch (IOException e) {
+                        closeEverything(socket, bufferedReader, bufferedWriter);
+                    }
+                }
+            }
+        }).start();
+    }
 }
