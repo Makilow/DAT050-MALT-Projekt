@@ -94,7 +94,7 @@ new FormModel {
 					"contentAreaFilled": false
 					"icon": new com.jformdesigner.model.SwingIcon( 0, "/icons/menu_icons/button_chat.png" )
 					"label": ""
-					"rolloverSelectedIcon": &SwingIcon0 new com.jformdesigner.model.SwingIcon( 0, "/icons/menu_icons/button_rulesH.png" )
+					"rolloverSelectedIcon": new com.jformdesigner.model.SwingIcon( 0, "/icons/menu_icons/button_chat.png" )
 					"selected": true
 					"text": ""
 				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
@@ -148,7 +148,7 @@ new FormModel {
 					"contentAreaFilled": false
 					"icon": new com.jformdesigner.model.SwingIcon( 0, "/icons/menu_icons/button_rules.png" )
 					"label": ""
-					"rolloverSelectedIcon": #SwingIcon0
+					"rolloverSelectedIcon": new com.jformdesigner.model.SwingIcon( 0, "/icons/menu_icons/button_rulesH.png" )
 					"selected": true
 					"text": ""
 				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
