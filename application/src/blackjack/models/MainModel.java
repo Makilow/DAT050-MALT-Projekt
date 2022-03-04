@@ -29,7 +29,7 @@ public class MainModel implements Observable<MainModel> {
     private DealerHand dealerHand;
     private int currentHand;
     private boolean showSecond;
-
+    SoundController sound = new SoundController();
 
     public MainModel() {
         state = State.MENU;
