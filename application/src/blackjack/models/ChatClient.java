@@ -94,4 +94,15 @@ public class ChatClient {
             e.printStackTrace();
         }
     }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter your Username for the chat: ");
+        String username = scanner.nextLine();
+        Socket socket = new Socket("localhost", 1234);
+        ChatClient chatClient = new ChatClient(socket, username);
+        System.out.println("Welcome " + username + "!");
+        chatClient.listenForMessage();
+        chatClient.sendMessage();
+    }
 }
