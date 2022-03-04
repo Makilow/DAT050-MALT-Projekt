@@ -36,9 +36,7 @@ public class ChatClientHandler implements Runnable{
         }
     }
 
-
-    /*
-        This method is run on a separated thread, listening for messages.
+    /*  This method is run on a separated thread, listening for messages.
         Blocking operation - the program will be stuck until the operation is completed.
         If multiple-threads not used, program will be stuck waiting for a message from a client.
         So instead - use a separated thread waiting for messages and another one working with the rest of application
@@ -58,9 +56,7 @@ public class ChatClientHandler implements Runnable{
         }
     }
 
-
-    /*
-        broadcastMessage-method which will be used to send the message client wrote
+    /*  broadcastMessage-method which will be used to send the message client wrote
         to everyone in the chat.
         Method takes the message that we want to send.
         Looping through chatClientHandlers ArrayList to send message to every client connected.
@@ -79,12 +75,31 @@ public class ChatClientHandler implements Runnable{
         }
     }
 
-    /*
-        Method to signal that a user has disconnected from the chat.
+    /*  Method to signal that a user has disconnected from the chat.
         Remove the client from the arrayList
      */
     public void removeChatClientHandler() {
         chatClientHandlers.remove(this);
         broadcastMessage("SERVER: " + clientUsername + " has left the chat!");
+    }
+
+    /*  Method to close everything.
+        This method is used to close down the connection and streams.
+     */
+    public void closeEverything(Socket socket, BufferedReader bufferedReader, BufferedWriter bufferedWriter) {
+        removeChatClientHandler();
+        try {
+            if (bufferedReader != null) {
+                bufferedReader.close();
+            }
+            if (bufferedWriter != null) {
+                bufferedWriter.close();
+            }
+            if (socket != null) {
+                socket.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
