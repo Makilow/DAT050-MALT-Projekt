@@ -3,11 +3,31 @@ package blackjack.models;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Abstract class Hand
+ * A hand used to store cards
+ * @author Tor Falkenberg
+ */
 public abstract class Hand {
     private final List<Card> cards = new ArrayList<>();
+    /**
+     *  clearHand function, clears the cards in hand
+     */
     public void clearHand() { cards.clear(); }
+    /**
+     * addCard function adds a card to the hand
+     * @param card  card to add to hand
+     */
     public void addCard(Card card) { cards.add(card); }
+    /**
+     * getCards function gets the list of cards in the hand
+     * @return  the list of cards
+     */
     public List<Card> getCards() { return cards; }
+    /**
+     * getValue function gets the value of all cards in the list
+     * @return  the value of all cards
+     */
     public int getValue() {
         int sum = 0;
         int aces = 0;
