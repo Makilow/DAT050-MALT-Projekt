@@ -30,7 +30,7 @@ public class ChatClientHandler implements Runnable{
             this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));   // Read Text-Data
             this.clientUsername = bufferedReader.readLine();
             chatClientHandlers.add(this);
-            broadcastMessage("SERVER: " + clientUsername + " has entered the chat.");
+            broadcastMessage("SERVER: " + clientUsername + " has entered the chat!");
         } catch (IOException e) {
             closeEverything(socket, bufferedReader, bufferedWriter);
         }
@@ -77,6 +77,14 @@ public class ChatClientHandler implements Runnable{
                 closeEverything(socket, bufferedReader, bufferedWriter);
             }
         }
+    }
 
+    /*
+        Method to signal that a user has disconnected from the chat.
+        Remove the client from the arrayList
+     */
+    public void removeChatClientHandler() {
+        chatClientHandlers.remove(this);
+        broadcastMessage("SERVER: " + clientUsername + " has left the chat!");
     }
 }
