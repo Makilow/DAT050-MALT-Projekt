@@ -11,11 +11,10 @@ import java.util.List;
 
 public class PlayerHand extends Hand {
     //Private variables
-    private Player player;
-    private final List<Card> cards = new ArrayList<>();;
-    private double bet;
+    private Player player = null;
+    //private final List<Card> cards = new ArrayList<>();
+    private double bet = 0;
     private boolean insured = false;
-
 
     //Constructors
     public PlayerHand() {}
@@ -25,18 +24,11 @@ public class PlayerHand extends Hand {
     //Functions
     public void setPlayer(Player player) {
         this.player = player;
-        //clearHand();
-    }
-    
-    public Player getPlayer () {return player;}
-    
-    public void removePlayer() { this.player = null; }
-
-    public void bet(double bet) {
-        this.bet += bet;
-        player.changeBalance(-bet);
+        clearHand();
     }
     public double getBet() { return bet; }
+    public Player getPlayer () {return player;}
+    public void removePlayer() { this.player = null; }
 
     @Override
     public void clearHand() {
@@ -44,6 +36,14 @@ public class PlayerHand extends Hand {
         bet = 0;
         insured = false;
     }
+
+    public void bet(double bet) {
+        this.bet += bet;
+        player.changeBalance(-bet);
+    }
+
+
+
     public void payout(double multiplier) {
         if (insured) {
             if(multiplier == 0) {
@@ -53,7 +53,7 @@ public class PlayerHand extends Hand {
             }
         }
         player.changeBalance(bet*multiplier);
-        cards.clear();
+        super.getCards().clear();
         bet = 0;
         insured = false;
     }
@@ -62,8 +62,8 @@ public class PlayerHand extends Hand {
     public PlayerHand split() {
         PlayerHand hand = new PlayerHand(player);
         hand.bet(bet);
-        hand.addCard(cards.get(1));
-        cards.remove(1);
+        hand.addCard(super.getCards().get(1));
+        super.getCards().remove(1);
         return hand;
     }
     public void insure() {
