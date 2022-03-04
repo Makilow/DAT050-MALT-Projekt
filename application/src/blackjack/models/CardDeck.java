@@ -31,7 +31,7 @@ public class CardDeck implements Iterator<Card> {
             for (Suit s : Suit.values()) 
                 for (Rank r : Rank.values()) 
                     deck.add(new Card(s, r));
-        Collections.shuffle(deck);  // Shuffle cards
+        Collections.shuffle(deck);
     }
     /**
      * percentageLeft function gets the percentage left of the deck in whole number 0-100
