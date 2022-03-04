@@ -116,7 +116,7 @@ public class MainModel implements Observable<MainModel> {
 
     public void toggleSound() {
         if (soundON){
-            playMusic(1);
+            playMusic(2);
         } else {
             stopMusic();
         }
