@@ -23,10 +23,17 @@ import com.intellij.uiDesigner.core.*;
  */
 public class GamePanel extends JPanel implements Observer<MainModel> {
 
+    private final List<PlayerPanel> playerPanelList = new ArrayList<>();
     private final List<JLayeredPane> handCards = new ArrayList<>();
     private final List<JTextArea> infoTexts = new ArrayList<>();
     private int cardWidth, cardHeight;
+
+    private JButton betOne, betTwo, betThree, betFour, betFive;
+
     public GamePanel(GameController gameController) {
+        for (int i = 0; i < 5; i++) {
+            playerPanelList.add(new PlayerPanel(i, gameController));
+        }
         initComponents();
         hitButton.addActionListener(gameController);
         standButton.addActionListener(gameController);
@@ -40,6 +47,25 @@ public class GamePanel extends JPanel implements Observer<MainModel> {
         splitButton.setActionCommand("SPLIT");
         addButton.setActionCommand("ADD");
         removeButton.setActionCommand("REMOVE");
+
+        betOne = new JButton("Bet");
+        betTwo = new JButton("Bet");
+        betThree = new JButton("Bet");
+        betFour = new JButton("Bet");
+        betFive = new JButton("Bet");
+
+        betOne.addActionListener(gameController);
+        betTwo.addActionListener(gameController);
+        betThree.addActionListener(gameController);
+        betFour.addActionListener(gameController);
+        betFive.addActionListener(gameController);
+
+        betOne.setActionCommand("BETONE");
+        betTwo.setActionCommand("BETTWO");
+        betThree.setActionCommand("BETTHREE");
+        betFour.setActionCommand("BETFOUR");
+        betFive.setActionCommand("BETFIVE");
+
         handCards.add(new JLayeredPane());
         handCards.add(new JLayeredPane());
         handCards.add(new JLayeredPane());
@@ -48,16 +74,25 @@ public class GamePanel extends JPanel implements Observer<MainModel> {
         for (JLayeredPane lp : handCards) {
             lp.setBounds(0, 0, 160, 160);
         }
-        handOne.setLayout(null);
-        handTwo.setLayout(null);
-        handThree.setLayout(null);
-        handFour.setLayout(null);
-        handFive.setLayout(null);
+
+        handTwo.add(new JPanel().add(betTwo));
+
+
+
+        /*
         handOne.add(handCards.get(0));
         handTwo.add(handCards.get(1));
         handThree.add(handCards.get(2));
         handFour.add(handCards.get(3));
         handFive.add(handCards.get(4));
+
+        handOne.setLayout(null);
+        handTwo.setLayout(null);
+        handThree.setLayout(null);
+        handFour.setLayout(null);
+        handFive.setLayout(null);
+        */
+
         infoTexts.add(infoOne);
         infoTexts.add(infoTwo);
         infoTexts.add(infoThree);
@@ -89,17 +124,21 @@ public class GamePanel extends JPanel implements Observer<MainModel> {
 
     private void showHands(List<PlayerHand> hands) {
         int i = 0;
-        for (Hand h : hands) {
+        for (PlayerHand h : hands) {
             int j = 0;
-            for (Card c : h.getCards()) {
-                JLabel l = new JLabel(cardImage(getFilename(c)));
-                l.setBounds(15 * j, 5 * j, cardWidth, cardHeight);
-                handCards.get(i).add(l, Integer.valueOf(j));
-                j++;
+            if (h.getBet() > 0) {
+                for (Card c : h.getCards()) {
+                    JLabel l = new JLabel(cardImage(getFilename(c)));
+                    l.setBounds(15 * j, 5 * j, cardWidth, cardHeight);
+                    handCards.get(i).add(l, Integer.valueOf(j));
+                    j++;
+                }
+                playerPanelList.get(i).showCards(handCards.get(i));
             }
-            i++;
         }
+        i++;
     }
+
 
     private void showDealer(List<Card> cards, boolean showSecond) {
         int i = 0;
@@ -134,7 +173,22 @@ public class GamePanel extends JPanel implements Observer<MainModel> {
         showDealer(o.getDealerCards(), o.getShowSecond());
         showHands(o.getHands());
         showBettingButton(o.activeGame(), o.getHands());
+
+        updatePlayerPanels(o.getHands());
     }
+
+    private void updatePlayerPanels(List<PlayerHand> hands) {
+        int i = 0;
+        for (PlayerHand hand : hands) {
+            if (hand.getPlayer() != null) {
+                playerPanelList.get(i).showButton("Add Player", false);
+                playerPanelList.get(i).showButton("Remove Player", true);
+                playerPanelList.get(i).showButton("Place Bet", true);
+            }
+            i++;
+        }
+    }
+
     private void showBettingButton(Boolean activeGame, List<PlayerHand> hands) {
         if (activeGame) {
             // dont show button
@@ -157,10 +211,17 @@ public class GamePanel extends JPanel implements Observer<MainModel> {
         String name;
         Double bet, balance;
         for (int i = 0; i < hands.size(); i++) {
+            /*
             name = hands.get(i).getPlayer().getName();
             bet = hands.get(i).getBet();
             balance = hands.get(i).getPlayer().getBalance();
             infoTexts.get(i).setText("Name: "+name+"\nBet: "+bet+"\nBalance: "+balance);
+
+             */
+            if (hands.get(i).getPlayer() != null) {
+                playerPanelList.get(i).setInfoText(hands.get(i));
+            }
+
         }
     }
     private void updateBackground(int width, int height) {
@@ -202,15 +263,10 @@ public class GamePanel extends JPanel implements Observer<MainModel> {
         var vSpacer1 = new Spacer();
         var hSpacer3 = new Spacer();
         handOne = new JPanel();
-        betOne = new JButton();
         handTwo = new JPanel();
-        betTwo = new JButton();
         handThree = new JPanel();
-        betThree = new JButton();
         handFour = new JPanel();
-        betFour = new JButton();
         handFive = new JPanel();
-        betFive = new JButton();
         var hSpacer4 = new Spacer();
         infoOne = new JTextArea();
         infoTwo = new JTextArea();
@@ -273,17 +329,11 @@ public class GamePanel extends JPanel implements Observer<MainModel> {
 
                 //======== handOne ========
                 {
-                    handOne.setBackground(null);
-                    handOne.setForeground(null);
                     handOne.setPreferredSize(null);
                     handOne.setOpaque(false);
                     handOne.setLayout(new FlowLayout());
-
-                    //---- betOne ----
-                    betOne.setText("bet");
-                    handOne.add(betOne);
                 }
-                panel1.add(handOne, new GridConstraints(3, 1, 1, 1,
+                panel1.add(playerPanelList.get(0), new GridConstraints(3, 1, 1, 1,
                     GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
                     GridConstraints.SIZEPOLICY_WANT_GROW,
                     GridConstraints.SIZEPOLICY_WANT_GROW,
@@ -294,12 +344,8 @@ public class GamePanel extends JPanel implements Observer<MainModel> {
                     handTwo.setPreferredSize(null);
                     handTwo.setOpaque(false);
                     handTwo.setLayout(new FlowLayout());
-
-                    //---- betTwo ----
-                    betTwo.setText("bet");
-                    handTwo.add(betTwo);
                 }
-                panel1.add(handTwo, new GridConstraints(3, 2, 1, 1,
+                panel1.add(playerPanelList.get(1), new GridConstraints(3, 2, 1, 1,
                     GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
                     GridConstraints.SIZEPOLICY_WANT_GROW,
                     GridConstraints.SIZEPOLICY_WANT_GROW,
@@ -310,12 +356,8 @@ public class GamePanel extends JPanel implements Observer<MainModel> {
                     handThree.setPreferredSize(null);
                     handThree.setOpaque(false);
                     handThree.setLayout(new FlowLayout());
-
-                    //---- betThree ----
-                    betThree.setText("bet");
-                    handThree.add(betThree);
                 }
-                panel1.add(handThree, new GridConstraints(3, 3, 1, 1,
+                panel1.add(playerPanelList.get(2), new GridConstraints(3, 3, 1, 1,
                     GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
                     GridConstraints.SIZEPOLICY_WANT_GROW,
                     GridConstraints.SIZEPOLICY_WANT_GROW,
@@ -326,12 +368,8 @@ public class GamePanel extends JPanel implements Observer<MainModel> {
                     handFour.setPreferredSize(null);
                     handFour.setOpaque(false);
                     handFour.setLayout(new FlowLayout());
-
-                    //---- betFour ----
-                    betFour.setText("bet");
-                    handFour.add(betFour);
                 }
-                panel1.add(handFour, new GridConstraints(3, 4, 1, 1,
+                panel1.add(playerPanelList.get(3), new GridConstraints(3, 4, 1, 1,
                     GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
                     GridConstraints.SIZEPOLICY_WANT_GROW,
                     GridConstraints.SIZEPOLICY_WANT_GROW,
@@ -342,12 +380,8 @@ public class GamePanel extends JPanel implements Observer<MainModel> {
                     handFive.setPreferredSize(null);
                     handFive.setOpaque(false);
                     handFive.setLayout(new FlowLayout());
-
-                    //---- betFive ----
-                    betFive.setText("bet");
-                    handFive.add(betFive);
                 }
-                panel1.add(handFive, new GridConstraints(3, 5, 1, 1,
+                panel1.add(playerPanelList.get(4), new GridConstraints(3, 5, 1, 1,
                     GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
                     GridConstraints.SIZEPOLICY_WANT_GROW,
                     GridConstraints.SIZEPOLICY_WANT_GROW,
@@ -421,7 +455,7 @@ public class GamePanel extends JPanel implements Observer<MainModel> {
                 //======== panel2 ========
                 {
                     panel2.setOpaque(false);
-                    panel2.setLayout(new GridLayoutManager(3, 2, new Insets(0, 0, 0, 0), -1, -1));
+                    panel2.setLayout(new GridLayoutManager(4, 2, new Insets(0, 0, 0, 0), -1, -1));
 
                     //---- hitButton ----
                     hitButton.setText("Hit");
@@ -506,15 +540,10 @@ public class GamePanel extends JPanel implements Observer<MainModel> {
     private JPanel panel1;
     private JPanel dealer;
     private JPanel handOne;
-    private JButton betOne;
     private JPanel handTwo;
-    private JButton betTwo;
     private JPanel handThree;
-    private JButton betThree;
     private JPanel handFour;
-    private JButton betFour;
     private JPanel handFive;
-    private JButton betFive;
     private JTextArea infoOne;
     private JTextArea infoTwo;
     private JTextArea infoThree;
