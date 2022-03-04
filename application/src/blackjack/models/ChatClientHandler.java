@@ -64,7 +64,7 @@ public class ChatClientHandler implements Runnable{
     public void broadcastMessage(String messageToSend) {
         for(ChatClientHandler chatClientHandler : chatClientHandlers) {
             try {
-                if(!chatClientHandler.clientUsername.equals(clientUsername)) { // to not send message back to the sender
+                if(chatClientHandler != this) { // to not send message back to the sender
                     chatClientHandler.bufferedWriter.write(messageToSend);
                     chatClientHandler.bufferedWriter.newLine();
                     chatClientHandler.bufferedWriter.flush(); // manually flush bufferedwriter, else the buffer wont reset

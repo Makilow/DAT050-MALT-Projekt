@@ -44,7 +44,7 @@ public class ChatServer {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         ServerSocket serverSocket = new ServerSocket(1234);
         ChatServer chatServer = new ChatServer(serverSocket);
         chatServer.startServer();

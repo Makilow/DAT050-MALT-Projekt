@@ -95,7 +95,7 @@ public class ChatClient {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter your Username for the chat: ");
         String username = scanner.nextLine();
