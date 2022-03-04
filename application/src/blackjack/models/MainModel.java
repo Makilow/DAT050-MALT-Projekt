@@ -7,10 +7,7 @@ import blackjack.views.State;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.LinkedList;
+import java.util.*;
 import javax.swing.Timer;
 
 /**
@@ -33,6 +30,7 @@ public class MainModel implements Observable<MainModel> {
 
     public MainModel() {
         state = State.MENU;
+
     }
     // Screen functions
     public void setSize(int width, int height) {this.width=width; this.height=height; updateObservers();}
@@ -56,9 +54,43 @@ public class MainModel implements Observable<MainModel> {
     private void startGame() {
         dealer = new Dealer(7);
         hands = new LinkedList<>();
+        for (int i = 0; i < 5; i++) {
+            hands.add(i, new PlayerHand());
+        }
         dealerHand = new DealerHand();
         waitForBet();
     }
+
+    private void waitForBet() {
+        new Timer(15000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for (PlayerHand h : hands) {
+                    if (h.getBet() > 0) {
+                        newRound();
+                        ((Timer)e.getSource()).stop();
+                        return;
+                    }
+                }
+            }
+        }).start();
+    }
+
+    public void newRound() {
+        activeGame = true;
+        showSecond = false;
+        currentHand = 0;
+        for (int i = 0; i < 2; i++) {
+            for (PlayerHand h : hands) {
+                if ((h.getPlayer() != null) && (h.getBet() != 0)) {
+                    h.addCard(dealer.dealCard());
+                }
+            }
+            dealerHand.addCard(dealer.dealCard());
+        }
+        updateObservers();
+    }
+
     public Boolean activeGame() {return activeGame;}
     public int getCurrentHand() {return currentHand;}
     /*
@@ -66,18 +98,25 @@ public class MainModel implements Observable<MainModel> {
     If not, a new player is created with 1000 credits, updated in the database, and added to MainModels "hands"-list.
     If the player already exists, it's credit score is recieved, and the player is added to the "hands"-list.
     */
-    public void addPlayer (String name) throws SQLException, ClassNotFoundException {
+    public void addPlayer (String name, int seat) {
         DatabaseHandler dbH = new DatabaseHandler();
-        Player player;
-        if (dbH.playerName(name)) {
-            player = new Player(name, dbH.getCredits(name));
-        } else {
-            player = new Player(name, 1000);
-            dbH.addPlayerData(player);
+        Player player = null;
+        try {
+            if (dbH.playerName(name)) {
+                player = new Player(name, dbH.getCredits(name));
+            } else {
+                player = new Player(name, 1000);
+                dbH.addPlayerData(player);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
         }
-        addHand(player);
+        setPlayerToHand(player, seat);
         updateObservers();
     }
+
+    public void setPlayerToHand(Player player, int seat) { hands.get(seat).setPlayer(player);}
+
     public void removePlayer(String name) {
         // TODO
     }
@@ -94,24 +133,16 @@ public class MainModel implements Observable<MainModel> {
         }
     }
     
-    public void addHand(Player player) { hands.add(new PlayerHand(player));}
-    public List getHands() { return hands; }
+
+    public List<PlayerHand> getHands() { return hands; }
     public List getDealerCards() {return dealerHand.getCards();}
-    public void newRound() {
-        activeGame = true;
-        showSecond = false;
-        currentHand = 0;
-        for (int i = 0; i < 2; i++) {
-            for (PlayerHand h : hands) {
-                if (h.getBet() == 0) {continue;}
-                h.addCard(dealer.dealCard());
-            }
-            dealerHand.addCard(dealer.dealCard());
-        }
-        updateObservers();
-    }
 
     public boolean getShowSecond() { return showSecond;}
+
+    public void playerBet (int seat, int bet) {
+        hands.get(seat).bet(bet);
+        updateObservers();
+    }
 
     public void playerHit() {
         if (!activeGame) {return;}
@@ -191,20 +222,7 @@ public class MainModel implements Observable<MainModel> {
         activeGame = false;
         waitForBet();
     }
-    private void waitForBet() {
-        new Timer(15000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                for (PlayerHand h : hands) {
-                    if (h.getBet() > 0) {
-                        newRound();
-                        ((Timer)e.getSource()).stop();
-                        return;
-                    }
-                }
-            }
-        }).start();
-    }
+
     /*-----------------------
          Observer functions
       -----------------------*/

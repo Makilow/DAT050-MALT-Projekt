@@ -25,7 +25,7 @@ public class PlayerHand extends Hand {
     //Functions
     public void setPlayer(Player player) {
         this.player = player;
-        clearHand();
+        //clearHand();
     }
     
     public Player getPlayer () {return player;}
