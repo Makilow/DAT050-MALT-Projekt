@@ -11,36 +11,114 @@ import java.util.Objects;
 import javax.swing.*;
 
 import blackjack.controllers.GameController;
+import blackjack.models.MainModel;
 import blackjack.models.PlayerHand;
 
 /**
- * @author unknown
+ * @author Tor Falkenberg Gunberg & Lukas Wigren
  */
 public class PlayerPanel extends JPanel {
 
+    //Local variables
     private GameController gameController;
-    private final int seat;
+    private PlayerHand hand = null;
     private JPanel cardPanel, buttonPanel;
     private JTextArea infoText;
-    private JLayeredPane cards;
-    private List<JButton> buttonList = new ArrayList<>();
-    //private JButton addPlayerButton, removePlayerButton, betButton, hitButton, standButton, doubleButton, splitButton;
+    //private JLayeredPane cardPane;
+    private List<JButton> buttonList;
+    private int seatNr;
+    private boolean actionNeeded = false;
+    private boolean actionDone = false;
 
-    public PlayerPanel(int seat, GameController gameController) {
+    //Constructor
+    public PlayerPanel(GameController gameController, int seatNr) {
+        this.gameController = gameController;
+        this.seatNr = seatNr;
 
+        //Set Layout
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setOpaque(false);
+        initialiseElements();
+        add(cardPanel);
+        add(buttonPanel);
+        add(infoText);
+    }
 
-        this.gameController = gameController;
-        this.seat = seat;
+    //Public methods
+    public boolean getActionDone () { return actionDone; }
+    public void setActionDone (boolean needed) { actionNeeded = needed; }
+    public void printCards(JLayeredPane cardsLP) {
+        cardPanel.removeAll();
+        cardPanel.add(cardsLP);
+    }
+    public void removeHand() { hand = null; }
 
+
+    public void update(PlayerHand hand, MainModel o) {
+        setHand(hand);
+        if (o.playerActionsNeeded() && hand.getBet()>0 && !actionDone ) {
+            actionNeeded = true;
+        }
+        if (actionDone && !o.playerActionsNeeded()) { actionDone = actionNeeded = false; }
+        whatButtons(o);
+        updateInfoText();
+    }
+
+    //Private update methods
+    private void setHand(PlayerHand hand) { this.hand = hand; }
+    private void whatButtons (MainModel o) {
+        hideAllButtons();
+        if (actionNeeded) {
+            showButton("Hit", true);
+            showButton("Stand", true);
+            showButton("Double", true);
+            showButton("Split", true);
+        } else if (actionDone || hand.getBet() > 0) {
+            return;
+        } else {
+            if (hand.getPlayer() == null) {
+                showButton("Add Player", true);
+            } else if (hand.getBet() == 0) {
+                showButton("Remove Player", true);
+                showButton("Place Bet", true);
+            }
+        }
+    }
+
+    private void updateInfoText() {
+        if (hand.getPlayer() == null) {
+            infoText.removeAll();
+        } else {
+            String name = hand.getPlayer().getName();
+            int bet = (int) hand.getBet();
+            double balance = hand.getPlayer().getBalance();
+            infoText.setText("Name: " + name + "\nBet: " + bet + "\nBalance: " + balance);
+        }
+    }
+
+
+    //Private methods
+
+    private void hideAllButtons() {
+        for (JButton button : buttonList) { button.setVisible(false); }
+    }
+
+    private void showButton(String text, boolean visible) {
+        for (JButton button : buttonList) {
+            if (Objects.equals(button.getText(), text)) {
+                button.setVisible(visible);
+            }
+        }
+    }
+
+    private void initialiseElements() {
         cardPanel = new JPanel();
         cardPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
         cardPanel.setLayout(new BoxLayout(cardPanel, BoxLayout.Y_AXIS));
-        cardPanel.setPreferredSize(new Dimension(200,130));
+        cardPanel.setPreferredSize(new Dimension(200, 130));
         cardPanel.setOpaque(false);
 
-        buttonPanel = new JPanel(new GridLayout(0,2));
+        buttonPanel = new JPanel(new GridLayout(0, 2));
         buttonPanel.setOpaque(false);
 
         infoText = new JTextArea();
@@ -49,87 +127,44 @@ public class PlayerPanel extends JPanel {
         infoText.setFont(new Font("Times New Roman", Font.BOLD, 18));
 
         createButtons();
-        showButton("Add Player", true);
-
-        add(cardPanel);
-        add(buttonPanel);
-        add(infoText);
     }
 
-
-    public void setInfoText (PlayerHand hand) {
-        String name = hand.getPlayer().getName();
-        int bet = (int)hand.getBet();
-        double balance = hand.getPlayer().getBalance();
-        infoText.setText("Name: "+name+"\nBet: "+bet+"\nBalance: "+balance);
-    }
-
-
-
-    public void createButtons () {
+    private void createButtons() {
+        buttonList = new ArrayList<>();
 
         JButton addPlayerButton = new JButton("Add Player");
-        addPlayerButton.setActionCommand("ADD"+Integer.toString(seat));
+        addPlayerButton.setActionCommand("ADD" + Integer.toString(seatNr));
         buttonList.add(addPlayerButton);
 
-        JButton removePlayerButton = new JButton("Remove Player");
-        removePlayerButton.setActionCommand("REMOVE"+Integer.toString(seat));
-        buttonList.add(removePlayerButton);
-
         JButton betButton = new JButton("Place Bet");
-        betButton.setActionCommand("BET"+Integer.toString(seat));
+        betButton.setActionCommand("BET" + Integer.toString(seatNr));
         buttonList.add(betButton);
 
+
         JButton hitButton = new JButton("Hit");
-        hitButton.setActionCommand("HIT"+Integer.toString(seat));
+        hitButton.setActionCommand("HIT" + Integer.toString(seatNr));
         buttonList.add(hitButton);
 
         JButton standButton = new JButton("Stand");
-        standButton.setActionCommand("STAND"+Integer.toString(seat));
+        standButton.setActionCommand("STAND" + Integer.toString(seatNr));
         buttonList.add(standButton);
 
         JButton doubleButton = new JButton("Double");
-        doubleButton.setActionCommand("DOUBLE"+Integer.toString(seat));
+        doubleButton.setActionCommand("DOUBLE" + Integer.toString(seatNr));
         buttonList.add(doubleButton);
 
         JButton splitButton = new JButton("Split");
-        splitButton.setActionCommand("SPLIT"+Integer.toString(seat));
+        splitButton.setActionCommand("SPLIT" + Integer.toString(seatNr));
         buttonList.add(splitButton);
+
+        JButton removePlayerButton = new JButton("Remove Player");
+        removePlayerButton.setActionCommand("REMOVE" + Integer.toString(seatNr));
+        buttonList.add(removePlayerButton);
 
         for (JButton button : buttonList) {
             button.addActionListener(gameController);
             button.setSize(new Dimension(30, 20));
             buttonPanel.add(button);
         }
-        hideAllButtons();
-    }
-
-    public void hideAllButtons() {
-        for (JButton button : buttonList) {
-            button.setVisible(false);
-        }
-    }
-    public void showButton (String text, boolean visible)  {
-        for (JButton button : buttonList) {
-            if (Objects.equals(button.getText(), text)) {
-                button.setVisible(visible);
-            }
-        }
-    }
-
-    public void showAddPlayerButton () {
-        //cards.setVisible(false);
-        //betButton.setVisible(false);
-        //addPlayerButton.setVisible(true);
-    }
-
-    public void showBetButton () {
-        //addPlayerButton.setVisible(false);
-        //betButton.setVisible(true);
-    }
-
-    public void showCards(JLayeredPane cards) {
-        cardPanel.removeAll();
-        cardPanel.add(cards);
     }
 }
