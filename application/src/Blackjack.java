@@ -30,7 +30,7 @@ public class Blackjack implements Runnable {
         mainController = new MainController(mainModel, mainView);
         JPanel container = new JPanel(new CardLayout());
         // Create Panels
-        GamePanel gamePanel = new GamePanel(new GameController(mainModel));
+        GamePanel gamePanel = new GamePanel(new GameController(mainModel), mainModel.getNrOfPlayers());
         MenuPanel menuPanel = new MenuPanel(new MenuController(mainModel));
         SettingPanel settingPanel = new SettingPanel(new SettingController(mainModel));
         RulePanel rulePanel = new RulePanel(new RuleController(mainModel));
