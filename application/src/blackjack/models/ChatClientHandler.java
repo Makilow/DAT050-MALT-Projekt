@@ -70,8 +70,11 @@ public class ChatClientHandler implements Runnable{
             try {
                 if(!chatClientHandler.clientUsername.equals(clientUsername)) { // to not send message back to the sender
                     chatClientHandler.bufferedWriter.write(messageToSend);
-                    chat
+                    chatClientHandler.bufferedWriter.newLine();
+                    chatClientHandler.bufferedWriter.flush(); // manually flush bufferedwriter, else the buffer wont reset
                 }
+            } catch (IOException e) {
+                closeEverything(socket, bufferedReader, bufferedWriter);
             }
         }
 
