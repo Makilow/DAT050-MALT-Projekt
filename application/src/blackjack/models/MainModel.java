@@ -110,7 +110,34 @@ public class MainModel implements Observable<MainModel> {
         }
         updateObservers();
     }
+    
+    public boolean getSoundON() {
+        return soundON;
+    }
 
+    public void toggleSound() {
+        if (soundON){
+            playMusic(1);
+        } else {
+            stopMusic();
+        }
+    }
+        public void playMusic(int i){
+        sound.setFile(i);
+        sound.play();
+        sound.loop();
+    }
+
+    public void stopMusic(){
+        sound.play();
+        sound.stop();
+    }
+
+    public void playSE(int i){
+        sound.setFile(i);
+        sound.play();
+    }
+    
     public boolean getShowSecond() { return showSecond;}
 
     public void playerHit() {
