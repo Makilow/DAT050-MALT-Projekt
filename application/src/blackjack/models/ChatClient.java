@@ -75,4 +75,23 @@ public class ChatClient {
             }
         }).start();
     }
+
+    /*  Method to close everything.
+        This method is used to close down the connection and streams.
+     */
+    public void closeEverything(Socket socket, BufferedReader bufferedReader, BufferedWriter bufferedWriter) {
+        try {
+            if (bufferedReader != null) {
+                bufferedReader.close();
+            }
+            if (bufferedWriter != null) {
+                bufferedWriter.close();
+            }
+            if (socket != null) {
+                socket.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
