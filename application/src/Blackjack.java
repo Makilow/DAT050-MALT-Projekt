@@ -35,12 +35,14 @@ public class Blackjack implements Runnable {
         SettingPanel settingPanel = new SettingPanel(new SettingController(mainModel));
         RulePanel rulePanel = new RulePanel(new RuleController(mainModel));
         ScoreboardPanel scoreboardPanel = new ScoreboardPanel(new ScoreboardController(mainModel));
+        ChatPanel chatPanel = new ChatPanel(new ChatController(mainModel));
         // Add to panels to mainPanel
         container.add(menuPanel, State.MENU.toString());
         container.add(gamePanel, State.GAME.toString());
         container.add(settingPanel, State.SETTINGS.toString());
         container.add(rulePanel, State.RULES.toString());
         container.add(scoreboardPanel, State.SCOREBOARD.toString());
+        container.add(chatPanel, State.CHAT.toString());
         //
         mainView = new MainView(mainModel.getWidth(), mainModel.getHeight(), container);
         // Listeners for mainView
@@ -54,5 +56,6 @@ public class Blackjack implements Runnable {
         mainModel.addObserver(settingPanel);
         mainModel.addObserver(rulePanel);
         mainModel.addObserver(scoreboardPanel);
+        mainModel.addObserver(chatPanel);
     }
 }
