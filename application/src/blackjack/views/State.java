@@ -7,6 +7,7 @@ package blackjack.views;
 public enum State {
     MENU("MENU"),
     SETTINGS("SETTINGS"),
+    CHAT("CHAT"),
     RULES("RULES"),
     GAME("GAME"),
     SCOREBOARD("SCOREBOARD"),
