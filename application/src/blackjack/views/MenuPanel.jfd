@@ -17,7 +17,7 @@ new FormModel {
 			"cursor": new java.awt.Cursor( 12 )
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.intellij.uiDesigner.core.GridLayoutManager ) {
 				"$columnCount": 3
-				"$rowCount": 9
+				"$rowCount": 11
 				"hGap": 5
 				"sameSizeHorizontally": true
 			} ) {
@@ -59,56 +59,6 @@ new FormModel {
 					"row": 3
 					"column": 1
 				} )
-				add( new FormComponent( "javax.swing.JButton" ) {
-					name: "settingsButton"
-					"borderPainted": false
-					"contentAreaFilled": false
-					"icon": new com.jformdesigner.model.SwingIcon( 0, "/icons/menu_icons/button_settings.png" )
-					"rolloverSelectedIcon": new com.jformdesigner.model.SwingIcon( 0, "/icons/menu_icons/button_settingsH.png" )
-					"selected": true
-					"text": ""
-				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
-					"row": 4
-					"column": 1
-				} )
-				add( new FormComponent( "javax.swing.JButton" ) {
-					name: "rulesButton"
-					"borderPainted": false
-					"contentAreaFilled": false
-					"icon": new com.jformdesigner.model.SwingIcon( 0, "/icons/menu_icons/button_rules.png" )
-					"label": ""
-					"rolloverSelectedIcon": new com.jformdesigner.model.SwingIcon( 0, "/icons/menu_icons/button_rulesH.png" )
-					"selected": true
-					"text": ""
-				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
-					"row": 5
-					"column": 1
-				} )
-				add( new FormComponent( "javax.swing.JButton" ) {
-					name: "scoreboardButton"
-					"borderPainted": false
-					"contentAreaFilled": false
-					"icon": new com.jformdesigner.model.SwingIcon( 0, "/icons/menu_icons/button_scoreboard.png" )
-					"rolloverSelectedIcon": new com.jformdesigner.model.SwingIcon( 0, "/icons/menu_icons/button_scoreboardH.png" )
-					"selected": true
-					"text": ""
-				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
-					"row": 6
-					"column": 1
-				} )
-				add( new FormComponent( "javax.swing.JButton" ) {
-					name: "exitButton"
-					"borderPainted": false
-					"contentAreaFilled": false
-					"icon": new com.jformdesigner.model.SwingIcon( 0, "/icons/menu_icons/button_exit.png" )
-					"label": ""
-					"rolloverSelectedIcon": new com.jformdesigner.model.SwingIcon( 0, "/icons/menu_icons/button_exitH.png" )
-					"selected": true
-					"text": ""
-				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
-					"row": 7
-					"column": 1
-				} )
 				add( new FormComponent( "javax.swing.JTextArea" ) {
 					name: "panel2"
 					"background": new java.awt.Color( 65, 4, 0, 255 )
@@ -138,6 +88,19 @@ new FormModel {
 					"row": 2
 					"vSizePolicy": 3
 				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "chatButton"
+					"borderPainted": false
+					"contentAreaFilled": false
+					"icon": new com.jformdesigner.model.SwingIcon( 0, "/icons/menu_icons/button_chat.png" )
+					"label": ""
+					"rolloverSelectedIcon": &SwingIcon0 new com.jformdesigner.model.SwingIcon( 0, "/icons/menu_icons/button_rulesH.png" )
+					"selected": true
+					"text": ""
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"row": 4
+					"column": 1
+				} )
 				add( new FormComponent( "com.jformdesigner.designer.wrapper.HSpacer" ) {
 					name: "hSpacer2"
 					auxiliary() {
@@ -145,6 +108,18 @@ new FormModel {
 					}
 				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
 					"row": 5
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "scoreboardButton"
+					"borderPainted": false
+					"contentAreaFilled": false
+					"icon": new com.jformdesigner.model.SwingIcon( 0, "/icons/menu_icons/button_scoreboard.png" )
+					"rolloverSelectedIcon": new com.jformdesigner.model.SwingIcon( 0, "/icons/menu_icons/button_scoreboardH.png" )
+					"selected": true
+					"text": ""
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"row": 5
+					"column": 1
 				} )
 				add( new FormComponent( "com.jformdesigner.designer.wrapper.HSpacer" ) {
 					name: "hSpacer3"
@@ -155,6 +130,44 @@ new FormModel {
 					"column": 2
 					"row": 5
 				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "settingsButton"
+					"borderPainted": false
+					"contentAreaFilled": false
+					"icon": new com.jformdesigner.model.SwingIcon( 0, "/icons/menu_icons/button_settings.png" )
+					"rolloverSelectedIcon": new com.jformdesigner.model.SwingIcon( 0, "/icons/menu_icons/button_settingsH.png" )
+					"selected": true
+					"text": ""
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"row": 6
+					"column": 1
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "rulesButton"
+					"borderPainted": false
+					"contentAreaFilled": false
+					"icon": new com.jformdesigner.model.SwingIcon( 0, "/icons/menu_icons/button_rules.png" )
+					"label": ""
+					"rolloverSelectedIcon": #SwingIcon0
+					"selected": true
+					"text": ""
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"row": 7
+					"column": 1
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "exitButton"
+					"borderPainted": false
+					"contentAreaFilled": false
+					"icon": new com.jformdesigner.model.SwingIcon( 0, "/icons/menu_icons/button_exit.png" )
+					"label": ""
+					"rolloverSelectedIcon": new com.jformdesigner.model.SwingIcon( 0, "/icons/menu_icons/button_exitH.png" )
+					"selected": true
+					"text": ""
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"row": 8
+					"column": 1
+				} )
 				add( new FormComponent( "com.jformdesigner.designer.wrapper.VSpacer" ) {
 					name: "vSpacer2"
 					auxiliary() {
@@ -162,7 +175,7 @@ new FormModel {
 					}
 				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
 					"column": 1
-					"row": 8
+					"row": 9
 				} )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) )
 			add( new FormComponent( "javax.swing.JLabel" ) {
