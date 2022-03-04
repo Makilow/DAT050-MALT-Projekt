@@ -31,11 +31,13 @@ public class MenuController implements ActionListener {
             case "SCOREBOARD":
                 mainModel.setState(State.SCOREBOARD);
                 break;
+            case "CHAT":
+                mainModel.setState(State.CHAT);
+                break;
             case "EXIT":
                 mainModel.setState(State.EXIT);
                 break;
             default:
         }
     }
-
 }
