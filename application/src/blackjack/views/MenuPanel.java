@@ -30,11 +30,13 @@ public class MenuPanel extends JPanel implements Observer<MainModel> {
         settingsButton.setActionCommand(State.SETTINGS.toString());
         rulesButton.setActionCommand(State.RULES.toString());
         scoreboardButton.setActionCommand(State.SCOREBOARD.toString());
+        chatButton.setActionCommand(State.CHAT.toString());
         exitButton.setActionCommand(State.EXIT.toString());
         startButton.addActionListener(menuController);
         settingsButton.addActionListener(menuController);
         rulesButton.addActionListener(menuController);
         scoreboardButton.addActionListener(menuController);
+        chatButton.addActionListener(menuController);
         exitButton.addActionListener(menuController);
         setLayout(new GridLayout(1, 0));
         add(panel);
