@@ -5,7 +5,7 @@ import javax.imageio.ImageIO;
 import blackjack.Observer;
 import blackjack.controllers.ChatController;
 import blackjack.models.ChatClient;
-import blackjack.models.ChatClientHandler;
+import blackjack.models.ChatHandler;
 import blackjack.models.ChatServer;
 import blackjack.models.MainModel;
 
@@ -28,7 +28,7 @@ public class ChatPanel extends JPanel implements Observer<MainModel> {
 
     private ChatServer chatServer;
     private ChatClient chatClient;
-    private ChatClientHandler chatClientHandler;
+    private ChatHandler chatHandler;
 
 
     public ChatPanel(ChatController chatController) {
@@ -49,7 +49,7 @@ public class ChatPanel extends JPanel implements Observer<MainModel> {
             System.out.println("Error creating the server!");
         }
 
-        //chatClientHandler.run(msgArea);
+        //chatHandler.run(msgArea);
 
     }
 
