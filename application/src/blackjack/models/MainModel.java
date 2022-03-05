@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
-import java.util.LinkedList;
+import java.util.*;
 import javax.swing.Timer;
 
 /**
@@ -19,23 +19,28 @@ import javax.swing.Timer;
  * @author Lukas Wigren, Tomas Alander, Tor Falkenberg
  */
 public class MainModel implements Observable<MainModel> {
+
+    //Local Setting Variables
     private int width=1280, height=720;
     private State state;
     private final Collection<Observer<MainModel>> observers = new HashSet<>();
     private boolean isFullscreen = false;
     private boolean soundON = true;
-    private boolean activeGame;
-    private Dealer dealer;
-    private List<PlayerHand> hands;
-    private DealerHand dealerHand;
-    private int currentHand;
-    private boolean showSecond;
-    SoundController sound = new SoundController();
+    private int nrOfPlayers = 5;            //Default number of players = 5
+    private int timeBetweenRounds = 15;     //Default number of seconds between rounds
 
-    public MainModel() {
-        state = State.MENU;
-    }
-    // Screen functions
+    //Local Game Variables
+    private Dealer dealer;
+    private DealerHand dealerHand;
+    private List<PlayerHand> playerHandList;
+    private boolean activeGame, playerActionsNeeded, showSecond;
+    private int timerCounter;
+
+
+    //Constructor
+    public MainModel() { state = State.MENU; }
+
+    // Screen & Setting methods
     public void setSize(int width, int height) {this.width=width; this.height=height; updateObservers();}
     public int getWidth() {return width;}
     public int getHeight() {return height;}
@@ -45,83 +50,17 @@ public class MainModel implements Observable<MainModel> {
         updateObservers();
     }
     public State getState() { return state; }
-    public boolean getIsFullscreen() {return isFullscreen;}
-    public void toggleFullscreen() {isFullscreen ^= true; updateObservers();}
-
-
-    /*-----------------------
-         Game functions
-      -----------------------*/
-    private void startGame() {
-        dealer = new Dealer(7);
-        hands = new LinkedList<>();
-        dealerHand = new DealerHand();
-        waitForBet();
-    }
-    public Boolean activeGame() {return activeGame;}
-    public int getCurrentHand() {return currentHand;}
-    /*
-    Checks if a player with that name exists in the database. 
-    If not, a new player is created with 1000 credits, updated in the database, and added to MainModels "hands"-list.
-    If the player already exists, it's credit score is recieved, and the player is added to the "hands"-list.
-    */
-    public void addPlayer (String name) throws SQLException, ClassNotFoundException {
-        DatabaseHandler dbH = new DatabaseHandler();
-        Player player;
-        if (dbH.playerName(name)) {
-            player = new Player(name, dbH.getCredits(name));
-        } else {
-            player = new Player(name, 1000);
-            dbH.addPlayerData(player);
-        }
-        addHand(player);
-        updateObservers();
-    }
-    public void removePlayer(String name) {
-        // TODO
-    }
-    
-    //Updates the database with the score of all players in the "hands"-list.
-    public void dbUpdateScores () {
-        DatabaseHandler dbH = new DatabaseHandler();
-        for (PlayerHand hand : hands) {
-            try {
-                dbH.addPlayerData(hand.getPlayer());
-            } catch (SQLException | ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-    
-    public void addHand(Player player) { hands.add(new PlayerHand(player));}
-    public List getHands() { return hands; }
-    public List getDealerCards() {return dealerHand.getCards();}
-    public void newRound() {
-        activeGame = true;
-        showSecond = false;
-        currentHand = 0;
-        for (int i = 0; i < 2; i++) {
-            for (PlayerHand h : hands) {
-                if (h.getBet() == 0) {continue;}
-                h.addCard(dealer.dealCard());
-            }
-            dealerHand.addCard(dealer.dealCard());
-        }
-        updateObservers();
-    }
-    
-    public boolean getSoundON() {
-        return soundON;
-    }
-
+    public boolean getIsFullscreen() { return isFullscreen; }
+    public void toggleFullscreen() { isFullscreen ^= true; updateObservers(); }
+    public boolean getSoundON() { return soundON; }
     public void toggleSound() {
-        if (soundON){
+        if (soundON) {
             playMusic(2);
         } else {
             stopMusic();
         }
     }
-        public void playMusic(int i){
+    public void playMusic(int i){
         sound.setFile(i);
         sound.play();
         sound.loop();
@@ -136,43 +75,152 @@ public class MainModel implements Observable<MainModel> {
         sound.setFile(i);
         sound.play();
     }
-    
-    public boolean getShowSecond() { return showSecond;}
+    public void setNrOfPlayers (int nrOfPlayers) { this.nrOfPlayers = nrOfPlayers; }
+    public void setTimeBetweenRounds (int timeBetweenRounds) { this.timeBetweenRounds = timeBetweenRounds; }
 
-    public void playerHit() {
-        if (!activeGame) {return;}
-        if (isBlackjack(hands.get(currentHand))) { playerStand(); }
-        hands.get(currentHand).addCard(dealer.dealCard());
-        int handValue = hands.get(currentHand).getValue();
+    //Public getter methods
+    public int getNrOfPlayers () { return nrOfPlayers; }
+    public int getTimeBetweenRounds () { return timeBetweenRounds; }
+    public List<PlayerHand> getHands() { return playerHandList; }
+    public List<Card> getDealerCards() { return dealerHand.getCards(); }
+    public boolean getShowSecond() { return showSecond;}
+    public boolean activeGame() { return activeGame; }
+
+    public boolean playerActionsNeeded() { return playerActionsNeeded; }
+
+    public int getTimerCounter() { return timerCounter; }
+
+
+    /*-----------------------
+         Game functions
+      -----------------------*/
+    private void startGame() {
+        dealer = new Dealer(7);
+        dealerHand = new DealerHand();
+        playerHandList = new ArrayList<>();
+        for (int i = 0; i < nrOfPlayers; i++) { playerHandList.add(new PlayerHand()); }
+        activeGame = playerActionsNeeded = showSecond = false;
+        timerCounter = timeBetweenRounds;
+    }
+
+    /*
+    Checks if a player with that name exists in the database.
+    If not, a new player is created with 1000 credits, updated in the database, and added to MainModels "hands"-list.
+    If the player already exists, it's credit score is recieved, and the player is added to the "hands"-list.
+    */
+    public void addPlayer (String name, int seat) {
+        DatabaseHandler dbH = new DatabaseHandler();
+        Player player = null;
+        try {
+            if (dbH.playerName(name)) {
+                player = new Player(name, dbH.getCredits(name));
+            } else {
+                player = new Player(name, 1000);
+                dbH.addPlayerData(player);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        setPlayerToHand(player, seat);
+        updateObservers();
+    }
+
+    private void setPlayerToHand(Player player, int seat) { playerHandList.get(seat).setPlayer(player);}
+
+    public void removePlayer(String name) { /* TODO*/ }
+
+    public void playerBet (int seatNr, int bet) {
+        playerHandList.get(seatNr).bet(bet);
+        if (!activeGame) {
+            activeGame = true;
+            waitForBet();
+        }
+        updateObservers();
+    }
+
+    private void waitForBet() {
+        timerCounter = timeBetweenRounds;
+        new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (timerCounter > 0) {
+                    timerCounter--;
+                    updateObservers();
+                    } else {
+                    ((Timer)e.getSource()).stop();
+                    newRound();
+                }
+
+            }
+        }).start();
+    }
+
+    public void newRound() {
+        showSecond = false;
+        playerActionsNeeded = true;
+        //currentHand = 0;
+        for (int i = 0; i < 2; i++) {
+            for (PlayerHand playerHand : playerHandList) {
+                if (playerHand.getBet() > 0) {
+                    playerHand.addCard(dealer.dealCard());
+                }
+            }
+            dealerHand.addCard(dealer.dealCard());
+        }
+        updateObservers();
+    }
+
+    
+    //Updates the database with the score of all players in the "hands"-list.
+    public void dbUpdateScores () {
+        DatabaseHandler dbH = new DatabaseHandler();
+        for (PlayerHand hand : playerHandList) {
+            try {
+                dbH.addPlayerData(hand.getPlayer());
+            } catch (SQLException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+
+
+
+    public void playerHit(int seat) {
+        //if (!activeGame) {return;}
+        if (isBlackjack(playerHandList.get(seat))) { playerStand(seat); }
+        playerHandList.get(seat).addCard(dealer.dealCard());
+        int handValue = playerHandList.get(seat).getValue();
         if (handValue == 21) {
-            playerStand();
+            playerStand(seat);
         } else if (handValue > 21) {
-            playerStand();
+            playerStand(seat);
         }
         updateObservers();
     }
-    public void playerStand() {
+
+
+    public void playerStand(int seat) {
         if (!activeGame) {return;}
-        if (currentHand == hands.size()-1) {
-            dealDealer();
-        } else {
-            currentHand++;
-        }
+        if (seat == playerHandList.size()-1) { dealDealer(); }
         updateObservers();
     }
-    public void playerDouble() {
+
+    public void playerDouble(int seat) {
         if (!activeGame) {return;}
-        if (hands.get(currentHand).getCards().size() != 2 ||
-        isBlackjack(hands.get(currentHand)) ||
-        hands.get(currentHand).getValue() >= 21) {return;}
-        hands.get(currentHand).bet(hands.get(currentHand).getBet());
-        hands.get(currentHand).addCard(dealer.dealCard());
-        playerStand();
+        if (playerHandList.get(seat).getCards().size() != 2 ||
+        isBlackjack(playerHandList.get(seat)) || playerHandList.get(seat).getValue() >= 21) {return;}
+        playerHandList.get(seat).bet(playerHandList.get(seat).getBet());
+        playerHandList.get(seat).addCard(dealer.dealCard());
+        playerStand(seat);
     }
     public void playerSplit() {
         if (!activeGame) {return;}
         // göra här
     }
+
+
 
     private void dealDealer() {
         showSecond = true;
@@ -194,7 +242,7 @@ public class MainModel implements Observable<MainModel> {
     private void payHands() {
         int dealerValue = dealerHand.getValue();
         int handValue;
-        for (PlayerHand h : hands) {
+        for (PlayerHand h : playerHandList) {
             handValue = h.getValue();
             if (handValue > 21) {
                 h.payout(0);
@@ -210,27 +258,14 @@ public class MainModel implements Observable<MainModel> {
                 h.payout(1);
             }
         }
-        for (PlayerHand h : hands) {
+        for (PlayerHand h : playerHandList) {
             h.clearHand();
         }
         dealerHand.clearHand();
         activeGame = false;
-        waitForBet();
+        //waitForBet();
     }
-    private void waitForBet() {
-        new Timer(15000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                for (PlayerHand h : hands) {
-                    if (h.getBet() > 0) {
-                        newRound();
-                        ((Timer)e.getSource()).stop();
-                        return;
-                    }
-                }
-            }
-        }).start();
-    }
+
     /*-----------------------
          Observer functions
       -----------------------*/
