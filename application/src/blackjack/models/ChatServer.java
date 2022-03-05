@@ -1,8 +1,12 @@
 package blackjack.models;
 
 import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.net.*;
+
+/**
+ * ChatServer, the model that creates a server for communication between clients using TCP stream.
+ * @author Arvin Allahbakhsh
+ */
 
 public class ChatServer {
 
@@ -23,9 +27,9 @@ public class ChatServer {
                 Socket socket = serverSocket.accept();
                 System.out.println("A new client has connected");
 
-                ChatClientHandler chatClientHandler = new ChatClientHandler(socket);
+                ChatHandler chatHandler = new ChatHandler(socket);
 
-                Thread thread = new Thread(chatClientHandler);
+                Thread thread = new Thread(chatHandler);
                 thread.start();
             }
         } catch (IOException e) {
