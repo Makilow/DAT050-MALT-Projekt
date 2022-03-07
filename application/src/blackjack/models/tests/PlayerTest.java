@@ -10,6 +10,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
     @Test
+    void initTest() {
+        assertThrows(NullPointerException.class, () ->
+        {
+            new Player(null, 0);
+        });
+    }
+    
+    @Test
     void getBalance() {
         int r;
         Random rnd = new Random();
