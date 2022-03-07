@@ -1,5 +1,7 @@
 package blackjack.models.tests;
 
+import blackjack.models.MainModel;
+import blackjack.views.State;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -8,6 +10,10 @@ class MainModelTest {
 
     @Test
     void setSize() {
+        MainModel mm = new MainModel();
+        mm.setSize(1080, 720);
+        assertEquals(1080, mm.getWidth());
+        assertEquals(720, mm.getHeight());
     }
 
     @Test
@@ -20,6 +26,9 @@ class MainModelTest {
 
     @Test
     void setState() {
+        MainModel mm = new MainModel();
+        mm.setState(State.CHAT);
+        assertEquals(State.CHAT, mm.getState());
     }
 
     @Test
