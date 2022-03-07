@@ -17,7 +17,7 @@ import com.intellij.uiDesigner.core.*;
 
 /**
  * ChatPanel, the panel that showcase the chat.
- * @author Arvin Allahbakhsh
+ * @author Arvin Allahbakhsh, Lukas Wigren
  */
 public class ChatPanel extends JPanel implements Observer<MainModel> {
     /**
