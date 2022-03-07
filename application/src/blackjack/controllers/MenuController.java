@@ -12,11 +12,17 @@ import java.awt.event.ActionListener;
  */
 public class MenuController implements ActionListener {
     MainModel mainModel;
-
+    /**
+     * MenuController constructor
+     * @param mainModel The MainModel
+     */
     public MenuController(MainModel mainModel) {
         this.mainModel = mainModel;
     }
-
+    /**
+     * ActionListener
+     * @param e ActionEvent
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
