@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class ChatHandler implements Runnable{
 
-    /*  Static ArrayList of every chatClientHandler object that we have instantiated.
+    /**  Static ArrayList of every chatClientHandler object that we have instantiated.
         Keep track of all our clients so that whenever a client sends a message we can loop through ArrayList of
         clients and send a message to each client.
         Responsible for allowing to communicate messages to multiple clients.
@@ -23,11 +23,12 @@ public class ChatHandler implements Runnable{
     private BufferedWriter bufferedWriter;
     private String clientUsername;
 
-    /*  Constructor
+    /**  Constructor
         Socket represents a connecting between server - clientHandler - client.
         Each socket connection has an OutputStream used to SEND data to server
         and a InputStream used to READ data from server.
         Using Buffer which will make the communication more efficient.
+        @param socket takes in socket connection.
     */
     public ChatHandler(Socket socket) {
         try {
@@ -42,7 +43,7 @@ public class ChatHandler implements Runnable{
         }
     }
 
-    /*  This method is run on a separated thread, listening for messages.
+    /**  This method is run on a separated thread, listening for messages.
         Blocking operation - the program will be stuck until the operation is completed.
         If multiple-threads not used, program will be stuck waiting for a message from a client.
         So instead - use a separated thread waiting for messages and another one working with the rest of application
@@ -62,10 +63,11 @@ public class ChatHandler implements Runnable{
         }
     }
 
-    /*  broadcastMessage-method which will be used to send the message client wrote
+    /**  broadcastMessage-method which will be used to send the message client wrote
         to everyone in the chat.
         Method takes the message that we want to send.
         Looping through chatClientHandlers ArrayList to send message to every client connected.
+        @param messageToSend takes in string to broadcast message.
      */
     public void broadcastMessage(String messageToSend) {
         for(ChatHandler chatHandler : chatHandlers) {
@@ -81,7 +83,7 @@ public class ChatHandler implements Runnable{
         }
     }
 
-    /*  Method to signal that a user has disconnected from the chat.
+    /**  Method to signal that a user has disconnected from the chat.
         Remove the client from the arrayList
      */
     public void removeChatClientHandler() {
@@ -89,8 +91,11 @@ public class ChatHandler implements Runnable{
         broadcastMessage("SERVER: " + clientUsername + " has left the chat!");
     }
 
-    /*  Method to close everything.
+    /**  Method to close everything.
         This method is used to close down the connection and streams.
+        @param socket takes in socket to close connection.
+        @param bufferedReader takes in stream to close the connection.
+        @param bufferedWriter takes in stream to close the connection.
      */
     public void closeEverything(Socket socket, BufferedReader bufferedReader, BufferedWriter bufferedWriter) {
         removeChatClientHandler();
