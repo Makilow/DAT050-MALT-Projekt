@@ -22,7 +22,7 @@ public class ChatClient {
      */
     public ChatClient(Socket socket, String username) {
         try {
-        //    this.socket = socket;
+            this.socket = socket;
             this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())); // Send Text-Data
             this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));   // Read Text-Data
             this.username = username;
