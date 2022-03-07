@@ -7,27 +7,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-
 /**
  * DBMS, uses SQL queries fore communication
  * Do not forget to "Apply" jarfile!
  *
  * @author Tomas Alander & Tor Falkenberg
+ * @version 2022-03-07
  */
 
 public class DatabaseHandler {
 
-    private DBMSConnection dbms;
-    private Connection con;
-    private Statement st;
-    private ResultSet rs;
-    private final String url = "jdbc:mysql://85.10.205.173:3306/playerscore";
-    private final String user = "tomasa";
-    private final String password = "blackjack";
-    private final String databaseName = "playerscore";
-    private final String tableName = "Scoreboard";
-    private final String kol1 = "name";
-    private final String kol2 = "credits";
+    private String url = "jdbc:mysql://85.10.205.173:3306/playerscore";
+    private String user = "tomasa";
+    private String password = "blackjack";
+    private String jdbcDriver = "com.mysql.cj.jdbc.Driver";
 
     private final String insertQuery = "INSERT INTO Scoreboard VALUES(?,?);";
     private final String getAllQuery = "SELECT* FROM Scoreboard;";
@@ -43,12 +36,26 @@ public class DatabaseHandler {
     public DatabaseHandler() {}
 
     /**
+     * Constructor mainly fore JUnit test purpose.
+     * @param user
+     * username to your local database
+     * @param password
+     * password to your local database
+     */
+    public DatabaseHandler(String user,String password) {
+        this.user = user;
+        this.password = password;
+        this.url = "jdbc:h2:~/test";
+        this.jdbcDriver = "org.h2.Driver";
+    }
+
+    /**
      * Creates a sorted ArrayList of all players stored in the database
      *
      */
     public List<Player> getScoreBoard(){
         List<Player> playerList = new ArrayList<>();
-        try (DBMSConnection dbms = new DBMSConnection(url, user, password);
+        try (DBMSConnection dbms = new DBMSConnection(this.url, this.user, this.password, this.jdbcDriver);
              Connection con = dbms.connect();){
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(sortPlayerQuery);
@@ -70,16 +77,42 @@ public class DatabaseHandler {
      * @return int
      * A players credit given the players name
      */
-    //=================Redundant function?================
     public int getCredits(String player){
         int ret = -1;
-        try (DBMSConnection dbms = new DBMSConnection(url, user, password);
+        try (DBMSConnection dbms = new DBMSConnection(this.url, this.user, this.password, this.jdbcDriver);
             Connection con = dbms.connect();){
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(getCreditsQuery + "'" + player + "'" + ";");
             rs.next();                 // Låt stå!
             ret = rs.getInt(1);
             rs.close();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return ret;
+    }
+
+    /**
+     * if player is in the database table Scoreboard return true
+     *
+     * @param player
+     * A String players name
+     * @return boolean
+     */
+    public boolean playerName(String player){
+        boolean ret = false;
+        try (DBMSConnection dbms = new DBMSConnection(this.url, this.user, this.password, this.jdbcDriver);
+            Connection con = dbms.connect();){
+            PreparedStatement ps = con.prepareStatement(findPlayerQuery);
+            ps.setString(1, player);
+            ResultSet rs = ps.executeQuery();
+            if (!rs.next()) {
+                System.out.println("Where are no player named " + player + " in this table");
+                rs.close();
+            } else {
+                rs.close();
+                ret = true;
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -100,46 +133,19 @@ public class DatabaseHandler {
             System.out.println("credits must be greater than 0");
             return;
         }
-        try (DBMSConnection dbms = new DBMSConnection(url, user, password);
-            Connection con = dbms.connect();){
+        try (DBMSConnection dbms = new DBMSConnection(this.url, this.user, this.password, this.jdbcDriver);
+             Connection con = dbms.connect();){
             if(getPlayerName(player,con)){
-            oldCredits = this.getPlayerCredits(player,con);
-            PreparedStatement ps = con.prepareStatement(addCreditsQuery);
-            ps.setInt(1, credits + oldCredits);
-            ps.setString(2, player);
-            ps.execute();
-            System.out.println("PreparedStatement Insert  successful. name = " + player + ", credits added = " + credits);
+                oldCredits = this.getPlayerCredits(player,con);
+                PreparedStatement ps = con.prepareStatement(addCreditsQuery);
+                ps.setInt(1, credits + oldCredits);
+                ps.setString(2, player);
+                ps.execute();
+                System.out.println("PreparedStatement Insert  successful. name = " + player + ", credits added = " + credits);
             }else System.out.println("Where are no players named " + player + " in this table");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    /**
-     * if player is in the database table Scoreboard return true
-     *
-     * @param player
-     * A String players name
-     * @return boolean
-     */
-    public boolean playerName(String player){
-        boolean ret = false;
-        try (DBMSConnection dbms = new DBMSConnection(url, user, password);
-            Connection con = dbms.connect();){
-            PreparedStatement ps = con.prepareStatement(findPlayerQuery);
-            ps.setString(1, player);
-            ResultSet rs = ps.executeQuery();
-            if (!rs.next()) {
-                System.out.println("Where are no players named " + player + " in this table");
-                rs.close();
-            } else {
-                rs.close();
-                ret = true;
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        return ret;
     }
 
     /**
@@ -150,7 +156,7 @@ public class DatabaseHandler {
      */
     public void removePlayer(String player) {
         int n = 0;
-        try (DBMSConnection dbms = new DBMSConnection(url, user, password);
+        try (DBMSConnection dbms = new DBMSConnection(this.url, this.user, this.password, this.jdbcDriver);
             Connection con = dbms.connect();){
             PreparedStatement ps = con.prepareStatement(deletePlayerQuery);
             ps.setString(1, player);
@@ -178,7 +184,7 @@ public class DatabaseHandler {
             System.out.println("Credits cannot be negative!");
             return;
         }
-            try (DBMSConnection dbms = new DBMSConnection(url, user, password);
+            try (DBMSConnection dbms = new DBMSConnection(this.url, this.user, this.password, this.jdbcDriver);
                 Connection con = dbms.connect();){
                 if (!this.getPlayerName(player,con)) {
                     PreparedStatement ps = con.prepareStatement(insertQuery);
@@ -197,7 +203,7 @@ public class DatabaseHandler {
      */
     public HashMap map() {
         HashMap<String, Integer> mapPlayers = new HashMap<>();
-        try (DBMSConnection dbms = new DBMSConnection(url, user, password);
+        try (DBMSConnection dbms = new DBMSConnection(this.url, this.user, "",this.jdbcDriver);
             Connection con = dbms.connect();){
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(getAllQuery);
@@ -217,7 +223,7 @@ public class DatabaseHandler {
      * A Sting of a players name
      */
     public Player player(String name) {
-        try (DBMSConnection dbms = new DBMSConnection(url, user, password);
+        try (DBMSConnection dbms = new DBMSConnection(this.url, this.user, this.password, this.jdbcDriver);
             Connection con = dbms.connect();){
             if (getPlayerName(name,con)) {
                 Statement st = con.createStatement();
@@ -242,7 +248,7 @@ public class DatabaseHandler {
      */
     public void addPlayerData(Player player){
 
-        try (DBMSConnection dbms = new DBMSConnection(url, user, password);
+        try (DBMSConnection dbms = new DBMSConnection(this.url, this.user, this.password, this.jdbcDriver);
             Connection con = dbms.connect();){
             if (!getPlayerName(player.getName(), con)) {
                 PreparedStatement ps = con.prepareStatement(insertQuery);
@@ -269,7 +275,7 @@ public class DatabaseHandler {
             ps.setString(1, player);
             ResultSet rs = ps.executeQuery();
             if (!rs.next()) {
-                System.out.println("Where are no players named " + player + " in this table");
+                System.out.println("Where are no player named " + player + " in this table");
                 rs.close();
             } else {
                 rs.close();
@@ -296,31 +302,17 @@ public class DatabaseHandler {
         return ret;
     }
 
-    //================For test purpose========================
-/*
-    public static void main(String[] args) throws Exception {
-        DatabaseHandler databaseHandler = new DatabaseHandler();
-        HashMap<String, Integer> mapScoreboard = databaseHandler.map();
-        mapScoreboard.forEach((k, v) -> {
-            System.out.println("name: " + k + " credits: " + v);
-        }); }
-    //      databaseHandler.addNewPlayer("Jonas",111);
-    // List<Player>player = databaseHandler.getScoreBoard();
-    //Player jon = new Player("jon",333);
-    //databaseHandler.addPlayerData(jon);
-    //Player Karin = databaseHandler.player("Karin");
-    // databaseHandler.addCredits("Tomas",333);
-    // databaseHandler.addCredits("Karin",123);
-*/
     private class DBMSConnection implements AutoCloseable{
         private String url;
         private String user;
         private String password;
+        private String jdbcDriver;
 
-        public DBMSConnection(String url, String user, String password) {
+        public DBMSConnection(String url, String user, String password, String jdbcDriver) {
             this.url = url;
             this.user = user;
             this.password = password;
+            this.jdbcDriver = jdbcDriver;
         }
 
         /**
@@ -331,15 +323,15 @@ public class DatabaseHandler {
          * @throws SQLException
          */
         public Connection connect() throws ClassNotFoundException, SQLException {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName(this.jdbcDriver);
             Connection con = DriverManager.getConnection(this.url, this.user, this.password);
-            System.out.println("Connection established");
+           // System.out.println("Connection established");
             return con;
         }
 
         @Override
         public void close() throws Exception {
-            System.out.println("Connection closet");
+           // System.out.println("Connection closet");
         }
     }
 }
