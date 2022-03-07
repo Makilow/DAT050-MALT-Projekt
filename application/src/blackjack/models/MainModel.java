@@ -37,7 +37,11 @@ public class MainModel implements Observable<MainModel> {
     private boolean activeGame, playerActionsNeeded, showSecond;
     private int timerCounter;
 
-
+    // chat
+    ChatClient chatClient;
+    private String username;
+    ArrayList<String> messages = new ArrayList<>();
+    
     //Constructor
     public MainModel() { state = State.MENU; }
 
@@ -258,7 +262,39 @@ public class MainModel implements Observable<MainModel> {
 
         }
     }
+    
+    /*-----------------------
+        Chat functions
+      -----------------------*/
 
+    public void setChatUsername(String uname) {
+        username = uname;
+    }
+    private void startChat() {
+        Socket socket = null;
+        try {
+            socket = new Socket("localhost", 1234);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        chatClient = new ChatClient(socket, username, this);
+        addToMessages("Welcome " + username + "!");
+        chatClient.listenForMessage();
+    }
+    public void sendMessage(String message) {
+        chatClient.sendMessage(message);
+        addToMessages("Me: "+message);
+    }
+    public ArrayList<String> getMessages() {
+        return messages;
+    }
+    public void addToMessages(String message) {
+        messages.add(0,message);
+        if (messages.size() > 50) {
+            messages.remove(50);
+        }
+        updateObservers();
+    }
     
     /*-----------------------
          Observer functions
