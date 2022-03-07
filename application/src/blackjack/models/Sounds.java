@@ -12,19 +12,18 @@ public class Sounds {
     private String[] sounds = new String[30];
 
     public Sounds() {
-        sounds[0] = "src/sounds/bmusic1.wav";
-        sounds[1] = "src/sounds/bmusic2.wav";
-        sounds[2] = "src/sounds/chips.wav";
-        sounds[3] = "src/sounds/dealcard.wav";
-        sounds[4] = "src/sounds/shuffle.wav";
-        sounds[5] = "src/sounds/win.wav";
-        sounds[6] = "src/sounds/win1.wav";
+        sounds[0] = "sounds/bmusic1.wav";
+        sounds[1] = "sounds/bmusic2.wav";
+        sounds[2] = "sounds/chips.wav";
+        sounds[3] = "sounds/dealcard.wav";
+        sounds[4] = "sounds/shuffle.wav";
+        sounds[5] = "sounds/win.wav";
+        sounds[6] = "sounds/win1.wav";
     }
 
     public void setFile(int i){
-        file = new File(sounds[i]);
         try{
-            AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(getClass().getClassLoader().getResource(sounds[i]));
             clip = AudioSystem.getClip();
             clip.open(audioStream);
         }catch (Exception e) {
