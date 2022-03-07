@@ -20,7 +20,11 @@ public enum Rank {
 
     private final String name;
     Rank(String name) { this.name = name;}
-
+    
+    /**
+     * toString function, returns the current Rank in String
+     * @return  Rank as a String
+     */
     @Override
     public String toString() {return name;}
 }
