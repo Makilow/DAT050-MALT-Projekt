@@ -30,7 +30,7 @@ class JUnitTestOWApi {
         assertEquals(weatherError,openWeather.getLocalWeather(91,-115.172813));
         assertEquals(weatherError,openWeather.getLocalWeather(50,-180.172813));
         assertEquals(weatherError,openWeather.getLocalWeather(50,180.172813));
-        Assert.assertNotEquals(weatherError,openWeather.getLocalWeather(36.114647,-115.172813));
+        Assertions.assertNotEquals(weatherError,openWeather.getLocalWeather(36.114647,-115.172813));
     }
 
     @Test
