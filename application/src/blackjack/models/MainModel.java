@@ -3,7 +3,6 @@ package blackjack.models;
 import blackjack.Observable;
 import blackjack.Observer;
 import blackjack.views.State;
-import blackjack.controllers.SoundController;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,7 +15,7 @@ import javax.swing.Timer;
 
 /**
  * MainModel, represents a Model as per MVC-design
- * @author Lukas Wigren, Tomas Alander, Tor Falkenberg
+ * @author Lukas Wigren, Tomas Alander, Tor Falkenberg, Mark Villarosa
  */
 public class MainModel implements Observable<MainModel> {
 
@@ -26,6 +25,8 @@ public class MainModel implements Observable<MainModel> {
     private final Collection<Observer<MainModel>> observers = new HashSet<>();
     private boolean isFullscreen = false;
     private boolean soundON = true;
+    private int currentSong;
+    private final Sounds sound = new Sounds();
     private int nrOfPlayers = 5;            //Default number of players = 5
     private int timeBetweenRounds = 15;     //Default number of seconds between rounds
 
@@ -52,29 +53,6 @@ public class MainModel implements Observable<MainModel> {
     public State getState() { return state; }
     public boolean getIsFullscreen() { return isFullscreen; }
     public void toggleFullscreen() { isFullscreen ^= true; updateObservers(); }
-    public boolean getSoundON() { return soundON; }
-    public void toggleSound() {
-        if (soundON) {
-            playMusic(2);
-        } else {
-            stopMusic();
-        }
-    }
-    public void playMusic(int i){
-        sound.setFile(i);
-        sound.play();
-        sound.loop();
-    }
-
-    public void stopMusic(){
-        sound.play();
-        sound.stop();
-    }
-
-    public void playSE(int i){
-        sound.setFile(i);
-        sound.play();
-    }
     public void setNrOfPlayers (int nrOfPlayers) { this.nrOfPlayers = nrOfPlayers; }
     public void setTimeBetweenRounds (int timeBetweenRounds) { this.timeBetweenRounds = timeBetweenRounds; }
 
@@ -89,7 +67,33 @@ public class MainModel implements Observable<MainModel> {
     public boolean playerActionsNeeded() { return playerActionsNeeded; }
 
     public int getTimerCounter() { return timerCounter; }
+    
+    public void playSE(int i){
+        sound.setFile(i);
+        sound.play();
+    }
 
+    public boolean getSoundON() {
+        return soundON;
+    }
+
+    public void toggleSound() {
+        soundON ^= true;
+        if (soundON) {
+            sound.setFile(currentSong);
+            sound.play();
+            sound.loop();
+        } else sound.stop();
+    }
+    public void switchSong(int song) {
+        sound.stop();
+        currentSong = song;
+        sound.setFile(currentSong);
+        if (soundON) {
+            sound.play();
+        }
+    }
+    public int currentSong() {return currentSong;}
 
     /*-----------------------
          Game functions
@@ -219,7 +223,6 @@ public class MainModel implements Observable<MainModel> {
         if (!activeGame) {return;}
         // göra här
     }
-
 
 
     private void dealDealer() {
