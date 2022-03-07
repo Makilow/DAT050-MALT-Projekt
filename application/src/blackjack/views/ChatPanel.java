@@ -16,6 +16,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.ResourceBundle;
 
 import com.intellij.uiDesigner.core.*;
@@ -26,37 +28,35 @@ import com.intellij.uiDesigner.core.*;
  */
 public class ChatPanel extends JPanel implements Observer<MainModel> {
 
-    private ChatServer chatServer;
-    private ChatClient chatClient;
-    private ChatHandler chatHandler;
-
-
     public ChatPanel(ChatController chatController) {
         initComponents();
         returnButton.setActionCommand(State.MENU.toString());
         sendButton.setActionCommand("SEND");
         returnButton.addActionListener(chatController);
         sendButton.addActionListener(chatController);
+        sendButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                msgText.setText("");
+            }
+        });
+        msgText.addKeyListener(chatController);
         setLayout(new GridLayout(1, 0));
         add(panel);
     }
 
-    public void initialize(URL location, ResourceBundle resource) {
-        try {
-            chatServer = new ChatServer(new ServerSocket(1234));
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Error creating the server!");
+    private void updateChat(ArrayList<String> messages) {
+        String text = "";
+        for (int i = messages.size()-1; i >= 0; i--) {
+            text += "\n" + messages.get(i);
         }
-
-        //chatHandler.run(msgArea);
-
+        msgArea.setText(text);
     }
-
 
     @Override
     public void update(MainModel o) {
         if (o.getState() != State.CHAT) {return;}
+        updateChat(o.getMessages());
         updateBackground(o.getWidth(), o.getHeight());
     }
     private void updateBackground(int width, int height) {
@@ -77,6 +77,7 @@ public class ChatPanel extends JPanel implements Observer<MainModel> {
     private void returnButtonKeyPressed(KeyEvent e) {
 
     }
+
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
@@ -132,6 +133,9 @@ public class ChatPanel extends JPanel implements Observer<MainModel> {
 
                 //======== scrollPane1 ========
                 {
+
+                    //---- msgArea ----
+                    msgArea.setEditable(false);
                     scrollPane1.setViewportView(msgArea);
                 }
                 panel1.add(scrollPane1, new GridConstraints(0, 7, 1, 4,
