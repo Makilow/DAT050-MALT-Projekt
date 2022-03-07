@@ -10,13 +10,15 @@ import java.awt.event.ItemListener;
 
 /**
  * SettingController, a controller for scoreboardPanel
- * @author  Lukas Wigren
+ * @author  Lukas Wigren. Mark Villarosa
  */
 public class SettingController implements ActionListener, ItemListener {
-    MainModel mainModel;
-    int width = 1280, height = 720;
-    boolean isFullscreen = false;
-    boolean soundON = true;
+    private MainModel mainModel;
+    private int  width = 1280, height = 720;
+    private boolean isFullscreen = false;
+    private boolean soundON = false;
+    private int song;
+
     public SettingController(MainModel mainModel) {
         this.mainModel = mainModel;
     }
@@ -25,9 +27,16 @@ public class SettingController implements ActionListener, ItemListener {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "OK" -> {
-                mainModel.setSize(width,height);
-                if (mainModel.getIsFullscreen() != isFullscreen) {mainModel.toggleFullscreen();}
-                if (mainModel.getSoundON() != soundON) {mainModel.toggleSound();}
+                mainModel.setSize(width, height);
+                if (mainModel.getIsFullscreen() != isFullscreen) {
+                    mainModel.toggleFullscreen();
+                }
+                if (mainModel.getSoundON() != soundON) {
+                    mainModel.toggleSound();
+                }
+                if (mainModel.currentSong() != song) {
+                    mainModel.switchSong(song);
+                }
                 mainModel.setState(State.MENU);
             }
             case "CANCEL" -> mainModel.setState(State.MENU);
@@ -51,6 +60,12 @@ public class SettingController implements ActionListener, ItemListener {
             case "1280x720" -> {
                 width = 1280;
                 height = 720;
+            }
+            case "Music 1" -> {
+                song = 0; System.out.println("YOOOOOOOOO 1");
+            }
+            case "Music 2" -> {
+                song = 1; System.out.println("YOOOOOOOOO 2");
             }
             default -> System.out.println("HOW DID WE GET HERE");
         }
