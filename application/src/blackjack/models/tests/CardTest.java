@@ -1,4 +1,4 @@
-package blackjack.models;
+package blackjack.models.tests;
 
 import blackjack.models.Card;
 import blackjack.models.Rank;
