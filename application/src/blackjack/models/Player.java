@@ -16,6 +16,7 @@ public class Player {
         money = 1000;
     }
     public Player(String name, double money) {
+        if (name == null) { throw new NullPointerException();}
         this.name = name;
         this.money = money;
     }
