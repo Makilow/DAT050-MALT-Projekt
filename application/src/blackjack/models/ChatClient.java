@@ -15,12 +15,13 @@ public class ChatClient {
     private BufferedReader bufferedReader;
     private BufferedWriter bufferedWriter;
     private String username;
-
+    MainModel mainModel;
     /*  Constructor used to instantiate every property.
         It takes a socket object for communication with server or chatClientHandler.
         It also takes a String username to actually represent the client
      */
-    public ChatClient(Socket socket, String username) {
+    public ChatClient(Socket socket, String username, MainModel mainModel) {
+        this.mainModel = mainModel;
         try {
             this.socket = socket;
             this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())); // Send Text-Data
@@ -34,18 +35,12 @@ public class ChatClient {
     /*  Method to send messages to our ChatClientHandler.
         Basically the connection the server has spawned to handle a client.
      */
-    public void sendMessage() {
+    public void sendMessage(String messageToSend) {
         try {
             bufferedWriter.write(username);
             bufferedWriter.newLine();
             bufferedWriter.flush();
-
-            /* Get what data the user typed into the chat-console with the scanner
-                and then send it over.
-             */
-            Scanner scanner = new Scanner(System.in);
-            while (socket.isConnected()) {
-                String messageToSend = scanner.nextLine();
+            if (socket.isConnected()) {
                 bufferedWriter.write(username + ": " + messageToSend);
                 bufferedWriter.newLine();
                 bufferedWriter.flush();
@@ -68,11 +63,10 @@ public class ChatClient {
             @Override
             public void run() {
                 String messageFromChat;
-
                 while (socket.isConnected()) {
                     try {
                         messageFromChat = bufferedReader.readLine();
-                        System.out.println(messageFromChat);
+                        mainModel.addToMessages(messageFromChat);
                     } catch (IOException e) {
                         closeEverything(socket, bufferedReader, bufferedWriter);
                     }
@@ -98,16 +92,5 @@ public class ChatClient {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public static void main(String[] args) throws IOException {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter your Username for the chat: ");
-        String username = scanner.nextLine();
-        Socket socket = new Socket("localhost", 1234);
-        ChatClient chatClient = new ChatClient(socket, username);
-        System.out.println("Welcome " + username + "!");
-        chatClient.listenForMessage();
-        chatClient.sendMessage();
     }
 }
