@@ -16,9 +16,11 @@ public class ChatClient {
     private BufferedWriter bufferedWriter;
     private String username;
     MainModel mainModel;
-    /*  Constructor used to instantiate every property.
-        It takes a socket object for communication with server or chatClientHandler.
-        It also takes a String username to actually represent the client
+
+    /**  Constructor used to instantiate every property.
+     @param socket It takes a socket object for communication with server or chatClientHandler.
+     @param username takes a String username to represent the client.
+     @param mainModel takes MainModel in.
      */
     public ChatClient(Socket socket, String username, MainModel mainModel) {
         this.mainModel = mainModel;
@@ -32,8 +34,9 @@ public class ChatClient {
         }
     }
 
-    /*  Method to send messages to our ChatClientHandler.
+    /**  Method to send messages to our ChatClientHandler.
         Basically the connection the server has spawned to handle a client.
+        @param messageToSend takes a string to send message.
      */
     public void sendMessage(String messageToSend) {
         try {
@@ -50,7 +53,7 @@ public class ChatClient {
         }
     }
 
-    /*  Method for listening for messages from the server.
+    /**  Method for listening for messages from the server.
         This will be the broadcasted messages from other users.
         New thread will be used because as we'll be listening for messages
         this will be a blocking operation.
@@ -75,8 +78,11 @@ public class ChatClient {
         }).start();
     }
 
-    /*  Method to close everything.
+    /**  Method to close everything.
         This method is used to close down the connection and streams.
+        @param socket takes in socket to close connection.
+        @param bufferedReader takes in stream to close the connection.
+        @param bufferedWriter takes in stream to close the connection.
      */
     public void closeEverything(Socket socket, BufferedReader bufferedReader, BufferedWriter bufferedWriter) {
         try {
