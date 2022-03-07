@@ -13,10 +13,17 @@ import java.awt.event.ActionListener;
  */
 public class ScoreboardController implements ActionListener {
     private MainModel mainModel;
+    /**
+     * Constructor for ScoreboardController
+     * @param mainModel The MainModel
+     */
     public ScoreboardController(MainModel mainModel) {
         this.mainModel = mainModel;
     }
-
+    /**
+     * ActionListener
+     * @param e ActionEvent
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if ("EXIT".equals(e.getActionCommand())) {
