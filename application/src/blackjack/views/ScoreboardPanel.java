@@ -56,16 +56,6 @@ public class ScoreboardPanel extends JPanel implements Observer<MainModel> {
         scorePanel.revalidate();
     }
 
-        for (Player player : list) {
-            JLabel l = new JLabel(player.getName() + ": " + (int)player.getBalance());
-            l.setAlignmentX(Component.CENTER_ALIGNMENT);
-            l.setFont(l.getFont().deriveFont(l.getFont().getSize() + 9f));
-            l.setForeground(Color.BLACK);
-            scorePanel.add(l);
-        }
-        scorePanel.revalidate();
-    }
-
     @Override
     public void update(MainModel o) {
         if (o.getState() != State.SCOREBOARD) {return;}
