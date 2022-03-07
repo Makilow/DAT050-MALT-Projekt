@@ -74,14 +74,15 @@ public class MenuPanel extends JPanel implements Observer<MainModel> {
         panel1 = new JPanel();
         var vSpacer3 = new Spacer();
         startButton = new JButton();
-        settingsButton = new JButton();
-        rulesButton = new JButton();
-        scoreboardButton = new JButton();
-        exitButton = new JButton();
         panel2 = new JTextArea();
         var vSpacer1 = new Spacer();
+        chatButton = new JButton();
         var hSpacer2 = new Spacer();
+        scoreboardButton = new JButton();
         var hSpacer3 = new Spacer();
+        settingsButton = new JButton();
+        rulesButton = new JButton();
+        exitButton = new JButton();
         var vSpacer2 = new Spacer();
         bordet = new JLabel();
 
@@ -103,7 +104,7 @@ public class MenuPanel extends JPanel implements Observer<MainModel> {
                 panel1.setMinimumSize(null);
                 panel1.setMaximumSize(null);
                 panel1.setPreferredSize(new Dimension(1280, 720));
-                panel1.setLayout(new GridLayoutManager(9, 3, new Insets(0, 0, 0, 0), 5, -1, true, false));
+                panel1.setLayout(new GridLayoutManager(11, 3, new Insets(0, 0, 0, 0), 5, -1, true, false));
                 panel1.add(vSpacer3, new GridConstraints(0, 1, 1, 1,
                     GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL,
                     GridConstraints.SIZEPOLICY_CAN_SHRINK,
@@ -141,60 +142,6 @@ public class MenuPanel extends JPanel implements Observer<MainModel> {
                     GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
                     null, null, null));
 
-                //---- settingsButton ----
-                settingsButton.setBorderPainted(false);
-                settingsButton.setContentAreaFilled(false);
-                settingsButton.setIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_settings.png")));
-                settingsButton.setRolloverSelectedIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_settingsH.png")));
-                settingsButton.setSelected(true);
-                settingsButton.setText("");
-                panel1.add(settingsButton, new GridConstraints(4, 1, 1, 1,
-                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-                    null, null, null));
-
-                //---- rulesButton ----
-                rulesButton.setBorderPainted(false);
-                rulesButton.setContentAreaFilled(false);
-                rulesButton.setIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_rules.png")));
-                rulesButton.setLabel("");
-                rulesButton.setRolloverSelectedIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_rulesH.png")));
-                rulesButton.setSelected(true);
-                rulesButton.setText("");
-                panel1.add(rulesButton, new GridConstraints(5, 1, 1, 1,
-                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-                    null, null, null));
-
-                //---- scoreboardButton ----
-                scoreboardButton.setBorderPainted(false);
-                scoreboardButton.setContentAreaFilled(false);
-                scoreboardButton.setIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_scoreboard.png")));
-                scoreboardButton.setRolloverSelectedIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_scoreboardH.png")));
-                scoreboardButton.setSelected(true);
-                scoreboardButton.setText("");
-                panel1.add(scoreboardButton, new GridConstraints(6, 1, 1, 1,
-                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-                    null, null, null));
-
-                //---- exitButton ----
-                exitButton.setBorderPainted(false);
-                exitButton.setContentAreaFilled(false);
-                exitButton.setIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_exit.png")));
-                exitButton.setLabel("");
-                exitButton.setRolloverSelectedIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_exitH.png")));
-                exitButton.setSelected(true);
-                exitButton.setText("");
-                panel1.add(exitButton, new GridConstraints(7, 1, 1, 1,
-                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-                    null, null, null));
-
                 //---- panel2 ----
                 panel2.setBackground(new Color(65, 4, 0));
                 panel2.setEditable(false);
@@ -221,17 +168,85 @@ public class MenuPanel extends JPanel implements Observer<MainModel> {
                     GridConstraints.SIZEPOLICY_CAN_SHRINK,
                     GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
                     null, null, null));
+
+                //---- chatButton ----
+                chatButton.setBorderPainted(false);
+                chatButton.setContentAreaFilled(false);
+                chatButton.setIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_chat.png")));
+                chatButton.setLabel("");
+                chatButton.setRolloverSelectedIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_chat.png")));
+                chatButton.setSelected(true);
+                chatButton.setText("");
+                panel1.add(chatButton, new GridConstraints(4, 1, 1, 1,
+                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                    null, null, null));
                 panel1.add(hSpacer2, new GridConstraints(5, 0, 1, 1,
                     GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
                     GridConstraints.SIZEPOLICY_CAN_GROW | GridConstraints.SIZEPOLICY_WANT_GROW,
                     GridConstraints.SIZEPOLICY_CAN_SHRINK,
+                    null, null, null));
+
+                //---- scoreboardButton ----
+                scoreboardButton.setBorderPainted(false);
+                scoreboardButton.setContentAreaFilled(false);
+                scoreboardButton.setIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_scoreboard.png")));
+                scoreboardButton.setRolloverSelectedIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_scoreboardH.png")));
+                scoreboardButton.setSelected(true);
+                scoreboardButton.setText("");
+                panel1.add(scoreboardButton, new GridConstraints(5, 1, 1, 1,
+                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
                     null, null, null));
                 panel1.add(hSpacer3, new GridConstraints(5, 2, 1, 1,
                     GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
                     GridConstraints.SIZEPOLICY_CAN_GROW | GridConstraints.SIZEPOLICY_WANT_GROW,
                     GridConstraints.SIZEPOLICY_CAN_SHRINK,
                     null, null, null));
-                panel1.add(vSpacer2, new GridConstraints(8, 1, 1, 1,
+
+                //---- settingsButton ----
+                settingsButton.setBorderPainted(false);
+                settingsButton.setContentAreaFilled(false);
+                settingsButton.setIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_settings.png")));
+                settingsButton.setRolloverSelectedIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_settingsH.png")));
+                settingsButton.setSelected(true);
+                settingsButton.setText("");
+                panel1.add(settingsButton, new GridConstraints(6, 1, 1, 1,
+                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                    null, null, null));
+
+                //---- rulesButton ----
+                rulesButton.setBorderPainted(false);
+                rulesButton.setContentAreaFilled(false);
+                rulesButton.setIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_rules.png")));
+                rulesButton.setLabel("");
+                rulesButton.setRolloverSelectedIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_rulesH.png")));
+                rulesButton.setSelected(true);
+                rulesButton.setText("");
+                panel1.add(rulesButton, new GridConstraints(7, 1, 1, 1,
+                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                    null, null, null));
+
+                //---- exitButton ----
+                exitButton.setBorderPainted(false);
+                exitButton.setContentAreaFilled(false);
+                exitButton.setIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_exit.png")));
+                exitButton.setLabel("");
+                exitButton.setRolloverSelectedIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_exitH.png")));
+                exitButton.setSelected(true);
+                exitButton.setText("");
+                panel1.add(exitButton, new GridConstraints(8, 1, 1, 1,
+                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
+                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                    null, null, null));
+                panel1.add(vSpacer2, new GridConstraints(9, 1, 1, 1,
                     GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL,
                     GridConstraints.SIZEPOLICY_CAN_SHRINK,
                     GridConstraints.SIZEPOLICY_CAN_GROW | GridConstraints.SIZEPOLICY_WANT_GROW,
@@ -261,12 +276,12 @@ public class MenuPanel extends JPanel implements Observer<MainModel> {
     private JPanel panel;
     private JPanel panel1;
     private JButton startButton;
+    private JTextArea panel2;
+    private JButton chatButton;
+    private JButton scoreboardButton;
     private JButton settingsButton;
     private JButton rulesButton;
-    private JButton scoreboardButton;
     private JButton exitButton;
-    private JTextArea panel2;
     private JLabel bordet;
-    private Jbutton chatButton;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
