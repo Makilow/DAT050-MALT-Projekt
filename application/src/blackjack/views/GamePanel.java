@@ -77,7 +77,7 @@ public class GamePanel extends JPanel implements Observer<MainModel> {
         panel1.setSize(new Dimension(width,height));
         BufferedImage bImage = null;
         try {
-            bImage = ImageIO.read(new File("src/icons/blackjackbord.jpg"));
+            bImage = ImageIO.read(getClass().getClassLoader().getResource("icons/blackjackbord.jpg"));
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Missing file: \"src/icons/blackjackbord.jpg\"");
@@ -156,7 +156,7 @@ public class GamePanel extends JPanel implements Observer<MainModel> {
     private ImageIcon cardImage(String filename) {
         BufferedImage bImage = null;
         try {
-            bImage = ImageIO.read(new File("src/icons/cards/" + filename));
+            bImage = ImageIO.read(getClass().getClassLoader().getResource("icons/cards/" + filename));
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Missing file: src/icons/cards/" + filename);
