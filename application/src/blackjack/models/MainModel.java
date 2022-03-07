@@ -109,10 +109,21 @@ public class MainModel implements Observable<MainModel> {
     public State getState() { return state; }
 
     //Sound methods
+    /**
+     * get function, for whether the sound is on/off
+     * @return  soundON boolean
+     */
     public boolean getSoundON() {
         return soundON;
     }
+    /**
+     * currentSong function returns the current song loaded
+     * @return  the current song
+     */
     public int currentSong() {return currentSong;}
+    /**
+     * toggles the sound
+     */
     public void toggleSound() {
         soundON ^= true;
         if (soundON) {
@@ -121,10 +132,18 @@ public class MainModel implements Observable<MainModel> {
             sound.loop();
         } else sound.stop();
     }
+    /**
+     * plays sound effect
+     * @param i index in sound list
+     */
     public void playSE(int i){
         sound.setFile(i);
         sound.play();
     }
+    /**
+     * switchSong function, switches the song to the index being sent
+     * @param song  the song index
+     */
     public void switchSong(int song) {
         sound.stop();
         currentSong = song;
