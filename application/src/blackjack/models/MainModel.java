@@ -6,12 +6,11 @@ import blackjack.views.State;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
+import java.io.IOException;
+import java.net.Socket;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
 import java.util.*;
-import javax.swing.Timer;
+import javax.swing.*;
 
 /**
  * MainModel, represents a Model as per MVC-design
@@ -319,7 +318,7 @@ public class MainModel implements Observable<MainModel> {
     public void setChatUsername(String uname) {
         username = uname;
     }
-    private void startChat() {
+    private void startChat() throws IOException {
         Socket socket = null;
         socket = new Socket("localhost", 1234);
         chatClient = new ChatClient(socket, username, this);
