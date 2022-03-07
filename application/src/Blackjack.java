@@ -5,7 +5,6 @@ import blackjack.views.State;
 
 import javax.swing.*;
 import java.awt.*;
-import java.sql.SQLException;
 
 /**
  * The Blackjack class.. starts the program... something something .. can be run in thread
