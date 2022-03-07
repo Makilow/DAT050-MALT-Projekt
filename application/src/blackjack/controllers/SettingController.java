@@ -3,6 +3,7 @@ package blackjack.controllers;
 import blackjack.models.MainModel;
 import blackjack.views.State;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -27,7 +28,7 @@ public class SettingController implements ActionListener, ItemListener {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "OK" -> {
-                mainModel.setSize(width, height);
+
                 if (mainModel.getIsFullscreen() != isFullscreen) {
                     mainModel.toggleFullscreen();
                 }
@@ -38,6 +39,12 @@ public class SettingController implements ActionListener, ItemListener {
                     mainModel.switchSong(song);
                 }
                 mainModel.setState(State.MENU);
+                Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+                if (mainModel.getIsFullscreen()) {
+                    mainModel.setSize(screenSize.width, screenSize.height);
+                } else {
+                    mainModel.setSize(width, height);
+                }
             }
             case "CANCEL" -> mainModel.setState(State.MENU);
             case "FULLSCREEN" -> isFullscreen ^= true;
