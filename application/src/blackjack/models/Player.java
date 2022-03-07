@@ -12,9 +12,6 @@ public class Player {
     private double money;
 
     //Constructors
-    public Player() {
-        money = 1000;
-    }
     public Player(String name, double money) {
         if (name == null) { throw new NullPointerException();}
         this.name = name;
