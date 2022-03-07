@@ -5,6 +5,10 @@ import javax.swing.border.*;
 import blackjack.controllers.GameController;
 import blackjack.models.*;
 import blackjack.Observer;
+import blackjack.models.Card;
+import blackjack.models.Hand;
+import blackjack.models.MainModel;
+import blackjack.models.PlayerHand;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
