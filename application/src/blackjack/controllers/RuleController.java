@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 
 /**
  * RuleController, a controller for rulePanel
- * @author  Lukas Wigren, Mark
+ * @author  Lukas Wigren, Mark Villarosa
  */
 public class RuleController implements ActionListener {
     MainModel mainModel;
@@ -18,11 +18,8 @@ public class RuleController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        switch (e.getActionCommand()) {
-            case "MENU" -> mainModel.setState(State.MENU);
-            default -> {
-            }
+        if ("MENU".equals(e.getActionCommand())) {
+            mainModel.setState(State.MENU);
         }
     }
-
 }
