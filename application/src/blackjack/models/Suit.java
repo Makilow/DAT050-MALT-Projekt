@@ -11,7 +11,11 @@ public enum Suit {
 
     private final String name;
     Suit(String name) {this.name = name;}
-
+    
+    /**
+     * toString function, returns the current Suit in String
+     * @return  Suit as a String
+     */
     @Override
     public String toString() {return name;}
 }
