@@ -33,6 +33,7 @@ public class ChatServer {
                 thread.start();
             }
         } catch (IOException e) {
+             e.printStackTrace();
         }
     }
 
