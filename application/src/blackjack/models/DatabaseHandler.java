@@ -52,6 +52,7 @@ public class DatabaseHandler {
     /**
      * Creates a sorted ArrayList of all players stored in the database
      *
+     * @return  An ArrayList of Players
      */
     public List<Player> getScoreBoard(){
         List<Player> playerList = new ArrayList<>();
