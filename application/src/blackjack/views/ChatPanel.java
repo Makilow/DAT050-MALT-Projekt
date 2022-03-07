@@ -1,24 +1,17 @@
 package blackjack.views;
 
-import java.awt.event.*;
-import javax.imageio.ImageIO;
 import blackjack.Observer;
 import blackjack.controllers.ChatController;
-import blackjack.models.ChatClient;
-import blackjack.models.ChatHandler;
-import blackjack.models.ChatServer;
 import blackjack.models.MainModel;
 
+import java.awt.event.*;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.ResourceBundle;
 
 import com.intellij.uiDesigner.core.*;
 
@@ -27,7 +20,11 @@ import com.intellij.uiDesigner.core.*;
  * @author Arvin Allahbakhsh
  */
 public class ChatPanel extends JPanel implements Observer<MainModel> {
-
+    /**
+     * Constructor for ChatPanel
+     * Creates all the swing objects and listeners
+     * @param chatController    ChatController for listeners
+     */
     public ChatPanel(ChatController chatController) {
         initComponents();
         returnButton.setActionCommand(State.MENU.toString());
@@ -52,7 +49,11 @@ public class ChatPanel extends JPanel implements Observer<MainModel> {
         }
         msgArea.setText(text);
     }
-
+    /**
+     * Update functions, called by observer
+     * updates the panel with newly updated mainModel
+     * @param o MainModel
+     */
     @Override
     public void update(MainModel o) {
         if (o.getState() != State.CHAT) {return;}
@@ -73,12 +74,6 @@ public class ChatPanel extends JPanel implements Observer<MainModel> {
         Image image = bImage.getScaledInstance(width,height,Image.SCALE_SMOOTH);
         bordet.setIcon(new ImageIcon(image));
     }
-
-    private void returnButtonKeyPressed(KeyEvent e) {
-
-    }
-
-
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         panel = new JPanel();
@@ -122,7 +117,6 @@ public class ChatPanel extends JPanel implements Observer<MainModel> {
                 returnButton.addKeyListener(new KeyAdapter() {
                     @Override
                     public void keyPressed(KeyEvent e) {
-                        returnButtonKeyPressed(e);
                     }
                 });
                 panel1.add(returnButton, new GridConstraints(0, 5, 1, 1,
