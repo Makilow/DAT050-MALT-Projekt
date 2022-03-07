@@ -1,4 +1,4 @@
-package com.vogella.junit.first;
+package blackjack.models.tests;
 
 import blackjack.models.OpenWeatherApi;
 import org.junit.Assert;
