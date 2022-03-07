@@ -45,10 +45,6 @@ public class Blackjack implements Runnable {
         container.add(chatPanel, State.CHAT.toString());
         //
         mainView = new MainView(mainModel.getWidth(), mainModel.getHeight(), container);
-        // Listeners for mainView
-        mainView.addKeyListener(mainController);
-        mainView.addMouseListener(mainController);
-        mainView.addComponentListener(mainController);
         // Add observers
         mainModel.addObserver(mainView);
         mainModel.addObserver(menuPanel);
