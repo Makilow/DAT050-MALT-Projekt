@@ -28,7 +28,7 @@ public class MainModel implements Observable<MainModel> {
     private int currentSong;
     private final Sounds sound = new Sounds();
     private int nrOfPlayers = 5;            //Default number of players = 5
-    private int timeBetweenRounds = 15;     //Default number of seconds between rounds
+    private int timeBetweenRounds = 30;     //Default number of seconds between rounds
 
     //Local Game Variables
     private Dealer dealer;
@@ -41,42 +41,28 @@ public class MainModel implements Observable<MainModel> {
     //Constructor
     public MainModel() { state = State.MENU; }
 
-    // Screen & Setting methods
+    // Screen methods
     public void setSize(int width, int height) {this.width=width; this.height=height; updateObservers();}
     public int getWidth() {return width;}
     public int getHeight() {return height;}
+    public boolean getIsFullscreen() { return isFullscreen; }
+    public void toggleFullscreen() { isFullscreen ^= true; updateObservers(); }
+
+    //Setting methods
     public void setState(State state) {
         if (state == State.GAME) {startGame();}
         this.state = state;
         updateObservers();
     }
     public State getState() { return state; }
-    public boolean getIsFullscreen() { return isFullscreen; }
-    public void toggleFullscreen() { isFullscreen ^= true; updateObservers(); }
     public void setNrOfPlayers (int nrOfPlayers) { this.nrOfPlayers = nrOfPlayers; }
     public void setTimeBetweenRounds (int timeBetweenRounds) { this.timeBetweenRounds = timeBetweenRounds; }
 
-    //Public getter methods
-    public int getNrOfPlayers () { return nrOfPlayers; }
-    public int getTimeBetweenRounds () { return timeBetweenRounds; }
-    public List<PlayerHand> getHands() { return playerHandList; }
-    public List<Card> getDealerCards() { return dealerHand.getCards(); }
-    public boolean getShowSecond() { return showSecond;}
-    public boolean activeGame() { return activeGame; }
-
-    public boolean playerActionsNeeded() { return playerActionsNeeded; }
-
-    public int getTimerCounter() { return timerCounter; }
-    
-    public void playSE(int i){
-        sound.setFile(i);
-        sound.play();
-    }
-
+    //Sound methods
     public boolean getSoundON() {
         return soundON;
     }
-
+    public int currentSong() {return currentSong;}
     public void toggleSound() {
         soundON ^= true;
         if (soundON) {
@@ -84,6 +70,10 @@ public class MainModel implements Observable<MainModel> {
             sound.play();
             sound.loop();
         } else sound.stop();
+    }
+    public void playSE(int i){
+        sound.setFile(i);
+        sound.play();
     }
     public void switchSong(int song) {
         sound.stop();
@@ -93,7 +83,17 @@ public class MainModel implements Observable<MainModel> {
             sound.play();
         }
     }
-    public int currentSong() {return currentSong;}
+    
+    //Public getter methods
+    public int getNrOfPlayers () { return nrOfPlayers; }
+    public List<PlayerHand> getHands() { return playerHandList; }
+    public List<Card> getDealerCards() { return dealerHand.getCards(); }
+    public boolean getShowSecond() { return showSecond;}
+    public boolean activeGame() { return activeGame; }
+    public boolean playerActionsNeeded() { return playerActionsNeeded; }
+    public int getTimerCounter() { return timerCounter; }
+    
+
 
     /*-----------------------
          Game functions
@@ -127,7 +127,10 @@ public class MainModel implements Observable<MainModel> {
 
     private void setPlayerToHand(Player player, int seat) { playerHandList.get(seat).setPlayer(player);}
 
-    public void removePlayer(String name) { /* TODO*/ }
+    public void removePlayer(int seat) {
+        playerHandList.get(seat).removePlayer();
+        updateObservers();
+    }
 
     public void playerBet (int seatNr, int bet) {
         playerHandList.get(seatNr).bet(bet);
@@ -139,30 +142,34 @@ public class MainModel implements Observable<MainModel> {
     }
 
     private void waitForBet() {
-        timerCounter = timeBetweenRounds;
-        new Timer(1000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (timerCounter > 0) {
-                    timerCounter--;
-                    updateObservers();
+        if (activeGame) {
+            timerCounter = timeBetweenRounds;
+            new Timer(1000, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (timerCounter > 0) {
+                        timerCounter--;
+                        updateObservers();
                     } else {
-                    ((Timer)e.getSource()).stop();
-                    newRound();
-                }
+                        ((Timer)e.getSource()).stop();
+                        newRound();
+                    }
 
-            }
-        }).start();
+                }
+            }).start();
+        }
     }
 
     public void newRound() {
         showSecond = false;
         playerActionsNeeded = true;
-        //currentHand = 0;
         for (int i = 0; i < 2; i++) {
             for (PlayerHand playerHand : playerHandList) {
                 if (playerHand.getBet() > 0) {
                     playerHand.addCard(dealer.dealCard());
+                    if (i == 1) {
+                        playerHand.setActionDone(false);
+                    }
                 }
             }
             dealerHand.addCard(dealer.dealCard());
@@ -170,18 +177,9 @@ public class MainModel implements Observable<MainModel> {
         updateObservers();
     }
 
+    private boolean isBlackjack(PlayerHand hand) {return (hand.getValue() == 21) && (hand.getCards().size() == 2);}
     
-    //Updates the database with the score of all players in the "hands"-list.
-    public void dbUpdateScores () {
-        DatabaseHandler dbH = new DatabaseHandler();
-        for (PlayerHand hand : playerHandList) {
-            dbH.addPlayerData(hand.getPlayer());
-        }
-    }
-
     public void playerHit(int seat) {
-        //if (!activeGame) {return;}
-        if (isBlackjack(playerHandList.get(seat))) { playerStand(seat); }
         playerHandList.get(seat).addCard(dealer.dealCard());
         int handValue = playerHandList.get(seat).getValue();
         if (handValue == 21) {
@@ -192,26 +190,23 @@ public class MainModel implements Observable<MainModel> {
         updateObservers();
     }
 
-
     public void playerStand(int seat) {
-        if (!activeGame) {return;}
-        if (seat == playerHandList.size()-1) { dealDealer(); }
+        playerHandList.get(seat).setActionDone(true);
+        int done = 0;
+        for (PlayerHand hand : playerHandList) {
+            if (hand.isActionDone()) { done++; }
+        }
+        if (done == nrOfPlayers) { dealDealer(); }
         updateObservers();
     }
 
     public void playerDouble(int seat) {
-        if (!activeGame) {return;}
         if (playerHandList.get(seat).getCards().size() != 2 ||
         isBlackjack(playerHandList.get(seat)) || playerHandList.get(seat).getValue() >= 21) {return;}
         playerHandList.get(seat).bet(playerHandList.get(seat).getBet());
         playerHandList.get(seat).addCard(dealer.dealCard());
         playerStand(seat);
     }
-    public void playerSplit() {
-        if (!activeGame) {return;}
-        // göra här
-    }
-
 
     private void dealDealer() {
         showSecond = true;
@@ -228,8 +223,7 @@ public class MainModel implements Observable<MainModel> {
             }
         }).start();
     }
-
-    private boolean isBlackjack(PlayerHand hand) {return (hand.getValue() == 21) && (hand.getCards().size() == 2);}
+    
     private void payHands() {
         int dealerValue = dealerHand.getValue();
         int handValue;
@@ -249,14 +243,23 @@ public class MainModel implements Observable<MainModel> {
                 h.payout(1);
             }
         }
-        for (PlayerHand h : playerHandList) {
-            h.clearHand();
-        }
         dealerHand.clearHand();
         activeGame = false;
-        //waitForBet();
+        playerActionsNeeded = false;
+        dbUpdateScores();
+        waitForBet();
     }
 
+    //Updates the database with the score of all players in the "hands"-list.
+    public void dbUpdateScores () {
+        DatabaseHandler dbH = new DatabaseHandler();
+        for (PlayerHand hand : playerHandList) {
+            if (hand.getPlayer() != null) { dbH.addPlayerData(hand.getPlayer()); }
+
+        }
+    }
+
+    
     /*-----------------------
          Observer functions
       -----------------------*/
