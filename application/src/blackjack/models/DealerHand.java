@@ -7,5 +7,4 @@ import java.util.List;
  * A hand used to store cards of the dealer
  */
 public class DealerHand extends Hand {
-    private final List<Card> cards = new ArrayList<>();
 }
