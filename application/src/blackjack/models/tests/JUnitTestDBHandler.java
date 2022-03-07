@@ -93,8 +93,8 @@ class JUnitTestDBHandler{
 
         assertEquals(1000, db.getCredits("Tomas"));
         assertEquals(700, db.getCredits("Tor"));
-        Assert.assertNotEquals(333, db.getCredits("Mark"));
-        Assert.assertNotEquals(123, db.getCredits("Arvin"));
+        Assertions.assertNotEquals(333, db.getCredits("Mark"));
+        Assertions.assertNotEquals(123, db.getCredits("Arvin"));
     }
 
     @AfterAll
