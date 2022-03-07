@@ -16,6 +16,7 @@ import javax.swing.Timer;
 /**
  * MainModel, represents a Model as per MVC-design
  * @author Lukas Wigren, Tomas Alander, Tor Falkenberg, Mark Villarosa
+ * @version 2022-03-07
  */
 public class MainModel implements Observable<MainModel> {
 
@@ -30,6 +31,7 @@ public class MainModel implements Observable<MainModel> {
     private int nrOfPlayers = 5;            //Default number of players = 5
     private int timeBetweenRounds = 30;     //Default number of seconds between rounds
 
+
     //Local Game Variables
     private Dealer dealer;
     private DealerHand dealerHand;
@@ -41,26 +43,62 @@ public class MainModel implements Observable<MainModel> {
     ChatClient chatClient;
     private String username;
     ArrayList<String> messages = new ArrayList<>();
-    
+
     //Constructor
+    /**
+     * Constructor for MainModel
+     */
     public MainModel() { state = State.MENU; }
 
     // Screen methods
+    /**
+     * Sets variables containing screen with and height, and updates observers
+     * @param width
+     * @param height
+     */
     public void setSize(int width, int height) {this.width=width; this.height=height; updateObservers();}
+
+    /**
+     * Gets with of frame
+     * @return  with of frame as an int
+     */
     public int getWidth() {return width;}
+
+    /**
+     * Gets height of frame
+     * @return  height of frame as an int
+     */
     public int getHeight() {return height;}
+
+    /**
+     * Checks if program is fullscreen.
+     * @return  true if it is, false if it is not.
+     */
     public boolean getIsFullscreen() { return isFullscreen; }
+
+    /**
+     * Toggles fullscreen variable between true and false, then updates observers.
+     */
     public void toggleFullscreen() { isFullscreen ^= true; updateObservers(); }
 
     //Setting methods
+
+    /**
+     * Sets state of program, which panel to show, updates observer.
+     * @param   state
+     * @see     State for availible enum values.
+     */
     public void setState(State state) {
         if (state == State.GAME) {startGame();}
         this.state = state;
         updateObservers();
     }
+
+    /**
+     * Gets which state is set.
+     * @return
+     */
     public State getState() { return state; }
-    public void setNrOfPlayers (int nrOfPlayers) { this.nrOfPlayers = nrOfPlayers; }
-    public void setTimeBetweenRounds (int timeBetweenRounds) { this.timeBetweenRounds = timeBetweenRounds; }
 
     //Sound methods
     public boolean getSoundON() {
@@ -96,7 +134,6 @@ public class MainModel implements Observable<MainModel> {
     public boolean activeGame() { return activeGame; }
     public boolean playerActionsNeeded() { return playerActionsNeeded; }
     public int getTimerCounter() { return timerCounter; }
-    
 
 
     /*-----------------------
@@ -111,11 +148,15 @@ public class MainModel implements Observable<MainModel> {
         timerCounter = timeBetweenRounds;
     }
 
-    /*
-    Checks if a player with that name exists in the database.
-    If not, a new player is created with 1000 credits, updated in the database, and added to MainModels "hands"-list.
-    If the player already exists, it's credit score is recieved, and the player is added to the "hands"-list.
-    */
+
+    /**
+     * Checks if a player with that name exists in the database.
+     * If not, a new player is created with 1000 credits, updated in the database, and added to MainModels "hands"-list.
+     * If the player already exists, it's credit score is recieved, and the player is added to the "hands"-list.
+     * Updates observers.
+     * @param name  Name of the player
+     * @param seat  Which table seat to add to (0-4, left to right)
+     */
     public void addPlayer (String name, int seat) {
         DatabaseHandler dbH = new DatabaseHandler();
         Player player = null;
