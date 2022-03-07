@@ -23,7 +23,7 @@ import com.intellij.uiDesigner.core.*;
 
 /**
  * GamePanel, the panel that showcase the game
- * @author Tor Falkenberg & Mark Villarosa & Lukas Wigren
+ * @author Tor Falkenberg, Mark Villarosa, Lukas Wigren
  */
 public class GamePanel extends JPanel implements Observer<MainModel> {
 
@@ -31,7 +31,12 @@ public class GamePanel extends JPanel implements Observer<MainModel> {
     private int cardWidth, cardHeight;
     private int nrOfPlayers = 5;
 
-    //Constructor
+    /**
+     * Constructor for GamePanel
+     * Creates all the swing objects and listeners
+     * @param gameController    ChatController for listeners
+     * @param nrOfPlayers   Number of players
+     */
     public GamePanel(GameController gameController, int nrOfPlayers) {
         //Local variables
         this.nrOfPlayers = nrOfPlayers;
@@ -49,7 +54,11 @@ public class GamePanel extends JPanel implements Observer<MainModel> {
         updateBackground(1280,720);
     }
     
-    
+    /**
+     * Update functions, called by observer
+     * updates the panel with newly updated mainModel
+     * @param o MainModel
+     */
     //Public methods
     @Override
     public void update(MainModel o) {
