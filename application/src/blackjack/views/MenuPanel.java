@@ -267,5 +267,6 @@ public class MenuPanel extends JPanel implements Observer<MainModel> {
     private JButton exitButton;
     private JTextArea panel2;
     private JLabel bordet;
+    private Jbutton chatButton;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
