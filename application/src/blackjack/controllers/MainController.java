@@ -6,21 +6,32 @@ import blackjack.views.State;
 
 import java.awt.event.*;
 /**
- * MainController, a controller for the program, MainView...
+ * MainController, a controller for the programs MainView
  * @author  Lukas Wigren
  */
 public class MainController implements KeyListener {
-    private MainModel mainModel;
+    private final MainModel mainModel;
     private MainView mainView;
-
+    /**
+     * The MainController constructor
+     * @param mainModel The mainModel
+     * @param mainView  The MainView
+     */
     public MainController(MainModel mainModel, MainView mainView) {
         this.mainModel = mainModel;
         this.mainView = mainView;
     }
-        @Override
+    /**
+     * KeyTyped, unused
+     * @param e KeyEvent
+     */
+    @Override
     public void keyTyped(KeyEvent e) {
     }
-
+    /**
+     * KeyPressed, ESC -> State.MENU
+     * @param e KeyEvent
+     */
     @Override
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
@@ -28,7 +39,10 @@ public class MainController implements KeyListener {
             default -> {}
         }
     }
-
+    /**
+     *  KeyReleased, unused
+     * @param e KeyEvent
+     */
     @Override
     public void keyReleased(KeyEvent e) {
     }
