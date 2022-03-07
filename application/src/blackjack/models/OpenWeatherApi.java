@@ -1,6 +1,7 @@
 package blackjack.models;
 
-import org.json.*;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,84 +13,65 @@ import java.net.URL;
  * Connects to open source data server, OpenWeather. Using API
  * don't forget org.json.jar
  * @author Tomas Alander
+ * @version 2022-03-07
  */
 public class OpenWeatherApi {
     private HttpURLConnection con;
-    private String inputline;
-    private String openWeatherApiKey = "084cbb00a74eb1329949d90952c5c519";
-    private double lasVegasLat = 36.114647;
-    private double lasVegasLong = -115.172813;
+    private String inPutLine;
+    private final String openWeatherApiKey = "084cbb00a74eb1329949d90952c5c519";
+    private final double lasVegasLat = 36.114647;
+    private final double lasVegasLong = -115.172813;
 
+    /**
+     *  A constructor for class OpenWeatherApi
+     */
     public OpenWeatherApi() {
     }
 
     /**
      * Establish connection to OpenWeather open data server using API.
-     * @param city
-     * @return the param city Geocode in JSON-format as a String.
-     */
-    public String getGeocoding(String city) {
-        String ret = "";
-        try {
-            URL url = new URL(" http://api.openweathermap.org/geo/" +
-                    "1.0/direct?q=" + city + "&limit=5&appid=084cbb00a74eb1329949d90952c5c519");
-            con = (HttpURLConnection) url.openConnection();
-            con.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-            con.setConnectTimeout(10000);
-            con.getReadTimeout();
-            int connectionInfo = con.getResponseCode();
-            System.out.println(connectionInfo);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            while ((inputline = reader.readLine()) != null) {
-                System.out.println(inputline);
-                ret += inputline;
-            }
-            con.disconnect();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return ret;
-    }
-
-    /**
-     * Establish connection to OpenWeather open data server using API.
+     * @pre  -90<=lat<=90, -180<=lon<=180
      * @param lat
      * @param lon
      * @return return a string in JSON-format with the current weather data from the given location.
      */
     public String getLocalWeather(double lat, double lon) {
         String ret = "";
-        try {
-              URL url = new URL(" http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=" + openWeatherApiKey);
-              con = (HttpURLConnection) url.openConnection();
-              con.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-              con.setConnectTimeout(10000);
-              con.getReadTimeout();
-              int connectionInfo = con.getResponseCode();
-              System.out.println(connectionInfo);
-              BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
-              while ((inputline = reader.readLine()) != null) {
-                  System.out.println(inputline);
-                  ret += inputline;
+        String urlAdress = " http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=" + openWeatherApiKey;
+        if(lat<-90 || lat>90 || lon>180 ||lon<-180){
+            return  ret = "Coordinates dont exist";
+        }
+        try{
+            con = getConnected(urlAdress);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            while ((inPutLine = reader.readLine()) != null) {
+                //System.out.println(inPutLine);
+                ret += inPutLine;
             }
-            con.disconnect();
         } catch (IOException e) {
             e.printStackTrace();
+        }finally {
+            con.disconnect();
         }
         return ret;
     }
-    //for test purpose
-    /*
-    public static void main(String[] arg) throws JSONException {
-        OpenWeatherApi APIquery = new OpenWeatherApi();
-        String json = APIquery.getLocalWeather(APIquery.lasVegasLat,APIquery.lasVegasLong);
-        JSONObject jsonObj = new JSONObject(json);
-        System.out.println("Pretty Print of JSON:");
-        System.out.println(jsonObj.toString(4));
+
+    public double getLasVegasLongitude(){
+        return this.lasVegasLong;
     }
-     */
+
+    public double getLasVegasLatitude(){
+        return this.lasVegasLat;
+    }
+
+    private HttpURLConnection getConnected(String urlAddress) throws IOException {
+            URL url = new URL(urlAddress);
+            con=(HttpURLConnection) url.openConnection();
+            con.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+            con.setConnectTimeout(10000);
+            con.getReadTimeout();
+            int connectionInfo = con.getResponseCode();
+            System.out.println("LocalWeather response code " + connectionInfo);
+            return con;
+    }
 }
-// private String LasVegas = "Las Vegas	US	5506956	-115.137222	36.174969";
-// private String LasVegasLat = "36.114647";
-// private String LasVegasLong = "-115.172813";
-//String json = APIquery.getGeocoding("哥德堡"); // Fungerar ej med JSONObject
