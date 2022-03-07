@@ -1,4 +1,4 @@
-package com.vogella.junit.first;
+package blackjack.models.tests;
 
 import blackjack.models.DatabaseHandler;
 import blackjack.models.Player;
