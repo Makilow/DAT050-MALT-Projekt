@@ -1,25 +1,22 @@
 package blackjack.views;
 
-import javax.imageio.ImageIO;
-import javax.swing.border.*;
 import blackjack.Observer;
-import blackjack.controllers.ScoreboardController;
 import blackjack.controllers.SettingController;
 import blackjack.models.MainModel;
+import com.intellij.uiDesigner.core.*;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import com.intellij.uiDesigner.core.*;
-
 /**
  * SettingPanel, the panel that showcase the settings
- * @author Lukas Wigren
+ *
+ * @author Lukas Wigren, Mark Villarosa
  */
 
 public class SettingPanel extends JPanel implements Observer<MainModel> {
@@ -27,26 +24,28 @@ public class SettingPanel extends JPanel implements Observer<MainModel> {
     public SettingPanel(SettingController settingController) {
         initComponents();
         okButton.setActionCommand("OK");
-        cancelButton.setActionCommand("CANCEL");
         fullscreenCheckbox.setActionCommand("FULLSCREEN");
         soundCheckbox.setActionCommand("SOUND");
         okButton.addActionListener(settingController);
-        cancelButton.addActionListener(settingController);
         resolutions.addItemListener(settingController);
         fullscreenCheckbox.addActionListener(settingController);
         soundCheckbox.addActionListener(settingController);
+        music.addItemListener(settingController);
         setLayout(new GridLayout(1, 0));
         add(panel);
     }
 
     @Override
     public void update(MainModel o) {
-        if (o.getState() != State.SETTINGS) {return;}
-        updateBackground(o.getWidth(),o.getHeight());
+        if (o.getState() != State.SETTINGS) {
+            return;
+        }
+        updateBackground(o.getWidth(), o.getHeight());
     }
+  
     private void updateBackground(int width, int height) {
-        panel.setSize(new Dimension(width,height));
-        panel1.setSize(new Dimension(width,height));
+        panel.setSize(new Dimension(width, height));
+        panel1.setSize(new Dimension(width, height));
         BufferedImage bImage = null;
         try {
             bImage = ImageIO.read(new File("src/icons/blackjackbordsuddigt.png"));
@@ -55,9 +54,10 @@ public class SettingPanel extends JPanel implements Observer<MainModel> {
             System.out.println("Missing file: \"src/icons/blackjackbordsuddigt.png\"");
             System.exit(0);
         }
-        Image image = bImage.getScaledInstance(width,height,Image.SCALE_SMOOTH);
+        Image image = bImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
         bordet.setIcon(new ImageIcon(image));
     }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         panel = new JPanel();
@@ -68,13 +68,15 @@ public class SettingPanel extends JPanel implements Observer<MainModel> {
         resolutionLabel = new JLabel();
         resolutions = new JComboBox<>();
         fullscreenLabel = new JLabel();
-        fullscreenCheckbox = new JCheckBox();
         var hSpacer2 = new Spacer();
+        fullscreenCheckbox = new JCheckBox();
         soundLabel = new JLabel();
         soundCheckbox = new JCheckBox();
+        music = new JComboBox<>();
+        soundLabel2 = new JLabel();
+        musicCheckbox = new JCheckBox();
         var vSpacer3 = new Spacer();
         okButton = new JButton();
-        cancelButton = new JButton();
         var vSpacer2 = new Spacer();
         bordet = new JLabel();
 
@@ -94,8 +96,8 @@ public class SettingPanel extends JPanel implements Observer<MainModel> {
             //======== panel1 ========
             {
                 panel1.setOpaque(false);
-                panel1.setLayout(new GridLayoutManager(11, 8, new Insets(0, 0, 0, 0), -1, -1));
-                panel1.add(vSpacer1, new GridConstraints(0, 0, 1, 8,
+                panel1.setLayout(new GridLayoutManager(12, 9, new Insets(0, 0, 0, 0), -1, -1));
+                panel1.add(vSpacer1, new GridConstraints(0, 0, 1, 9,
                     GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL,
                     GridConstraints.SIZEPOLICY_CAN_SHRINK,
                     GridConstraints.SIZEPOLICY_FIXED,
@@ -105,12 +107,12 @@ public class SettingPanel extends JPanel implements Observer<MainModel> {
                 title.setText("SETTINGS");
                 title.setFont(new Font("Times New Roman", Font.BOLD, 31));
                 title.setForeground(new Color(255, 153, 204));
-                panel1.add(title, new GridConstraints(1, 0, 1, 8,
+                panel1.add(title, new GridConstraints(1, 0, 1, 9,
                     GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
                     GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
                     GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
                     null, null, null));
-                panel1.add(hSpacer1, new GridConstraints(1, 0, 7, 1,
+                panel1.add(hSpacer1, new GridConstraints(1, 0, 8, 1,
                     GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
                     GridConstraints.SIZEPOLICY_CAN_GROW | GridConstraints.SIZEPOLICY_WANT_GROW,
                     GridConstraints.SIZEPOLICY_CAN_SHRINK,
@@ -133,6 +135,9 @@ public class SettingPanel extends JPanel implements Observer<MainModel> {
                     "1920x1080"
                 }));
                 resolutions.setOpaque(false);
+                resolutions.setBackground(Color.white);
+                resolutions.setForeground(Color.red);
+                resolutions.setFont(resolutions.getFont().deriveFont(resolutions.getFont().getStyle() | Font.BOLD));
                 panel1.add(resolutions, new GridConstraints(2, 6, 1, 1,
                     GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE,
                     GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -148,22 +153,24 @@ public class SettingPanel extends JPanel implements Observer<MainModel> {
                     GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
                     GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
                     null, null, null));
-
-                //---- fullscreenCheckbox ----
-                fullscreenCheckbox.setOpaque(false);
-                panel1.add(fullscreenCheckbox, new GridConstraints(3, 6, 1, 1,
-                    GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE,
-                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-                    null, null, null));
-                panel1.add(hSpacer2, new GridConstraints(1, 7, 7, 1,
+                panel1.add(hSpacer2, new GridConstraints(1, 8, 8, 1,
                     GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
                     GridConstraints.SIZEPOLICY_CAN_GROW | GridConstraints.SIZEPOLICY_WANT_GROW,
                     GridConstraints.SIZEPOLICY_CAN_SHRINK,
                     null, null, null));
 
+                //---- fullscreenCheckbox ----
+                fullscreenCheckbox.setOpaque(false);
+                fullscreenCheckbox.setBackground(Color.white);
+                fullscreenCheckbox.setForeground(Color.white);
+                panel1.add(fullscreenCheckbox, new GridConstraints(3, 5, 1, 1,
+                    GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE,
+                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                    null, null, null));
+
                 //---- soundLabel ----
-                soundLabel.setText("VFX ON/OFF");
+                soundLabel.setText("Music Sound");
                 soundLabel.setFont(new Font("Times New Roman", Font.BOLD, 18));
                 soundLabel.setForeground(new Color(255, 153, 204));
                 panel1.add(soundLabel, new GridConstraints(4, 1, 1, 1,
@@ -174,12 +181,51 @@ public class SettingPanel extends JPanel implements Observer<MainModel> {
 
                 //---- soundCheckbox ----
                 soundCheckbox.setOpaque(false);
-                panel1.add(soundCheckbox, new GridConstraints(4, 6, 1, 1,
+                soundCheckbox.setBackground(Color.white);
+                soundCheckbox.setForeground(Color.white);
+                panel1.add(soundCheckbox, new GridConstraints(4, 5, 1, 1,
                     GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE,
                     GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
                     GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
                     null, null, null));
-                panel1.add(vSpacer3, new GridConstraints(5, 1, 1, 6,
+
+                //---- music ----
+                music.setModel(new DefaultComboBoxModel<>(new String[] {
+                    "Music 1",
+                    "Music 2"
+                }));
+                music.setBackground(Color.white);
+                music.setForeground(Color.red);
+                music.setFont(music.getFont().deriveFont(music.getFont().getStyle() | Font.BOLD));
+                music.setOpaque(false);
+                panel1.add(music, new GridConstraints(4, 6, 1, 1,
+                    GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE,
+                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                    null, null, null));
+
+                //---- soundLabel2 ----
+                soundLabel2.setText("VFX Sound");
+                soundLabel2.setFont(new Font("Times New Roman", Font.BOLD, 18));
+                soundLabel2.setForeground(new Color(255, 153, 204));
+                soundLabel2.setVisible(false);
+                panel1.add(soundLabel2, new GridConstraints(5, 1, 1, 1,
+                    GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE,
+                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                    null, null, null));
+
+                //---- musicCheckbox ----
+                musicCheckbox.setOpaque(false);
+                musicCheckbox.setBackground(Color.white);
+                musicCheckbox.setForeground(Color.white);
+                musicCheckbox.setVisible(false);
+                panel1.add(musicCheckbox, new GridConstraints(5, 5, 1, 1,
+                    GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE,
+                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                    null, null, null));
+                panel1.add(vSpacer3, new GridConstraints(6, 1, 1, 6,
                     GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL,
                     GridConstraints.SIZEPOLICY_CAN_SHRINK,
                     GridConstraints.SIZEPOLICY_CAN_GROW | GridConstraints.SIZEPOLICY_WANT_GROW,
@@ -187,20 +233,12 @@ public class SettingPanel extends JPanel implements Observer<MainModel> {
 
                 //---- okButton ----
                 okButton.setText("OK");
-                panel1.add(okButton, new GridConstraints(6, 1, 1, 6,
+                panel1.add(okButton, new GridConstraints(7, 1, 1, 6,
                     GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
                     GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
                     GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
                     null, null, null));
-
-                //---- cancelButton ----
-                cancelButton.setText("CANCEL");
-                panel1.add(cancelButton, new GridConstraints(7, 1, 1, 6,
-                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
-                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-                    null, null, null));
-                panel1.add(vSpacer2, new GridConstraints(8, 0, 2, 8,
+                panel1.add(vSpacer2, new GridConstraints(9, 0, 2, 9,
                     GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL,
                     GridConstraints.SIZEPOLICY_CAN_SHRINK,
                     GridConstraints.SIZEPOLICY_FIXED,
@@ -236,8 +274,10 @@ public class SettingPanel extends JPanel implements Observer<MainModel> {
     private JCheckBox fullscreenCheckbox;
     private JLabel soundLabel;
     private JCheckBox soundCheckbox;
+    private JComboBox<String> music;
+    private JLabel soundLabel2;
+    private JCheckBox musicCheckbox;
     private JButton okButton;
-    private JButton cancelButton;
     private JLabel bordet;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
