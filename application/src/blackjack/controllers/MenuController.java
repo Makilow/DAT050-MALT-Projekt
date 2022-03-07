@@ -26,8 +26,10 @@ public class MenuController implements ActionListener {
             case "SCOREBOARD" -> mainModel.setState(State.SCOREBOARD);
             case "CHAT" ->  {
                 String uname = JOptionPane.showInputDialog("Enter username:");
-                mainModel.setChatUsername(uname);
-                mainModel.setState(State.CHAT);
+                if (uname != null) {
+                    mainModel.setChatUsername(uname);
+                    mainModel.setState(State.CHAT);
+                }
             }
             case "EXIT" -> mainModel.setState(State.EXIT);
             default -> {
