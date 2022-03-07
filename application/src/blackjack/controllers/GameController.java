@@ -8,14 +8,21 @@ import java.awt.event.ActionListener;
 
 /**
  * GameController, a controller for gamePanel
- * @author  Lukas Wigren & Tor Falkenberg
+ * @author  Lukas Wigren, Tor Falkenberg
  */
 public class GameController implements ActionListener {
     MainModel mainModel;
+    /**
+     * Constructor for GameController
+     * @param mainModel the MainModel
+     */
     public GameController(MainModel mainModel) {
         this.mainModel = mainModel;
     }
-
+    /**
+     * Actionlistener for Chatcontroller
+     * @param e ActionEvent
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         String name;
@@ -69,6 +76,4 @@ public class GameController implements ActionListener {
     private void playerHit (int seat) {
         mainModel.playerHit(seat);
     }
-
-
 }
