@@ -89,9 +89,16 @@ public class MainModel implements Observable<MainModel> {
      * @see     State for availible enum values.
      */
     public void setState(State state) {
-        if (state == State.GAME) {startGame();}
-        if (state == State.CHAT) {startChat();}
         this.state = state;
+        if (state == State.GAME) {startGame();}
+        if (state == State.CHAT) {
+            try {
+                startChat();
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(null, "Chat server is currently down!", "Chat down!", JOptionPane.PLAIN_MESSAGE);
+                this.state = State.MENU;
+            }
+        }
         updateObservers();
     }
 
@@ -314,11 +321,7 @@ public class MainModel implements Observable<MainModel> {
     }
     private void startChat() {
         Socket socket = null;
-        try {
-            socket = new Socket("localhost", 1234);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        socket = new Socket("localhost", 1234);
         chatClient = new ChatClient(socket, username, this);
         addToMessages("Welcome " + username + "!");
         chatClient.listenForMessage();
