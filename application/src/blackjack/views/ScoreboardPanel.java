@@ -44,27 +44,17 @@ public class ScoreboardPanel extends JPanel implements Observer<MainModel> {
         //Hämtar lista med players och scores från databasen
         DatabaseHandler dbH = new DatabaseHandler();
         List<Player> list = new ArrayList<>();
+        list = dbH.getScoreBoard();
 
-        try {
-            list = dbH.getScoreBoard();
-        } catch (SQLException | ClassNotFoundException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-            JLabel l = new JLabel("Sorry, the database server has problems at the moment :(");
+        for (Player player : list) {
+            JLabel l = new JLabel(player.getName() + ": " + (int)player.getBalance());
             l.setAlignmentX(Component.CENTER_ALIGNMENT);
             l.setFont(l.getFont().deriveFont(l.getFont().getSize() + 9f));
             l.setForeground(Color.BLACK);
             scorePanel.add(l);
-            e.printStackTrace();
         }
-
-/*
-        //Testkod pga "too many connections" på databas
-        List<Player> list = new ArrayList<>();
-        list.add(new Player("Tor", 10000));
-        list.add(new Player("Tomas", 500));
-        list.add(new Player("Arvin", 0));
-
- */
+        scorePanel.revalidate();
+    }
 
         for (Player player : list) {
             JLabel l = new JLabel(player.getName() + ": " + (int)player.getBalance());
