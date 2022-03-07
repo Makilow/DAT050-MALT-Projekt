@@ -115,15 +115,11 @@ public class MainModel implements Observable<MainModel> {
     public void addPlayer (String name, int seat) {
         DatabaseHandler dbH = new DatabaseHandler();
         Player player = null;
-        try {
-            if (dbH.playerName(name)) {
-                player = new Player(name, dbH.getCredits(name));
-            } else {
-                player = new Player(name, 1000);
-                dbH.addPlayerData(player);
-            }
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+        if (dbH.playerName(name)) {
+            player = new Player(name, dbH.getCredits(name));
+        } else {
+            player = new Player(name, 1000);
+            dbH.addPlayerData(player);
         }
         setPlayerToHand(player, seat);
         updateObservers();
@@ -179,17 +175,9 @@ public class MainModel implements Observable<MainModel> {
     public void dbUpdateScores () {
         DatabaseHandler dbH = new DatabaseHandler();
         for (PlayerHand hand : playerHandList) {
-            try {
-                dbH.addPlayerData(hand.getPlayer());
-            } catch (SQLException | ClassNotFoundException e) {
-                e.printStackTrace();
-            }
+            dbH.addPlayerData(hand.getPlayer());
         }
     }
-
-
-
-
 
     public void playerHit(int seat) {
         //if (!activeGame) {return;}
