@@ -90,6 +90,7 @@ public class MainModel implements Observable<MainModel> {
      */
     public void setState(State state) {
         if (state == State.GAME) {startGame();}
+        if (state == State.CHAT) {startChat();}
         this.state = state;
         updateObservers();
     }
