@@ -19,11 +19,17 @@ public class SettingController implements ActionListener, ItemListener {
     private boolean isFullscreen = false;
     private boolean soundON = false;
     private int song;
-
+    /**
+     * Constructor for SettingController
+     * @param mainModel The MainModel
+     */
     public SettingController(MainModel mainModel) {
         this.mainModel = mainModel;
     }
-
+    /**
+     * ActionListener
+     * @param e ActionEvent
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
@@ -52,7 +58,10 @@ public class SettingController implements ActionListener, ItemListener {
             default -> System.out.println(e.getActionCommand());
         }
     }
-
+    /**
+     * ItemListener, dropdown menus
+     * @param e ItemEvent
+     */
     @Override
     public void itemStateChanged(ItemEvent e) {
         switch (e.getItem().toString()) {
