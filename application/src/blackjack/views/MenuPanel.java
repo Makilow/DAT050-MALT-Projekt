@@ -60,7 +60,7 @@ public class MenuPanel extends JPanel implements Observer<MainModel> {
         panel1.setSize(new Dimension(width,height));
         BufferedImage bImage = null;
         try {
-            bImage = ImageIO.read(new File("src/icons/blackjackbordsuddigt.png"));
+            bImage = ImageIO.read(getClass().getClassLoader().getResource("icons/blackjackbordsuddigt.png"));
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Missing file: \"src/icons/blackjackbordsuddigt.png\"");
