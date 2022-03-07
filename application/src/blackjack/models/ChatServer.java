@@ -12,13 +12,14 @@ public class ChatServer {
 
     private ServerSocket serverSocket;
 
-    /*  Constructor creating a serverSocket.
+    /**  Constructor creating a serverSocket.
+     * @param serverSocket takes in serverSocket.
      */
     public ChatServer(ServerSocket serverSocket) {
         this.serverSocket = serverSocket;
     }
 
-    /* This method, startServer, will be responsible for keeping the server running.
+    /** This method, startServer, will be responsible for keeping the server running.
        Server is constantly running until the server socket is closed.
      */
     public void startServer(){
@@ -37,7 +38,7 @@ public class ChatServer {
         }
     }
 
-    /*  Method for handling socket error so that we can avoid nested try-catches
+    /**  Method for handling socket error so that we can avoid nested try-catches
      */
     public void closeServerSocket() {
         try {
