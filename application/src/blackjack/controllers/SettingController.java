@@ -62,10 +62,10 @@ public class SettingController implements ActionListener, ItemListener {
                 height = 720;
             }
             case "Music 1" -> {
-                song = 0; System.out.println("YOOOOOOOOO 1");
+                song = 0;
             }
             case "Music 2" -> {
-                song = 1; System.out.println("YOOOOOOOOO 2");
+                song = 1; 
             }
             default -> System.out.println("HOW DID WE GET HERE");
         }
