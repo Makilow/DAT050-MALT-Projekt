@@ -19,11 +19,14 @@ import com.intellij.uiDesigner.core.*;
 
 /**
  * MenuPanel, the panel that showcase the menu
- *
  * @author Lukas Wigren
  */
 public class MenuPanel extends JPanel implements Observer<MainModel> {
-
+    /**
+     * Constructor for MenuPanel
+     * Creates all the swing objects and listeners
+     * @param menuController    ChatController for listeners
+     */
     public MenuPanel(MenuController menuController) {
         initComponents();
         startButton.setActionCommand(State.GAME.toString());
@@ -42,7 +45,11 @@ public class MenuPanel extends JPanel implements Observer<MainModel> {
         add(panel);
         updateBackground(1280,720);
     }
-
+    /**
+     * Update functions, called by observer
+     * updates the panel with newly updated mainModel
+     * @param o MainModel
+     */
     @Override
     public void update(MainModel o) {
         if (o.getState() != State.MENU) {return;}
