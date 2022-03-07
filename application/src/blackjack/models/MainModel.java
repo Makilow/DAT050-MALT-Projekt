@@ -24,7 +24,7 @@ public class MainModel implements Observable<MainModel> {
     private State state;
     private final Collection<Observer<MainModel>> observers = new HashSet<>();
     private boolean isFullscreen = false;
-    private boolean soundON = true;
+    private boolean soundON = false;
     private int currentSong;
     private final Sounds sound = new Sounds();
     private int nrOfPlayers = 5;            //Default number of players = 5
