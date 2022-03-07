@@ -45,9 +45,11 @@ public class GameController implements ActionListener {
             case "DOUBLE2"-> mainModel.playerDouble(2);
             case "DOUBLE3"-> mainModel.playerDouble(3);
             case "DOUBLE4"-> mainModel.playerDouble(4);
-            //case "SPLIT"-> mainModel.playerSplit();
-
-            case "REMOVE" -> removePlayer();
+            case "REMOVE0" -> mainModel.removePlayer(0);
+            case "REMOVE1" -> mainModel.removePlayer(1);
+            case "REMOVE2" -> mainModel.removePlayer(2);
+            case "REMOVE3" -> mainModel.removePlayer(3);
+            case "REMOVE4" -> mainModel.removePlayer(4);
             default-> System.out.println("HOW DID WE GET HERE?");
         }
     }
@@ -56,13 +58,6 @@ public class GameController implements ActionListener {
         String name = JOptionPane.showInputDialog(null, "Enter player name:");
         if (name != null) {
             mainModel.addPlayer(name, seat);
-        }
-    }
-
-    private void removePlayer () {
-        String name = JOptionPane.showInputDialog(null, "Enter player name:");
-        if (name != null) {
-            mainModel.removePlayer(name);
         }
     }
 
