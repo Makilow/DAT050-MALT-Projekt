@@ -12,10 +12,17 @@ import java.awt.event.ActionListener;
  */
 public class RuleController implements ActionListener {
     MainModel mainModel;
+    /**
+     * Constructor for RuleController
+     * @param mainModel The MainModel
+     */
     public RuleController(MainModel mainModel) {
         this.mainModel = mainModel;
     }
-
+    /**
+     * ActionListener
+     * @param e ActionEvent
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if ("MENU".equals(e.getActionCommand())) {
