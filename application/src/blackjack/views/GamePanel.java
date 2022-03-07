@@ -27,55 +27,38 @@ import com.intellij.uiDesigner.core.*;
  */
 public class GamePanel extends JPanel implements Observer<MainModel> {
 
-    //Local variables
-    private GameController gamecontroller;
     private final List<PlayerPanel> playerPanelList = new ArrayList<>();
-    private final List<JLayeredPane> cardLPList = new ArrayList<>();
     private int cardWidth, cardHeight;
     private int nrOfPlayers = 5;
-    //private boolean activeGame,playerActionsNeeded = false;
-    private int timerCounter, timeBetweenRounds;
 
     //Constructor
     public GamePanel(GameController gameController, int nrOfPlayers) {
-        this.gamecontroller = gameController;
+        //Local variables
         this.nrOfPlayers = nrOfPlayers;
 
         //Set Layout
         setLayout(new GridLayout(1, 0));
         initComponents();
-
         for (int i = 0; i < nrOfPlayers; i++) {
-
-            JLayeredPane layeredPane = new JLayeredPane();
-            layeredPane.setBounds(0, 0, 160, 160);
-            cardLPList.add(layeredPane);
-
             PlayerPanel playerPanel = new PlayerPanel(gameController, i);
-            playerPanel.printCards(layeredPane);
             playerPanelList.add(playerPanel);
-
             ppContainer.add(playerPanel);
         }
 
         add(panel);
         updateBackground(1280,720);
     }
-
-
+    
+    
     //Public methods
     @Override
     public void update(MainModel o) {
         if (o.getState() != State.GAME) return;
         updateBackground(o.getWidth(),o.getHeight());
-        doGameLogic(o);
+        updateStatusText(o);
         updatePlayerPanels(o.getHands(), o);
         showDealer(o.getDealerCards(), o.getShowSecond());
         showHands(o.getHands());
-
-        //highlightCurrentHand(o.getCurrentHand());
-        //clearCards();
-        //showBettingButton(o.activeGame(), o.getHands());
     }
 
     //Private update methods
@@ -95,19 +78,23 @@ public class GamePanel extends JPanel implements Observer<MainModel> {
         bordet.setIcon(new ImageIcon(image));
     }
 
-    private void doGameLogic (MainModel o) {
+    private void updateCardSize(int h) {
+        switch (h) {
+            case 720 -> { cardWidth = 60; cardHeight = 90; }
+            case 900 -> { cardWidth = 80; cardHeight = 120; }
+            case 1080 -> { cardWidth = 100; cardHeight = 150; }
+            default -> System.out.println("Wait what how we get here?");
+        }
+    }
 
-        //Get timer variables
-        this.timerCounter = o.getTimerCounter();
-        this.timeBetweenRounds = o.getTimeBetweenRounds();
-
+    private void updateStatusText (MainModel o) {
+        int timerCounter = o.getTimerCounter();
         if (!o.activeGame()) {
             this.statusText.setText("Place a bet for the game to start");
         } else if (o.activeGame() && timerCounter > 0) {
             this.statusText.setText("The round starts in " + Integer.toString(timerCounter) + "s. Place your bets!");
         } else if (o.activeGame() && timerCounter == 0) {
             this.statusText.setText("");
-
         }
     }
 
@@ -117,8 +104,8 @@ public class GamePanel extends JPanel implements Observer<MainModel> {
         }
     }
 
-
     private void showDealer(List<Card> cards, boolean showSecond) {
+        dealer.removeAll();
         int i = 0;
         for (Card c : cards) {
             JLabel l;
@@ -135,58 +122,20 @@ public class GamePanel extends JPanel implements Observer<MainModel> {
     private void showHands(List<PlayerHand> playerHandList) {
         int i = 0;
         for (PlayerHand pHand : playerHandList) {
+            JLayeredPane layeredPane = new JLayeredPane();
+            layeredPane.setBounds(0, 0, 160, 160);
+            layeredPane.setAlignmentX(Component.CENTER_ALIGNMENT);
             int j = 0;
-            if (!pHand.getCards().isEmpty()) {
-                for (Card c : pHand.getCards()) {
-                    JLabel l = new JLabel(cardImage(getFilename(c)));
-                    l.setBounds(15 * j, 5 * j, cardWidth, cardHeight);
-                    cardLPList.get(i).add(l, Integer.valueOf(j));
-                    j++;
-                }
-                playerPanelList.get(i).printCards(cardLPList.get(i));
+            for (Card c : pHand.getCards()) {
+                JLabel l = new JLabel(cardImage(getFilename(c)));
+                l.setBounds(15 * j, 5 * j, cardWidth, cardHeight);
+                layeredPane.add(l, Integer.valueOf(j));
+                j++;
             }
+            playerPanelList.get(i).printCards(layeredPane);
             i++;
         }
     }
-
-    /*
-    private void clearCards() {
-        dealer.removeAll();
-        for (JLayeredPane lp : handCards) {
-            lp.removeAll();
-        }
-        panel.revalidate();
-        panel.repaint();
-    }
-
-
-
-    private void highlightCurrentHand(int index) {
-        Border currentPlayerBorder = BorderFactory.createLineBorder(Color.RED);
-        for(JLayeredPane lp : handCards) {lp.setBorder(null);}
-        handCards.get(index).setBorder(currentPlayerBorder);
-    }
-
-     */
-
-
-    private void updateCardSize(int h) {
-        switch (h) {
-            case 720 -> {
-                cardWidth = 60; cardHeight = 90;
-            }
-            case 900 -> {
-                cardWidth = 80; cardHeight = 120;
-            }
-            case 1080 -> {
-                cardWidth = 100; cardHeight = 150;
-            }
-            default -> System.out.println("Wait what how we get here?");
-        }
-    }
-
-
-
 
     //Private methods
     private String getFilename(Card c) {
@@ -207,14 +156,6 @@ public class GamePanel extends JPanel implements Observer<MainModel> {
         Image image = bImage.getScaledInstance(cardWidth, cardHeight, Image.SCALE_SMOOTH);
         return new ImageIcon(image);
     }
-
-
-
-
-
-
-
-
 
 
     private void initComponents() {
@@ -335,134 +276,3 @@ public class GamePanel extends JPanel implements Observer<MainModel> {
     private JLabel bordet;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
-
-/*
-    private void showBettingButton(Boolean activeGame, List<PlayerHand> hands) {
-        if (activeGame) {
-            // dont show button
-            // setvisable(false)
-        } else {
-            // show button
-            for (PlayerHand h : hands) {
-                if (h.getPlayer() != null) {
-                    // show button
-                }
-            }
-        }
-    }
-    */
-
-
-
-
-
-
-
-/*
- //======== panel1 ========
-            {
-                panel1.setOpaque(false);
-                panel1.setLayout(new GridLayoutManager(9, 7, new Insets(0, 0, 0, 0), 2, 2));
-                panel1.add(vSpacer2, new GridConstraints(0, 3, 1, 1,
-                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL,
-                    GridConstraints.SIZEPOLICY_CAN_SHRINK,
-                    GridConstraints.SIZEPOLICY_CAN_GROW | GridConstraints.SIZEPOLICY_WANT_GROW,
-                    null, null, null));
-
-                //======== dealer ========
-                {
-                    dealer.setOpaque(false);
-                    dealer.setLayout(new FlowLayout());
-                }
-                panel1.add(dealer, new GridConstraints(1, 1, 1, 5,
-                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
-                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-                    null, null, null));
-                panel1.add(vSpacer1, new GridConstraints(2, 3, 1, 1,
-                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL,
-                    GridConstraints.SIZEPOLICY_CAN_SHRINK,
-                    GridConstraints.SIZEPOLICY_CAN_GROW | GridConstraints.SIZEPOLICY_WANT_GROW,
-                    null, null, null));
-                panel1.add(hSpacer3, new GridConstraints(3, 0, 1, 1,
-                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
-                    GridConstraints.SIZEPOLICY_CAN_GROW | GridConstraints.SIZEPOLICY_WANT_GROW,
-                    GridConstraints.SIZEPOLICY_CAN_SHRINK,
-                    null, null, null));
-
-                //======== handOne ========
-                {
-                    handOne.setPreferredSize(null);
-                    handOne.setOpaque(false);
-                    handOne.setLayout(new FlowLayout());
-                }
-                panel1.add(playerPanelList.get(0), new GridConstraints(3, 1, 1, 1,
-                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
-                    GridConstraints.SIZEPOLICY_WANT_GROW,
-                    GridConstraints.SIZEPOLICY_WANT_GROW,
-                    null, null, null));
-
-                //======== handTwo ========
-                {
-                    handTwo.setPreferredSize(null);
-                    handTwo.setOpaque(false);
-                    handTwo.setLayout(new FlowLayout());
-                }
-                panel1.add(playerPanelList.get(1), new GridConstraints(3, 2, 1, 1,
-                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
-                    GridConstraints.SIZEPOLICY_WANT_GROW,
-                    GridConstraints.SIZEPOLICY_WANT_GROW,
-                    null, null, null));
-
-                //======== handThree ========
-                {
-                    handThree.setPreferredSize(null);
-                    handThree.setOpaque(false);
-                    handThree.setLayout(new FlowLayout());
-                }
-                panel1.add(playerPanelList.get(2), new GridConstraints(3, 3, 1, 1,
-                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
-                    GridConstraints.SIZEPOLICY_WANT_GROW,
-                    GridConstraints.SIZEPOLICY_WANT_GROW,
-                    null, null, null));
-
-                //======== handFour ========
-                {
-                    handFour.setPreferredSize(null);
-                    handFour.setOpaque(false);
-                    handFour.setLayout(new FlowLayout());
-                }
-                panel1.add(playerPanelList.get(3), new GridConstraints(3, 4, 1, 1,
-                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
-                    GridConstraints.SIZEPOLICY_WANT_GROW,
-                    GridConstraints.SIZEPOLICY_WANT_GROW,
-                    null, null, null));
-
-                //======== handFive ========
-                {
-                    handFive.setPreferredSize(null);
-                    handFive.setOpaque(false);
-                    handFive.setLayout(new FlowLayout());
-                }
-                panel1.add(playerPanelList.get(4), new GridConstraints(3, 5, 1, 1,
-                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
-                    GridConstraints.SIZEPOLICY_WANT_GROW,
-                    GridConstraints.SIZEPOLICY_WANT_GROW,
-                    null, null, null));
-                panel1.add(hSpacer4, new GridConstraints(3, 6, 1, 1,
-                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
-                    GridConstraints.SIZEPOLICY_CAN_GROW | GridConstraints.SIZEPOLICY_WANT_GROW,
-                    GridConstraints.SIZEPOLICY_CAN_SHRINK,
-                    null, null, null));
-
-                //---- infoOne ----
-                infoOne.setOpaque(false);
-                infoOne.setForeground(new Color(255, 0, 51));
-                infoOne.setFont(new Font("Times New Roman", Font.BOLD, 18));
-                infoOne.setEditable(false);
-                panel1.add(infoOne, new GridConstraints(4, 1, 1, 1,
-                    GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL,
-                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-                    null, null, null));
- */
