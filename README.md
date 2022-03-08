@@ -1,22 +1,22 @@
 # DAT055-MALT-Projekt
 Projektgrupp - DAT055 - MALT
 -----------------------------
-With JAR:
+	- With JAR:
 	- Start BlackjackServer.jar (If you want localhost chat enabled).
 	- Start BlackjackGame.jar (If you want to play the game).
 
 
-With Code:
+	- With Code:
 	- Start src/blackjack/models/ChatServer.java (If you want localhost chat enabled).
 	- Start src/blackjack.java (If you want to play the game).
 
-In-game:
+	- In-game:
 	- Start Game
 		- Add Player, if a player is not registered from before, creates a new player and auto saves.
 		- Place bet to start the game timer (30 sec).
 		- Win game.
 		
-	- Chat
+	- **Chat**
 		- Chat locally with others.
 		
 	- Scoreboard
