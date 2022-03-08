@@ -82,7 +82,6 @@ public class MainModel implements Observable<MainModel> {
     public void toggleFullscreen() { isFullscreen ^= true; updateObservers(); }
 
     //Setting methods
-
     /**
      * Sets state of program, which panel to show, updates observer.
      * @param   state
@@ -232,7 +231,7 @@ public class MainModel implements Observable<MainModel> {
         }
     }
 
-    public void newRound() {
+    private void newRound() {
         showSecond = false;
         playerActionsNeeded = true;
         for (int i = 0; i < 2; i++) {
@@ -323,11 +322,10 @@ public class MainModel implements Observable<MainModel> {
     }
 
     //Updates the database with the score of all players in the "hands"-list.
-    public void dbUpdateScores () {
+    private void dbUpdateScores () {
         DatabaseHandler dbH = new DatabaseHandler();
         for (PlayerHand hand : playerHandList) {
             if (hand.getPlayer() != null) { dbH.addPlayerData(hand.getPlayer()); }
-
         }
     }
     
@@ -372,6 +370,7 @@ public class MainModel implements Observable<MainModel> {
     public void addObserver(Observer<MainModel> o) {
         observers.add(o);
     }
+
     @Override
     public void removeObserver(Observer<MainModel> o) {
         observers.remove(o);
