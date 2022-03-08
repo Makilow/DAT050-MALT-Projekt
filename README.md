@@ -9,6 +9,7 @@ Projektgrupp - DAT055 - MALT
 
 
 	- With Code:
+		- Add SDK (if errors, restart IDE - if still error, redownload program). 
 		- Start src/blackjack/models/ChatServer.java (If you want localhost chat enabled).
 		- Start src/blackjack.java (If you want to play the game).
 -------------------------------------------------------------------------------------------------------------------
