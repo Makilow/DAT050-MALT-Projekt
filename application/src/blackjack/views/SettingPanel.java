@@ -105,8 +105,8 @@ public class SettingPanel extends JPanel implements Observer<MainModel> {
 
                 //---- title ----
                 title.setText("SETTINGS");
-                title.setFont(new Font("Times New Roman", Font.BOLD, 31));
-                title.setForeground(new Color(255, 153, 204));
+                title.setFont(new Font("Hotel De Paris", Font.PLAIN, 74));
+                title.setForeground(Color.white);
                 panel1.add(title, new GridConstraints(1, 0, 1, 9,
                     GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
                     GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -120,8 +120,8 @@ public class SettingPanel extends JPanel implements Observer<MainModel> {
 
                 //---- resolutionLabel ----
                 resolutionLabel.setText("Screen resolution");
-                resolutionLabel.setFont(new Font("Times New Roman", Font.BOLD, 18));
-                resolutionLabel.setForeground(new Color(255, 153, 204));
+                resolutionLabel.setFont(new Font("Docktrin", Font.PLAIN, 27));
+                resolutionLabel.setForeground(new Color(204, 0, 51));
                 panel1.add(resolutionLabel, new GridConstraints(2, 1, 1, 1,
                     GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE,
                     GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -135,7 +135,6 @@ public class SettingPanel extends JPanel implements Observer<MainModel> {
                     "1920x1080"
                 }));
                 resolutions.setOpaque(false);
-                resolutions.setBackground(Color.white);
                 resolutions.setForeground(Color.red);
                 resolutions.setFont(resolutions.getFont().deriveFont(resolutions.getFont().getStyle() | Font.BOLD));
                 panel1.add(resolutions, new GridConstraints(2, 6, 1, 1,
@@ -146,8 +145,8 @@ public class SettingPanel extends JPanel implements Observer<MainModel> {
 
                 //---- fullscreenLabel ----
                 fullscreenLabel.setText("Fullscreen");
-                fullscreenLabel.setFont(new Font("Times New Roman", Font.BOLD, 18));
-                fullscreenLabel.setForeground(new Color(255, 153, 204));
+                fullscreenLabel.setFont(new Font("Docktrin", Font.PLAIN, 27));
+                fullscreenLabel.setForeground(new Color(204, 0, 51));
                 panel1.add(fullscreenLabel, new GridConstraints(3, 1, 1, 1,
                     GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE,
                     GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -171,8 +170,8 @@ public class SettingPanel extends JPanel implements Observer<MainModel> {
 
                 //---- soundLabel ----
                 soundLabel.setText("Music Sound");
-                soundLabel.setFont(new Font("Times New Roman", Font.BOLD, 18));
-                soundLabel.setForeground(new Color(255, 153, 204));
+                soundLabel.setFont(new Font("Docktrin", Font.PLAIN, 27));
+                soundLabel.setForeground(new Color(204, 0, 51));
                 panel1.add(soundLabel, new GridConstraints(4, 1, 1, 1,
                     GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE,
                     GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -194,7 +193,6 @@ public class SettingPanel extends JPanel implements Observer<MainModel> {
                     "Music 1",
                     "Music 2"
                 }));
-                music.setBackground(Color.white);
                 music.setForeground(Color.red);
                 music.setFont(music.getFont().deriveFont(music.getFont().getStyle() | Font.BOLD));
                 music.setOpaque(false);
@@ -232,9 +230,16 @@ public class SettingPanel extends JPanel implements Observer<MainModel> {
                     null, null, null));
 
                 //---- okButton ----
-                okButton.setText("OK");
+                okButton.setIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_confirmh.png")));
+                okButton.setFocusable(false);
+                okButton.setOpaque(false);
+                okButton.setRolloverSelectedIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_confirm.png")));
+                okButton.setSelected(true);
+                okButton.setBackground(new Color(65, 4, 0));
+                okButton.setBorderPainted(false);
+                okButton.setContentAreaFilled(false);
                 panel1.add(okButton, new GridConstraints(7, 1, 1, 6,
-                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
+                    GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
                     GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
                     GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
                     null, null, null));

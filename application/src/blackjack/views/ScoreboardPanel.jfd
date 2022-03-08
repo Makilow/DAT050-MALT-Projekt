@@ -14,7 +14,6 @@ new FormModel {
 			"preferredSize": sfield com.jformdesigner.model.FormObject NULL_VALUE
 			"alignmentX": 0.0f
 			"alignmentY": 0.0f
-			"cursor": new java.awt.Cursor( 12 )
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.intellij.uiDesigner.core.GridLayoutManager ) {
 				"$columnCount": 3
 				"$rowCount": 5
@@ -49,11 +48,12 @@ new FormModel {
 					name: "exitButton"
 					"borderPainted": false
 					"contentAreaFilled": false
-					"icon": new com.jformdesigner.model.SwingIcon( 0, "/icons/menu_icons/button_exit.png" )
+					"icon": new com.jformdesigner.model.SwingIcon( 0, "/icons/button_return.png" )
 					"label": ""
-					"rolloverSelectedIcon": new com.jformdesigner.model.SwingIcon( 0, "/icons/menu_icons/button_exitH.png" )
+					"rolloverSelectedIcon": new com.jformdesigner.model.SwingIcon( 0, "/icons/button_returnH.png" )
 					"selected": true
 					"text": ""
+					"cursor": new java.awt.Cursor( 12 )
 				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
 					"row": 3
 					"column": 1
@@ -62,7 +62,7 @@ new FormModel {
 					name: "panel2"
 					"background": new java.awt.Color( 65, 4, 0, 255 )
 					"editable": false
-					"font": new java.awt.Font( "Luminari", 1, 101 )
+					"font": new java.awt.Font( "Hotel De Paris", 0, 101 )
 					"foreground": new java.awt.Color( 255, 255, 255, 255 )
 					"opaque": false
 					"requestFocusEnabled": false

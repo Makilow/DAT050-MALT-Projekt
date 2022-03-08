@@ -76,9 +76,7 @@ public class ScoreboardPanel extends JPanel implements Observer<MainModel> {
         Image image = bImage.getScaledInstance(width,height,Image.SCALE_SMOOTH);
         bordet.setIcon(new ImageIcon(image));
     }
-    private void startButtonMouseClicked(MouseEvent e) {
-        // TODO add your code here
-    }
+    private void startButtonMouseClicked(MouseEvent e) {}
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
@@ -102,7 +100,6 @@ public class ScoreboardPanel extends JPanel implements Observer<MainModel> {
             panel.setPreferredSize(null);
             panel.setAlignmentX(0.0F);
             panel.setAlignmentY(0.0F);
-            panel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             panel.setLayout(null);
 
             //======== panel1 ========
@@ -133,11 +130,12 @@ public class ScoreboardPanel extends JPanel implements Observer<MainModel> {
                 //---- exitButton ----
                 exitButton.setBorderPainted(false);
                 exitButton.setContentAreaFilled(false);
-                exitButton.setIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_exit.png")));
+                exitButton.setIcon(new ImageIcon(getClass().getResource("/icons/button_return.png")));
                 exitButton.setLabel("");
-                exitButton.setRolloverSelectedIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_exitH.png")));
+                exitButton.setRolloverSelectedIcon(new ImageIcon(getClass().getResource("/icons/button_returnH.png")));
                 exitButton.setSelected(true);
                 exitButton.setText("");
+                exitButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                 panel1.add(exitButton, new GridConstraints(3, 1, 1, 1,
                     GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
                     GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -147,7 +145,7 @@ public class ScoreboardPanel extends JPanel implements Observer<MainModel> {
                 //---- panel2 ----
                 panel2.setBackground(new Color(65, 4, 0));
                 panel2.setEditable(false);
-                panel2.setFont(new Font("Luminari", Font.BOLD, 101));
+                panel2.setFont(new Font("Hotel De Paris", Font.PLAIN, 101));
                 panel2.setForeground(Color.white);
                 panel2.setOpaque(false);
                 panel2.setRequestFocusEnabled(false);

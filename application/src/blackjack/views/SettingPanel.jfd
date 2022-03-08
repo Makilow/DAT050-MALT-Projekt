@@ -17,8 +17,8 @@ new FormModel {
 			"border": new javax.swing.border.TitledBorder( "text" )
 			"opaque": false
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.intellij.uiDesigner.core.GridLayoutManager ) {
-				"$columnCount": 8
-				"$rowCount": 11
+				"$columnCount": 9
+				"$rowCount": 12
 			} ) {
 				name: "panel1"
 				"opaque": false
@@ -28,18 +28,18 @@ new FormModel {
 						"JavaCodeGenerator.variableLocal": true
 					}
 				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
-					"colSpan": 8
+					"colSpan": 9
 					"vSizePolicy": 0
 					"preferredSize": new java.awt.Dimension( 0, 100 )
 				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "title"
 					"text": "SETTINGS"
-					"font": new java.awt.Font( "Times New Roman", 1, 31 )
-					"foreground": &Color0 new java.awt.Color( 255, 153, 204, 255 )
+					"font": new java.awt.Font( "Hotel De Paris", 0, 74 )
+					"foreground": sfield java.awt.Color white
 				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
 					"row": 1
-					"colSpan": 8
+					"colSpan": 9
 				} )
 				add( new FormComponent( "com.jformdesigner.designer.wrapper.HSpacer" ) {
 					name: "hSpacer1"
@@ -47,14 +47,14 @@ new FormModel {
 						"JavaCodeGenerator.variableLocal": true
 					}
 				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
-					"rowSpan": 7
+					"rowSpan": 8
 					"row": 1
 				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "resolutionLabel"
 					"text": "Screen resolution"
-					"font": &Font0 new java.awt.Font( "Times New Roman", 1, 18 )
-					"foreground": #Color0
+					"font": &Font0 new java.awt.Font( "Docktrin", 0, 27 )
+					"foreground": new java.awt.Color( 204, 0, 51, 255 )
 				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
 					"column": 1
 					"row": 2
@@ -69,6 +69,8 @@ new FormModel {
 						addElement( "1920x1080" )
 					}
 					"opaque": false
+					"foreground": &Color0 new java.awt.Color( 255, 0, 0, 255 )
+					"font": &SwingDerivedFont0 new com.jformdesigner.model.SwingDerivedFont( null, 1, 0, false )
 				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
 					"column": 6
 					"row": 2
@@ -78,18 +80,10 @@ new FormModel {
 					name: "fullscreenLabel"
 					"text": "Fullscreen"
 					"font": #Font0
-					"foreground": #Color0
+					"foreground": new java.awt.Color( 204, 0, 51, 255 )
 				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
 					"row": 3
 					"column": 1
-					"anchor": 8
-				} )
-				add( new FormComponent( "javax.swing.JCheckBox" ) {
-					name: "fullscreenCheckbox"
-					"opaque": false
-				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
-					"column": 6
-					"row": 3
 					"anchor": 8
 				} )
 				add( new FormComponent( "com.jformdesigner.designer.wrapper.HSpacer" ) {
@@ -98,15 +92,25 @@ new FormModel {
 						"JavaCodeGenerator.variableLocal": true
 					}
 				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
-					"column": 7
-					"rowSpan": 7
+					"column": 8
+					"rowSpan": 8
 					"row": 1
+				} )
+				add( new FormComponent( "javax.swing.JCheckBox" ) {
+					name: "fullscreenCheckbox"
+					"opaque": false
+					"background": &Color1 new java.awt.Color( 255, 255, 255, 255 )
+					"foreground": &Color2 new java.awt.Color( 255, 255, 255, 255 )
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"column": 5
+					"row": 3
+					"anchor": 8
 				} )
 				add( new FormComponent( "javax.swing.JLabel" ) {
 					name: "soundLabel"
-					"text": "VFX ON/OFF"
+					"text": "Music Sound"
 					"font": #Font0
-					"foreground": #Color0
+					"foreground": new java.awt.Color( 204, 0, 51, 255 )
 				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
 					"row": 4
 					"anchor": 8
@@ -115,10 +119,49 @@ new FormModel {
 				add( new FormComponent( "javax.swing.JCheckBox" ) {
 					name: "soundCheckbox"
 					"opaque": false
+					"background": #Color1
+					"foreground": #Color2
 				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
-					"column": 6
+					"column": 5
 					"row": 4
 					"anchor": 8
+				} )
+				add( new FormComponent( "javax.swing.JComboBox" ) {
+					name: "music"
+					"model": new javax.swing.DefaultComboBoxModel {
+						selectedItem: "Music 1"
+						addElement( "Music 1" )
+						addElement( "Music 2" )
+					}
+					"foreground": #Color0
+					"font": #SwingDerivedFont0
+					"opaque": false
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"row": 4
+					"anchor": 8
+					"column": 6
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "soundLabel2"
+					"text": "VFX Sound"
+					"font": new java.awt.Font( "Times New Roman", 1, 18 )
+					"foreground": new java.awt.Color( 255, 153, 204, 255 )
+					"visible": false
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"row": 5
+					"anchor": 8
+					"column": 1
+				} )
+				add( new FormComponent( "javax.swing.JCheckBox" ) {
+					name: "musicCheckbox"
+					"opaque": false
+					"background": #Color1
+					"foreground": #Color2
+					"visible": false
+				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
+					"row": 5
+					"anchor": 8
+					"column": 5
 				} )
 				add( new FormComponent( "com.jformdesigner.designer.wrapper.VSpacer" ) {
 					name: "vSpacer3"
@@ -126,27 +169,25 @@ new FormModel {
 						"JavaCodeGenerator.variableLocal": true
 					}
 				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
-					"row": 5
+					"row": 6
 					"colSpan": 6
 					"column": 1
 				} )
 				add( new FormComponent( "javax.swing.JButton" ) {
 					name: "okButton"
-					"text": "OK"
-				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
-					"row": 6
-					"fill": 3
-					"column": 1
-					"colSpan": 6
-				} )
-				add( new FormComponent( "javax.swing.JButton" ) {
-					name: "cancelButton"
-					"text": "CANCEL"
+					"icon": new com.jformdesigner.model.SwingIcon( 0, "/icons/menu_icons/button_confirmh.png" )
+					"focusable": false
+					"opaque": false
+					"rolloverSelectedIcon": new com.jformdesigner.model.SwingIcon( 0, "/icons/menu_icons/button_confirm.png" )
+					"selected": true
+					"background": new java.awt.Color( 65, 4, 0, 255 )
+					"borderPainted": false
+					"contentAreaFilled": false
 				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
 					"row": 7
-					"fill": 3
 					"column": 1
 					"colSpan": 6
+					"useParentLayout": false
 				} )
 				add( new FormComponent( "com.jformdesigner.designer.wrapper.VSpacer" ) {
 					name: "vSpacer2"
@@ -154,8 +195,8 @@ new FormModel {
 						"JavaCodeGenerator.variableLocal": true
 					}
 				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
-					"row": 8
-					"colSpan": 8
+					"row": 9
+					"colSpan": 9
 					"rowSpan": 2
 					"vSizePolicy": 0
 					"preferredSize": new java.awt.Dimension( 0, 100 )

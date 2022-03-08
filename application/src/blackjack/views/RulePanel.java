@@ -75,7 +75,6 @@ public class RulePanel extends JPanel implements Observer<MainModel> {
             panel.setMinimumSize(null);
             panel.setAlignmentX(0.0F);
             panel.setAlignmentY(0.0F);
-            panel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             panel.setBorder(new TitledBorder("text"));
             panel.setLayout(null);
 
@@ -102,7 +101,7 @@ public class RulePanel extends JPanel implements Observer<MainModel> {
                 rules.setRequestFocusEnabled(false);
                 rules.setSelectionEnd(928);
                 rules.setTabSize(2);
-                rules.setText("-The goal of blackjack is to beat the dealer's hand without going over 21.\n\n-Face cards are worth 10. Aces are worth 1 or 11, whichever makes a better hand.\n\n-Each player starts with two cards, one of the dealer's cards is hidden until the end.\n\n-To 'Hit' is to ask for another card. To 'Stand' is to hold your total and end your turn.\n\n-If you go over 21 you bust, and the dealer wins regardless  of the dealer's hand.\n\n-If you are dealt 21 from the start (Ace & 10), you get blackjack.\n\n-Blackjack usually means you win 1.5 times the amount of your bet.\n\n-Dealer will hit until his/her cards total 17 or higher.\n\n-Doubling is like a hit, only the bet is doubled and you only get one more card.\n\n-Split can be done when you have two of the same card and the pair is split into two hands.\n\n-Splitting also doubles the bet, because each new hand is worth the original bet.\n\n-You cannot play on two aces after they are split.");
+                rules.setText("-The goal of blackjack is to beat the dealer's hand without going over 21.\n\n-Face cards are worth 10. Aces are worth 1 or 11, whichever makes a better hand.\n\n-Each player starts with two cards, one of the dealer's cards is hidden until the end.\n\n-To 'Hit' is to ask for another card. To 'Stand' is to hold your total and end your turn.\n\n-If you go over 21 you bust, and the dealer wins regardless  of the dealer's hand.\n\n-If you are dealt 21 from the start (Ace & 10), you get blackjack.\n\n-Blackjack usually means you win 1.5 times the amount of your bet.\n\n-Dealer will hit until his/her cards total 17 or higher.\n\n-Doubling is like a hit, only the bet is doubled and you only get one more card.");
                 rules.setWrapStyleWord(false);
                 rules.setOpaque(false);
                 panel1.add(rules, new GridConstraints(1, 1, 1, 1,
@@ -130,8 +129,8 @@ public class RulePanel extends JPanel implements Observer<MainModel> {
                 returnButton.setHorizontalTextPosition(SwingConstants.CENTER);
                 returnButton.setMaximumSize(new Dimension(174, 46));
                 returnButton.setBorderPainted(false);
-                returnButton.setSelected(true);
                 returnButton.setContentAreaFilled(false);
+                returnButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                 returnButton.addKeyListener(new KeyAdapter() {
                     @Override
                     public void keyPressed(KeyEvent e) {

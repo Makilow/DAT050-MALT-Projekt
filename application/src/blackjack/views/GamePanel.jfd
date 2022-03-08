@@ -11,7 +11,6 @@ new FormModel {
 			"alignmentY": 0.0f
 			"background": new java.awt.Color( 7, 65, 0, 255 )
 			"border": new javax.swing.border.TitledBorder( "text" )
-			"cursor": new java.awt.Cursor( 12 )
 			"maximumSize": new java.awt.Dimension( 1280, 720 )
 			"minimumSize": sfield com.jformdesigner.model.FormObject NULL_VALUE
 			"preferredSize": new java.awt.Dimension( 1280, 720 )
@@ -44,9 +43,11 @@ new FormModel {
 					"text": "New round starts in 30s! Place your bets!"
 					"opaque": false
 					"horizontalAlignment": 0
-					"font": new com.jformdesigner.model.SwingDerivedFont( null, 1, 48, true )
+					"font": new java.awt.Font( "Docktrin", 0, 55 )
 					"border": sfield com.jformdesigner.model.FormObject NULL_VALUE
-					"foreground": new java.awt.Color( 0, 0, 0, 255 )
+					"foreground": new java.awt.Color( 39, 4, 4, 255 )
+					"editable": false
+					"focusable": false
 				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
 					"row": 2
 					"colSpan": 7

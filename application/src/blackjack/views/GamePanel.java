@@ -187,7 +187,6 @@ public class GamePanel extends JPanel implements Observer<MainModel> {
             panel.setAlignmentY(0.0F);
             panel.setBackground(new Color(7, 65, 0));
             panel.setBorder(new TitledBorder("text"));
-            panel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             panel.setMaximumSize(new Dimension(1280, 720));
             panel.setMinimumSize(null);
             panel.setPreferredSize(new Dimension(1280, 720));
@@ -215,11 +214,14 @@ public class GamePanel extends JPanel implements Observer<MainModel> {
                     null, null, null));
 
                 //---- statusText ----
+                statusText.setText("New round starts in 30s! Place your bets!");
                 statusText.setOpaque(false);
                 statusText.setHorizontalAlignment(SwingConstants.CENTER);
-                statusText.setFont(statusText.getFont().deriveFont(statusText.getFont().getStyle() | Font.BOLD, 48f));
+                statusText.setFont(new Font("Docktrin", Font.PLAIN, 55));
                 statusText.setBorder(null);
-                statusText.setForeground(Color.black);
+                statusText.setForeground(new Color(39, 4, 4));
+                statusText.setEditable(false);
+                statusText.setFocusable(false);
                 panel1.add(statusText, new GridConstraints(2, 0, 1, 7,
                     GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
                     GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW | GridConstraints.SIZEPOLICY_WANT_GROW,

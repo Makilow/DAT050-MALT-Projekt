@@ -14,7 +14,6 @@ new FormModel {
 			"preferredSize": sfield com.jformdesigner.model.FormObject NULL_VALUE
 			"alignmentX": 0.0f
 			"alignmentY": 0.0f
-			"cursor": new java.awt.Cursor( 12 )
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.intellij.uiDesigner.core.GridLayoutManager ) {
 				"$columnCount": 3
 				"$rowCount": 11
@@ -54,6 +53,7 @@ new FormModel {
 					"visible": true
 					"contentAreaFilled": false
 					"horizontalTextPosition": 0
+					"cursor": &Cursor0 new java.awt.Cursor( 12 )
 					addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "startButtonMouseClicked", true ) )
 				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
 					"row": 3
@@ -63,14 +63,15 @@ new FormModel {
 					name: "panel2"
 					"background": new java.awt.Color( 65, 4, 0, 255 )
 					"editable": false
-					"font": new java.awt.Font( "Luminari", 1, 101 )
-					"foreground": new java.awt.Color( 255, 255, 255, 255 )
+					"font": new java.awt.Font( "Hotel De Paris", 0, 130 )
+					"foreground": sfield java.awt.Color white
 					"opaque": false
 					"requestFocusEnabled": false
 					"selectionEnd": 928
 					"tabSize": 2
-					"text": "Blackjack"
+					"text": "Blackjack "
 					"wrapStyleWord": false
+					"cursor": new java.awt.Cursor( 0 )
 				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
 					"colSpan": 3
 					"row": 1
@@ -94,9 +95,10 @@ new FormModel {
 					"contentAreaFilled": false
 					"icon": new com.jformdesigner.model.SwingIcon( 0, "/icons/menu_icons/button_chat.png" )
 					"label": ""
-					"rolloverSelectedIcon": new com.jformdesigner.model.SwingIcon( 0, "/icons/menu_icons/button_chat.png" )
+					"rolloverSelectedIcon": new com.jformdesigner.model.SwingIcon( 0, "/icons/menu_icons/button_chath.png" )
 					"selected": true
 					"text": ""
+					"cursor": #Cursor0
 				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
 					"row": 4
 					"column": 1
@@ -117,6 +119,7 @@ new FormModel {
 					"rolloverSelectedIcon": new com.jformdesigner.model.SwingIcon( 0, "/icons/menu_icons/button_scoreboardH.png" )
 					"selected": true
 					"text": ""
+					"cursor": #Cursor0
 				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
 					"row": 5
 					"column": 1
@@ -138,6 +141,7 @@ new FormModel {
 					"rolloverSelectedIcon": new com.jformdesigner.model.SwingIcon( 0, "/icons/menu_icons/button_settingsH.png" )
 					"selected": true
 					"text": ""
+					"cursor": #Cursor0
 				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
 					"row": 6
 					"column": 1
@@ -151,6 +155,7 @@ new FormModel {
 					"rolloverSelectedIcon": new com.jformdesigner.model.SwingIcon( 0, "/icons/menu_icons/button_rulesH.png" )
 					"selected": true
 					"text": ""
+					"cursor": #Cursor0
 				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
 					"row": 7
 					"column": 1
@@ -164,6 +169,7 @@ new FormModel {
 					"rolloverSelectedIcon": new com.jformdesigner.model.SwingIcon( 0, "/icons/menu_icons/button_exitH.png" )
 					"selected": true
 					"text": ""
+					"cursor": #Cursor0
 				}, new FormLayoutConstraints( class com.intellij.uiDesigner.core.GridConstraints ) {
 					"row": 8
 					"column": 1

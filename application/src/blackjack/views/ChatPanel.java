@@ -1,5 +1,6 @@
 package blackjack.views;
 
+import javax.swing.border.*;
 import blackjack.Observer;
 import blackjack.controllers.ChatController;
 import blackjack.models.MainModel;
@@ -74,6 +75,10 @@ public class ChatPanel extends JPanel implements Observer<MainModel> {
         Image image = bImage.getScaledInstance(width,height,Image.SCALE_SMOOTH);
         bordet.setIcon(new ImageIcon(image));
     }
+
+    private void returnButtonKeyPressed(KeyEvent e) {
+        // TODO add your code here
+    }
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         panel = new JPanel();
@@ -94,7 +99,6 @@ public class ChatPanel extends JPanel implements Observer<MainModel> {
             panel.setMinimumSize(new Dimension(1280, 820));
             panel.setAlignmentX(0.0F);
             panel.setAlignmentY(0.0F);
-            panel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             panel.setBorder(null);
             panel.setLayout(null);
 
@@ -114,9 +118,11 @@ public class ChatPanel extends JPanel implements Observer<MainModel> {
                 returnButton.setSelected(true);
                 returnButton.setContentAreaFilled(false);
                 returnButton.setVerticalAlignment(SwingConstants.BOTTOM);
+                returnButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                 returnButton.addKeyListener(new KeyAdapter() {
                     @Override
                     public void keyPressed(KeyEvent e) {
+                        returnButtonKeyPressed(e);
                     }
                 });
                 panel1.add(returnButton, new GridConstraints(0, 5, 1, 1,
@@ -129,7 +135,12 @@ public class ChatPanel extends JPanel implements Observer<MainModel> {
                 {
 
                     //---- msgArea ----
+                    msgArea.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+                    msgArea.setForeground(Color.red);
                     msgArea.setEditable(false);
+                    msgArea.setBackground(new Color(153, 153, 153));
+                    msgArea.setBorder(new BevelBorder(BevelBorder.LOWERED));
+                    msgArea.setWrapStyleWord(true);
                     scrollPane1.setViewportView(msgArea);
                 }
                 panel1.add(scrollPane1, new GridConstraints(0, 7, 1, 4,
@@ -142,8 +153,12 @@ public class ChatPanel extends JPanel implements Observer<MainModel> {
                 {
 
                     //---- msgText ----
-                    msgText.setForeground(new Color(153, 153, 153));
                     msgText.setMaximumSize(new Dimension(100, 100));
+                    msgText.setFont(new Font("Consolas", Font.PLAIN, 20));
+                    msgText.setForeground(Color.red);
+                    msgText.setBackground(new Color(153, 153, 153));
+                    msgText.setBorder(new BevelBorder(BevelBorder.LOWERED));
+                    msgText.setCaretColor(new Color(255, 0, 51));
                     scrollPane2.setViewportView(msgText);
                 }
                 panel1.add(scrollPane2, new GridConstraints(1, 8, 1, 1,
@@ -153,9 +168,12 @@ public class ChatPanel extends JPanel implements Observer<MainModel> {
                     null, new Dimension(400, 60), null));
 
                 //---- sendButton ----
-                sendButton.setText("SEND");
                 sendButton.setMinimumSize(new Dimension(100, 20));
                 sendButton.setPreferredSize(new Dimension(100, 50));
+                sendButton.setIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_send.png")));
+                sendButton.setRolloverIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_sendh.png")));
+                sendButton.setSelected(true);
+                sendButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                 panel1.add(sendButton, new GridConstraints(1, 9, 1, 1,
                     GridConstraints.ANCHOR_NORTHWEST, GridConstraints.FILL_NONE,
                     GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,

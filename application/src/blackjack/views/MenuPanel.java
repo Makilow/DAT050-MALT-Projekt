@@ -102,7 +102,6 @@ public class MenuPanel extends JPanel implements Observer<MainModel> {
             panel.setPreferredSize(null);
             panel.setAlignmentX(0.0F);
             panel.setAlignmentY(0.0F);
-            panel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             panel.setLayout(null);
 
             //======== panel1 ========
@@ -137,6 +136,7 @@ public class MenuPanel extends JPanel implements Observer<MainModel> {
                 startButton.setVisible(true);
                 startButton.setContentAreaFilled(false);
                 startButton.setHorizontalTextPosition(SwingConstants.CENTER);
+                startButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                 startButton.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
@@ -152,14 +152,15 @@ public class MenuPanel extends JPanel implements Observer<MainModel> {
                 //---- panel2 ----
                 panel2.setBackground(new Color(65, 4, 0));
                 panel2.setEditable(false);
-                panel2.setFont(new Font("Luminari", Font.BOLD, 101));
+                panel2.setFont(new Font("Hotel De Paris", Font.PLAIN, 130));
                 panel2.setForeground(Color.white);
                 panel2.setOpaque(false);
                 panel2.setRequestFocusEnabled(false);
                 panel2.setSelectionEnd(928);
                 panel2.setTabSize(2);
-                panel2.setText("Blackjack");
+                panel2.setText("Blackjack ");
                 panel2.setWrapStyleWord(false);
+                panel2.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
                 panel1.add(panel2, new GridConstraints(1, 0, 1, 3,
                     GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
                     GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -181,9 +182,10 @@ public class MenuPanel extends JPanel implements Observer<MainModel> {
                 chatButton.setContentAreaFilled(false);
                 chatButton.setIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_chat.png")));
                 chatButton.setLabel("");
-                chatButton.setRolloverSelectedIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_chat.png")));
+                chatButton.setRolloverSelectedIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_chath.png")));
                 chatButton.setSelected(true);
                 chatButton.setText("");
+                chatButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                 panel1.add(chatButton, new GridConstraints(4, 1, 1, 1,
                     GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
                     GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -202,6 +204,7 @@ public class MenuPanel extends JPanel implements Observer<MainModel> {
                 scoreboardButton.setRolloverSelectedIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_scoreboardH.png")));
                 scoreboardButton.setSelected(true);
                 scoreboardButton.setText("");
+                scoreboardButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                 panel1.add(scoreboardButton, new GridConstraints(5, 1, 1, 1,
                     GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
                     GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -220,6 +223,7 @@ public class MenuPanel extends JPanel implements Observer<MainModel> {
                 settingsButton.setRolloverSelectedIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_settingsH.png")));
                 settingsButton.setSelected(true);
                 settingsButton.setText("");
+                settingsButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                 panel1.add(settingsButton, new GridConstraints(6, 1, 1, 1,
                     GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
                     GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -234,6 +238,7 @@ public class MenuPanel extends JPanel implements Observer<MainModel> {
                 rulesButton.setRolloverSelectedIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_rulesH.png")));
                 rulesButton.setSelected(true);
                 rulesButton.setText("");
+                rulesButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                 panel1.add(rulesButton, new GridConstraints(7, 1, 1, 1,
                     GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
                     GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
@@ -248,6 +253,7 @@ public class MenuPanel extends JPanel implements Observer<MainModel> {
                 exitButton.setRolloverSelectedIcon(new ImageIcon(getClass().getResource("/icons/menu_icons/button_exitH.png")));
                 exitButton.setSelected(true);
                 exitButton.setText("");
+                exitButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                 panel1.add(exitButton, new GridConstraints(8, 1, 1, 1,
                     GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE,
                     GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
