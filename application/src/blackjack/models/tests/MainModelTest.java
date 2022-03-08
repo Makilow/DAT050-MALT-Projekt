@@ -1,86 +1,74 @@
 package blackjack.models.tests;
 
+import blackjack.Observer;
+import blackjack.controllers.GameController;
 import blackjack.models.MainModel;
+import blackjack.models.Player;
+import blackjack.models.PlayerHand;
+import blackjack.views.GamePanel;
 import blackjack.views.State;
 import org.junit.jupiter.api.Test;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class MainModelTest {
+    MainModel mm = new MainModel();
+
+    @Test
+    void testGame() {
+        GamePanel gp = new GamePanel(new GameController(mm), mm.getNrOfPlayers());
+        mm.addObserver(gp);
+        mm.setState(State.GAME);
+        assertEquals(State.GAME, mm.getState());
+        mm.addPlayer("Tor", 0);
+        assertNotNull(mm.getHands());
+        assertNotNull(mm.getDealerCards());
+        mm.playerBet(0,200);
+        mm.playerDouble(0);
+        mm.playerHit(0);
+        mm.playerStand(0);
+
+        mm.removeObserver(gp);
+    }
 
     @Test
     void setSize() {
-        MainModel mm = new MainModel();
         mm.setSize(1080, 720);
         assertEquals(1080, mm.getWidth());
         assertEquals(720, mm.getHeight());
     }
 
     @Test
-    void getWidth() {
-    }
-
-    @Test
-    void getHeight() {
-    }
-
-    @Test
-    void setState() {
-        MainModel mm = new MainModel();
-        mm.setState(State.CHAT);
-        assertEquals(State.CHAT, mm.getState());
-    }
-
-    @Test
-    void getState() {
-    }
-
-    @Test
     void getIsFullscreen() {
-    }
-
-    @Test
-    void toggleFullscreen() {
-    }
-
-    @Test
-    void setNrOfPlayers() {
-    }
-
-    @Test
-    void setTimeBetweenRounds() {
+        assertFalse(mm.getIsFullscreen());
+        mm.toggleFullscreen();
+        assertTrue(mm.getIsFullscreen());
     }
 
     @Test
     void getNrOfPlayers() {
-    }
-
-    @Test
-    void getTimeBetweenRounds() {
-    }
-
-    @Test
-    void getHands() {
-    }
-
-    @Test
-    void getDealerCards() {
+        assertEquals(5, mm.getNrOfPlayers());
     }
 
     @Test
     void getShowSecond() {
+        assertFalse(mm.getShowSecond());
     }
 
     @Test
     void activeGame() {
+        assertFalse(mm.activeGame());
     }
 
     @Test
     void playerActionsNeeded() {
+        assertFalse(mm.playerActionsNeeded());
     }
 
     @Test
     void getTimerCounter() {
+        assertEquals(0, mm.getTimerCounter());
     }
 
     @Test
@@ -89,61 +77,9 @@ class MainModelTest {
 
     @Test
     void getSoundON() {
-    }
-
-    @Test
-    void toggleSound() {
-    }
-
-    @Test
-    void switchSong() {
-    }
-
-    @Test
-    void currentSong() {
-    }
-
-    @Test
-    void addPlayer() {
-    }
-
-    @Test
-    void removePlayer() {
-    }
-
-    @Test
-    void playerBet() {
-    }
-
-    @Test
-    void newRound() {
-    }
-
-    @Test
-    void dbUpdateScores() {
-    }
-
-    @Test
-    void playerHit() {
-    }
-
-    @Test
-    void playerStand() {
-    }
-
-    @Test
-    void playerDouble() {
-    }
-
-    @Test
-    void playerSplit() {
-    }
-
-    @Test
-    void addObserver() {
-    }
-
-    @Test
-    void removeObserver() {
+        assertFalse(mm.getSoundON());
+        mm.toggleSound();
+        assertTrue(mm.getSoundON());
+        mm.switchSong(mm.currentSong());
     }
 }
