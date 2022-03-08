@@ -17,7 +17,6 @@ public class PlayerHand extends Hand {
 
     //Constructors
     public PlayerHand() {}
-    public PlayerHand(Player player) { this.player = player;}
     
     //Public methods
     public void setPlayer(Player player) {
