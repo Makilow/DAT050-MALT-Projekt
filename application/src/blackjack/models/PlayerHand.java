@@ -13,7 +13,6 @@ public class PlayerHand extends Hand {
     //Private variables
     private Player player = null;
     private double bet = 0;
-    private boolean insured = false;
     private boolean actionDone = true;
 
     //Constructors
@@ -47,13 +46,6 @@ public class PlayerHand extends Hand {
 
     public void payout(double multiplier) {
         if (player != null) {
-            if (insured) {
-                if(multiplier == 0) {
-                    multiplier = 1;
-                } else {
-                    bet -= bet/3;
-                }
-            }
             player.changeBalance(bet*multiplier);
             clearHand();
         }
